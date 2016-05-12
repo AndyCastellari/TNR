@@ -1,0 +1,16 @@
+{
+    "ObjectName": "TestObject3Data",
+    "Author": "STRING",
+    "Bears": {
+    	"NewLine" : "on",
+    	"Description" : "on",
+        "type": "CountedArray",
+        "count": "U32",
+        "record": {
+	    	"NewLine" : "off",
+	    	"Description" : "on",
+            "Bear Name": "STRING",
+            "Bear Size" : "U8"
+        }
+    }
+}

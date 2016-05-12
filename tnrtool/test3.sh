@@ -1,0 +1,18 @@
+#/bin/bash
+if [ -e temp3.bin ]
+    then
+        rm temp3.bin
+    fi
+if [ -e temp3.txt ]
+    then
+        rm temp3.txt
+    fi
+Debug/tnrtool -t testObject3.json --if testObject3.bin --of temp3.txt --binary-text
+Debug/tnrtool -t testObject3.json --of temp3.bin --if temp3.txt
+diff testObject3.bin temp3.bin
+if [ $? -ne 0 ]
+    then
+	echo "FAILED"
+    else
+	echo "PASS"
+    fi

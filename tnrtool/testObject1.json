@@ -1,0 +1,25 @@
+{
+    "ObjectName": "TestObject1",
+    "Unsigned 8 bit Value": "U8",
+    "Unsigned 16 bit value": "U16",
+    "Array of 8xU8s": {
+        "type": "FixedArray",
+        "count": 8,
+        "record": "U8"
+    },
+    "Another U8": "U8",
+    "Variable array 24 bit count and 32 bit values": {
+        "type": "CountedArray",
+        "count": "U24",
+        "record": "U32"
+    },
+    "Variable array 32 bit count and values are struct of two 16 bit values": {
+        "type": "CountedArray",
+        "count": "U32",
+        "record": {
+            "Start": "U16",
+            "End": "U16"
+        }
+    },
+    "Final U8": "U8"
+}
