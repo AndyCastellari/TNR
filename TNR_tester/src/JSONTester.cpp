@@ -97,12 +97,15 @@ bool LoadFileToString(const char * filename, std::string & s)
 		std::ifstream t(filename, std::ios_base::in);
 		if (t.is_open())
 		{
+			std::cout << "LoadFileToString(" << filename << ") succeeded" << endl;
+
 			std::stringstream buffer;
 			buffer << t.rdbuf();
 			s = buffer.str();
 		}
 		else
 		{
+			std::cout << "LoadFileToString(" << filename << ") failed" << endl;
 			result = false;
 		}
 	}
@@ -237,7 +240,7 @@ bool JSONTester::testJSON_to_Container()
 	SimpleTextReadIf strif(wstream3);
 	SimpleTextWriteIf stwif2(wstream4);
 
-	if (LoadFileToString("src/testobject1.json", input_json))
+	if (LoadFileToString("./testobject1.json", input_json))
 	{
 
 		// Create input stream to populate the template container just created
