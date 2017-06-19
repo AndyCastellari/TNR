@@ -34,7 +34,9 @@
 #include <fstream>
 
 #include "rapidjson/prettywriter.h"	// for stringify JSON
-#include "rapidjson/filestream.h"	// wrapper of C stream for prettywriter as output
+//#include "rapidjson/filestream.h"	// wrapper of C stream for prettywriter as output
+#include "rapidjson/filereadstream.h"	// wrapper of C stream for prettywriter as output
+#include "rapidjson/filewritestream.h"	// wrapper of C stream for prettywriter as output
 #include <cstdio>
 
 #include "tnr.h"
