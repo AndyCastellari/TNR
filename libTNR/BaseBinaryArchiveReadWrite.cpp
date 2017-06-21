@@ -40,56 +40,56 @@ BaseBinaryArchiveWrite::~BaseBinaryArchiveWrite()
 
 // These methods wrap up sending the correct number of bytes to the derived classes
 
-int tnr::BaseBinaryArchiveWrite::write(U8 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(U8 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 1);
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveWrite::write(S8 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(S8 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 1);
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveWrite::write(U16 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(U16 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 2);
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveWrite::write(S16 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(S16 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 2);
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveWrite::write(U24 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(U24 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 3);
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveWrite::write(S24 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(S24 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 3);
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveWrite::write(U32 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(U32 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 4);
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveWrite::write(S32 value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(S32 value, std::string &, tnr_format &)
 {
 	int result = 0;
 	result = writeBytes((U32)value, 4);
@@ -99,7 +99,7 @@ int tnr::BaseBinaryArchiveWrite::write(S32 value, std::string &description, tnr_
 /**
  * Write a c-style string into the binary stream
  */
-int tnr::BaseBinaryArchiveWrite::write(std::string &value, std::string &description, tnr_format &format)
+int tnr::BaseBinaryArchiveWrite::write(std::string &value, std::string &, tnr_format &)
 {
 	int result = 0;
 	// Output characters in string
@@ -113,13 +113,13 @@ int tnr::BaseBinaryArchiveWrite::write(std::string &value, std::string &descript
 	return result;	// TODO
 }
 
-void BaseBinaryArchiveWrite::nextLevel(tnr_format &format) {
+void BaseBinaryArchiveWrite::nextLevel(tnr_format &) {
 }
 
-void BaseBinaryArchiveWrite::previousLevel(tnr_format &format) {
+void BaseBinaryArchiveWrite::previousLevel(tnr_format &) {
 }
 
-int BaseBinaryArchiveWrite::write(std::string &description, tnr_format &format)
+int BaseBinaryArchiveWrite::write(std::string &, tnr_format &)
 {
 	return 0;	// TODO check
 }
@@ -212,7 +212,7 @@ BaseBinaryArchiveRead::~BaseBinaryArchiveRead()
 
 // These methods wrap up sending the correct number of bytes to the derived classes
 
-int tnr::BaseBinaryArchiveRead::read(U8 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(U8 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -221,7 +221,7 @@ int tnr::BaseBinaryArchiveRead::read(U8 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(S8 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(S8 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -230,7 +230,7 @@ int tnr::BaseBinaryArchiveRead::read(S8 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(U16 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(U16 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -239,7 +239,7 @@ int tnr::BaseBinaryArchiveRead::read(U16 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(S16 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(S16 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -248,7 +248,7 @@ int tnr::BaseBinaryArchiveRead::read(S16 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(U24 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(U24 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -257,7 +257,7 @@ int tnr::BaseBinaryArchiveRead::read(U24 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(S24 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(S24 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -266,7 +266,7 @@ int tnr::BaseBinaryArchiveRead::read(S24 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(U32 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(U32 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -275,7 +275,7 @@ int tnr::BaseBinaryArchiveRead::read(U32 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(S32 & value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(S32 & value, tnr_format &)
 {
 	int result = 0;
 	U32 temp = 0;
@@ -284,7 +284,7 @@ int tnr::BaseBinaryArchiveRead::read(S32 & value, tnr_format &format)
 	return result;	// TODO
 }
 
-int tnr::BaseBinaryArchiveRead::read(std::string &value, tnr_format &format)
+int tnr::BaseBinaryArchiveRead::read(std::string &value, tnr_format &)
 {
 	int result = 0;
 	U8 c = '\0';
@@ -303,15 +303,15 @@ int tnr::BaseBinaryArchiveRead::read(std::string &value, tnr_format &format)
 	return result;	// TODO
 }
 
-void BaseBinaryArchiveRead::nextLevel(tnr_format &format)
+void BaseBinaryArchiveRead::nextLevel(tnr_format &)
 {
 }
 
-void BaseBinaryArchiveRead::previousLevel(tnr_format &format)
+void BaseBinaryArchiveRead::previousLevel(tnr_format &)
 {
 }
 
-//int BaseBinaryArchiveRead::read(std::string & description)
+//int BaseBinaryArchiveRead::read(std::string & )
 //{
 //	return 0;	// TODO check
 //}

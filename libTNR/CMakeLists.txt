@@ -24,7 +24,7 @@ if(NOT TARGET TNRlib)
     target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../boost_1_64_0/)
     target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../rapidjson/include/)
 
-#    target_compile_options(TNRlib PRIVATE -Wall -Wextra)
+    target_compile_options(TNRlib PRIVATE -Wall -Wextra)
 
     target_link_libraries(TNRlib)
 endif()

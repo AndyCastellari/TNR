@@ -220,12 +220,12 @@ void tnr::FormattedTextWriteIf::CheckForNewLine(tnr_format &format)
 	}
 }
 
-void tnr::FormattedTextWriteIf::nextLevel(tnr_format &format)
+void tnr::FormattedTextWriteIf::nextLevel(tnr_format &)
 {
 	m_level++;
 }
 
-void tnr::FormattedTextWriteIf::previousLevel(tnr_format &format)
+void tnr::FormattedTextWriteIf::previousLevel(tnr_format &)
 {
 	if (m_level > 0)
 	{
@@ -374,7 +374,7 @@ int tnr::FormattedTextReadIf::read(S32& value, tnr_format &format)
  * so only characters are detected but this turned off to read the interior
  * of the string as it may contain whitespace.
  */
-int tnr::FormattedTextReadIf::read(std::string &value, tnr_format &format)
+int tnr::FormattedTextReadIf::read(std::string &value, tnr_format &)
 {
 	int result = 0;
 
@@ -421,15 +421,15 @@ int tnr::FormattedTextReadIf::read(std::string &value, tnr_format &format)
 	return result;	// TODO
 }
 
-void tnr::FormattedTextReadIf::nextLevel(tnr_format &format)
+void tnr::FormattedTextReadIf::nextLevel(tnr_format &)
 {
 }
 
-void tnr::FormattedTextReadIf::previousLevel(tnr_format &format)
+void tnr::FormattedTextReadIf::previousLevel(tnr_format &)
 {
 }
 
-int tnr::FormattedTextReadIf::getNextNumber(U32 & value, tnr_format &format)
+int tnr::FormattedTextReadIf::getNextNumber(U32 & value, tnr_format &)
 {
 	std::string temp;
 	do

@@ -99,8 +99,8 @@ public:
 	virtual void previousLevel(tnr_format &format) = 0;
 
 	// Methods to indicate when a set of data (like the values in an array) are going to be written
-	virtual void startSection(tnr_format &format) {};
-	virtual void endSection(tnr_format &format) {};
+	virtual void startSection(tnr_format &) {};
+	virtual void endSection(tnr_format &) {};
 };
 
 class tnr_read_interface
