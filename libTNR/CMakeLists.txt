@@ -3,8 +3,9 @@ cmake_minimum_required(VERSION 3.3.1)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 14)
 
-project(TNRlib)
- 
+cmake_policy(SET CMP0048 NEW)
+project(TNRlib VERSION 1.3.1 LANGUAGES CXX)
+
 if(NOT TARGET TNRlib)
     set(TNRlib_SRC 
     	BaseBinaryArchiveReadWrite.cpp

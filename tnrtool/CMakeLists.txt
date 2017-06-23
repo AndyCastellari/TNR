@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.9)
 
-project (tnrtool)
+cmake_policy(SET CMP0048 NEW)
+project (tnrtool VERSION 1.3.1 LANGUAGES CXX)
 
 add_executable(tnrtool tnrtool.cpp)
 
