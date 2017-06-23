@@ -242,7 +242,7 @@ bool JSONTester::testJSON_to_Container()
 	SimpleTextReadIf strif(wstream3);
 	SimpleTextWriteIf stwif2(wstream4);
 
-	if (LoadFileToString("./testobject1.json", input_json))
+	if (LoadFileToString("/home/andy/development/cmake/build_ubuntu/TNR_tester/testobject1.json", input_json))
 	{
 
 		// Create input stream to populate the template container just created

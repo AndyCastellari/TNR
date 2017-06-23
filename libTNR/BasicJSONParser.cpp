@@ -299,22 +299,32 @@ bool BasicJSONParser::parseTNRObject(const char * containerName, TNRContainer_pt
 	{
 		// ////////////////////////////////////////////////////////
 		// Try and add formatting to the party - TBC - experimental
-		Value &NewLine = document["NewLine"];			// Make this object print on one line
-		Value &Description = document["Description"];	// Print items within object without description
 
-		// Check if any formatting changes have been specified
-		// Look for "NewLine" : "off"
-		if (NewLine.IsString() && (strcmp(NewLine.GetString(), "off") == 0))
+	    if (document.HasMember("NewLine"))
 		{
-			printf("New Line turned off in %s\n", containerName);
-			child_format.setOutputNewline(false);
+			Value &NewLine = document["NewLine"];			// Make this object print on one line
+
+			// Check if any formatting changes have been specified
+			// Look for "NewLine" : "off"
+			if (NewLine.IsString() && (strcmp(NewLine.GetString(), "off") == 0))
+			{
+				printf("New Line turned off in %s\n", containerName);
+				child_format.setOutputNewline(false);
+			}
 		}
-		// Look for "Description" : "off"
-		if (Description.IsString() && (strcmp(Description.GetString(), "off") == 0))
-		{
-			printf("Description turned off in %s\n", containerName);
-			child_format.setOutputDescription(false);
-		}
+
+		if (document.HasMember("Description"))
+        {
+            Value &Description = document["Description"];// Print items within object without description
+
+            // Look for "Description" : "off"
+            if (Description.IsString()
+                    && (strcmp(Description.GetString(), "off") == 0))
+            {
+                printf("Description turned off in %s\n", containerName);
+                child_format.setOutputDescription(false);
+            }
+        }
 		// ////////////////////////////////////////////////////////
 
 		// Is this object an array? Identified in our grammar by the fields type, count and record
@@ -323,15 +333,18 @@ bool BasicJSONParser::parseTNRObject(const char * containerName, TNRContainer_pt
 			Value &type = document["type"];
 			Value &count = document["count"];
 			Value &recordType = document["record"];
-			Value &ObjectName = document["ObjectName"];		// Optionally add this array type to ObjectMap
 
-			// Check if the object being created should also be added to the Object Map
-			if (ObjectName.IsString())
-			{
-				objectName = ObjectName.GetString();
-				addToOM = true;
-			}
+	        if (document.HasMember("ObjectName"))
+	        {
+	            Value &ObjectName = document["ObjectName"];     // Optionally add this array type to ObjectMap
 
+	            // Check if the object being created should also be added to the Object Map
+	            if (ObjectName.IsString())
+	            {
+	                objectName = ObjectName.GetString();
+	                addToOM = true;
+	            }
+	        }
 
 			if (type.IsString())
 			{
