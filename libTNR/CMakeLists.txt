@@ -25,7 +25,12 @@ if(NOT TARGET TNRlib)
     target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../boost_1_64_0/)
     target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../rapidjson/include/)
 
+# Set default compile flags for GCC
+if(CMAKE_COMPILER_IS_GNUCXX)
+    message(STATUS "GCC detected, adding compile flags")
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98 -pedantic -Wall -Wextra")
     target_compile_options(TNRlib PRIVATE -Wall -Wextra)
+endif(CMAKE_COMPILER_IS_GNUCXX)
 
     target_link_libraries(TNRlib)
 endif()
