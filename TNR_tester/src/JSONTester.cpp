@@ -34,7 +34,6 @@
 #include <fstream>
 
 #include "rapidjson/prettywriter.h"	// for stringify JSON
-//#include "rapidjson/filestream.h"	// wrapper of C stream for prettywriter as output
 #include "rapidjson/filereadstream.h"	// wrapper of C stream for prettywriter as output
 #include "rapidjson/filewritestream.h"	// wrapper of C stream for prettywriter as output
 #include <cstdio>
@@ -49,8 +48,6 @@
 using namespace rapidjson;
 using namespace tnr;
 using namespace std;
-
-bool parseJSONToTNR(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth);
 
 JSONTester::JSONTester() {
 	// TODO Auto-generated constructor stub
