@@ -20,3 +20,8 @@ configure_file(testObject3.bin testObject3.bin COPYONLY)
 configure_file(test2.sh test2.sh COPYONLY)
 configure_file(test3.sh test3.sh COPYONLY)
 
+enable_testing()
+
+add_test(script_test2 test2.sh) 
+add_test(script_test3 test3.sh)
+ 
