@@ -13,6 +13,8 @@ diff testObject3.bin temp3.bin
 if [ $? -ne 0 ]
     then
 	echo "FAILED"
+	exit -1
     else
 	echo "PASS"
+	exit 0
     fi
