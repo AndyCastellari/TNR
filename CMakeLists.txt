@@ -11,7 +11,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libTNR ${CMAKE_CURRENT_BINARY_DIR}/libTNR)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/TNR_tester ${CMAKE_CURRENT_BINARY_DIR}/TNR_tester)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/tnrtool ${CMAKE_CURRENT_BINARY_DIR}/tnrtool)
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/tnrtool ${CMAKE_CURRENT_BINARY_DIR}/tnrdsltool)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/tnrdsltool ${CMAKE_CURRENT_BINARY_DIR}/tnrdsltool)
 
 enable_testing()
 
