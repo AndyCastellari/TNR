@@ -225,7 +225,7 @@ const unsigned char testBytes[] = {
 bool JSONTester::testJSON_to_Container()
 {
 	bool result  = true;
-	TNRContainer_ptr c(new TNRContainer("testContainer"));
+	TNRContainer_ptr c = make_shared<TNRContainer>("testContainer");
 	std::string input_json;
 	std::shared_ptr<std::stringstream> wstream1(new std::stringstream());
 	std::shared_ptr<std::stringstream> wstream2(new std::stringstream());
@@ -245,8 +245,11 @@ bool JSONTester::testJSON_to_Container()
 		// Create input stream to populate the template container just created
 		std::string tempString((const char *)testBytes, sizeof(testBytes));
 
-		std::shared_ptr<std::istream> _rstream(new std::stringstream(tempString));
-		StreamReadIf msrif(_rstream);
+        std::shared_ptr<std::istream> _rstream(new std::stringstream(tempString));
+        StreamReadIf msrif(_rstream);
+
+        std::shared_ptr<std::stringstream> _wstream = make_shared<stringstream>(ios_base::out);
+        StreamWriteIf mswif(_wstream);
 
 		JSONprintString("rstream ", std::dynamic_pointer_cast<std::stringstream>(_rstream)->str());
 
@@ -258,11 +261,11 @@ bool JSONTester::testJSON_to_Container()
 
 		// Write out the object as text, long version
 		c->write(tlwif);
-//		cout << "Text Log Output" << endl << wstream1->str() << endl;
+		cout << ">>>>>>>>Text Log Output" << endl << wstream1->str() << endl << "<<<<<<<<<<End of Text Log Output" << endl;
 
 		// Write out in more concise text version
 		c->write(stwif);	// Write text version
-		cout << "Simple Text Output" << endl << wstream2->str() << endl;
+		cout << ">>>>>>>>Simple Text Output" << endl << wstream2->str()<< endl << "<<<<<<<<<<End of Simple Text Log Output"  << endl;
 
 		// Now read back from simple text version and then write it out again
 		*wstream3 << wstream2->str();		// Copy text output and check it copied OK
@@ -275,7 +278,17 @@ bool JSONTester::testJSON_to_Container()
 		cout << "After clearing wstream2 is " << endl << wstream2->str() << endl;
 		// Then write it again from the new contents ofthe object
 		c->write(stwif2);	// Write text version
-		cout << "Simple Text Output after readback" << endl << wstream4->str() << endl;
+		cout << ">>>>>>>>>>Simple Text Output after readback" << endl << wstream4->str() << endl << "<<<<<<<<<<End of Simple Text Output after readback" << endl;
+
+        c->write(mswif);
+
+        JSONprintString("Input binary: ", tempString);
+        JSONprintString("_wstring    : ", _wstream->str());
+
+        if (_wstream->str() != tempString)
+        {
+            result = false;
+        }
 
 	}
 	else
