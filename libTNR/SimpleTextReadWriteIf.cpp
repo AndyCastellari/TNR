@@ -41,63 +41,63 @@ tnr::SimpleTextWriteIf::~SimpleTextWriteIf()
 
 std::string tnr::SimpleTextWriteIf::padding()
 {
-		return std::string(m_level * 2, ' ');
+        return std::string(m_level * 2, ' ');
 }
 
 int tnr::SimpleTextWriteIf::write(U8 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << std::setw(2) << "0x" << (U16)value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << std::setw(2) << "0x" << (U16)value << endl;
+    return result;
 }
 
 int tnr::SimpleTextWriteIf::write(S8 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
+    return result;
 }
 
 int tnr::SimpleTextWriteIf::write(U16 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
+    return result;
 }
 
 int tnr::SimpleTextWriteIf::write(S16 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
+    return result;
 }
 
 int tnr::SimpleTextWriteIf::write(U24 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return result;
 }
 
 int tnr::SimpleTextWriteIf::write(S24 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return result;
 }
 
 int tnr::SimpleTextWriteIf::write(U32 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return result;
 }
 
 int tnr::SimpleTextWriteIf::write(S32 value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return result;
 }
 
 /**
@@ -106,34 +106,34 @@ int tnr::SimpleTextWriteIf::write(S32 value, std::string &description, tnr_forma
  */
 int tnr::SimpleTextWriteIf::write(std::string &value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << '"' << value << '"' << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << '"' << value << '"' << endl;
+    return result;
 
 }
 
 void tnr::SimpleTextWriteIf::nextLevel(tnr_format &format)
 {
-	m_level++;
+    m_level++;
 }
 
 void tnr::SimpleTextWriteIf::previousLevel(tnr_format &format)
 {
-	if (m_level > 0)
-	{
-		m_level--;
-	}
-	else
-	{
-//		TODO deal with error
-	}
+    if (m_level > 0)
+    {
+        m_level--;
+    }
+    else
+    {
+//        TODO deal with error
+    }
 }
 
 int tnr::SimpleTextWriteIf::write(std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << endl;
+    return result;
 }
 
 /**
@@ -152,74 +152,74 @@ tnr::SimpleTextReadIf::~SimpleTextReadIf()
 
 int tnr::SimpleTextReadIf::read(U8& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (U8)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (U8)temp;
+    return result;
 }
 
 int tnr::SimpleTextReadIf::read(S8& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (S8)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (S8)temp;
+    return result;
 }
 
 int tnr::SimpleTextReadIf::read(U16& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (U16)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (U16)temp;
+    return result;
 }
 
 int tnr::SimpleTextReadIf::read(S16& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (S16)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (S16)temp;
+    return result;
 }
 
 int tnr::SimpleTextReadIf::read(U24& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (U24)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (U24)temp;
+    return result;
 }
 
 int tnr::SimpleTextReadIf::read(S24& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (S24)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (S24)temp;
+    return result;
 }
 
 int tnr::SimpleTextReadIf::read(U32& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (U32)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (U32)temp;
+    return result;
 }
 
 int tnr::SimpleTextReadIf::read(S32& value, tnr_format &format)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = getNextNumber(temp, format);
-	value = (S32)temp;
-	return result;
+    int result = 0;
+    U32 temp = 0;
+    result = getNextNumber(temp, format);
+    value = (S32)temp;
+    return result;
 }
 
 
@@ -229,29 +229,29 @@ int tnr::SimpleTextReadIf::read(S32& value, tnr_format &format)
  */
 int tnr::SimpleTextReadIf::read(std::string &value, tnr_format &format)
 {
-	int result = 0;
+    int result = 0;
 
-	std::string temp;
-	do
-	{
-		*m_stream >> temp;
-	} while (temp != ":");
-	char c;
+    std::string temp;
+    do
+    {
+        *m_stream >> temp;
+    } while (temp != ":");
+    char c;
 
-	// Skip 0x then read the hex number following
-	*m_stream >> c;	// skip opening double quote
-	while (c != '"')
-	{
-		*m_stream >> c;
-		// Add character to string
-		char tempstr[2] = { 0, 0 };
-		tempstr[0] = c;
-		value.append(tempstr);
-	}
+    // Skip 0x then read the hex number following
+    *m_stream >> c;    // skip opening double quote
+    while (c != '"')
+    {
+        *m_stream >> c;
+        // Add character to string
+        char tempstr[2] = { 0, 0 };
+        tempstr[0] = c;
+        value.append(tempstr);
+    }
 
-	cout << "Read " << '"' << value << '"' << " from m_stream" << std::endl;
+    cout << "Read " << '"' << value << '"' << " from m_stream" << std::endl;
 
-	return result;	// TODO
+    return result;    // TODO
 }
 
 void tnr::SimpleTextReadIf::nextLevel(tnr_format &format)
@@ -264,21 +264,21 @@ void tnr::SimpleTextReadIf::previousLevel(tnr_format &format)
 
 int tnr::SimpleTextReadIf::getNextNumber(U32 & value, tnr_format &format)
 {
-	std::string temp;
-	do
-	{
-		*m_stream >> temp;
-	} while (temp != ":");
-	char c;
+    std::string temp;
+    do
+    {
+        *m_stream >> temp;
+    } while (temp != ":");
+    char c;
 
-	// Skip 0x then read the hex number following
-	*m_stream >> c;
-	*m_stream >> c;
-	*m_stream >> std::hex >> value;
+    // Skip 0x then read the hex number following
+    *m_stream >> c;
+    *m_stream >> c;
+    *m_stream >> std::hex >> value;
 
-	cout << "Read " << std::hex << value << " from m_stream" << std::endl;
+    cout << "Read " << std::hex << value << " from m_stream" << std::endl;
 
-	return (U32)0;
+    return (U32)0;
 }
 
 } /* namespace tnr */

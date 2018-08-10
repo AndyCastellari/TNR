@@ -36,33 +36,33 @@ namespace tnr {
 class StreamWriteIf: public tnr::LSBBaseBinaryArchiveWrite
 {
 public:
-	StreamWriteIf(std::shared_ptr<std::ostream> _stream);
-	virtual ~StreamWriteIf();
+    StreamWriteIf(std::shared_ptr<std::ostream> _stream);
+    virtual ~StreamWriteIf();
 
 protected:
-	//! Write one byte to the actual storage being used
-	int writeOneByte(U8 value);
+    //! Write one byte to the actual storage being used
+    int writeOneByte(U8 value);
 
 protected:
-//	U32 m_level;
-	std::shared_ptr<std::ostream> m_stream;
+//    U32 m_level;
+    std::shared_ptr<std::ostream> m_stream;
 };
 
 class StreamReadIf: public tnr::LSBBaseBinaryArchiveRead
 {
 public:
-	StreamReadIf(std::shared_ptr<std::istream> _stream);
-	virtual ~StreamReadIf();
+    StreamReadIf(std::shared_ptr<std::istream> _stream);
+    virtual ~StreamReadIf();
 
-//	bool operator==(std::string &rhs);
-
-protected:
-	//! Write one byte to the actual storage being used
-	int readOneByte(U8 & value);
+//    bool operator==(std::string &rhs);
 
 protected:
-//	U32 m_level;
-	std::shared_ptr<std::istream> m_stream;
+    //! Write one byte to the actual storage being used
+    int readOneByte(U8 & value);
+
+protected:
+//    U32 m_level;
+    std::shared_ptr<std::istream> m_stream;
 };
 
 } /* namespace tnr */

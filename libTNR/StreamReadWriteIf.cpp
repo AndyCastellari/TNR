@@ -33,7 +33,7 @@ StreamWriteIf::StreamWriteIf(std::shared_ptr<std::ostream> _stream) : LSBBaseBin
 
 StreamWriteIf::~StreamWriteIf()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 /**
@@ -41,9 +41,9 @@ StreamWriteIf::~StreamWriteIf()
  */
 int StreamWriteIf::writeOneByte(U8 value)
 {
-	char temp = (char)value;
-	m_stream->write(&temp, 1);
-	return m_stream->bad() ? 1 : 0;
+    char temp = (char)value;
+    m_stream->write(&temp, 1);
+    return m_stream->bad() ? 1 : 0;
 }
 
 StreamReadIf::StreamReadIf(std::shared_ptr<std::istream> _stream) : LSBBaseBinaryArchiveRead(), m_stream(_stream)
@@ -52,7 +52,7 @@ StreamReadIf::StreamReadIf(std::shared_ptr<std::istream> _stream) : LSBBaseBinar
 
 StreamReadIf::~StreamReadIf()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 /**
@@ -60,10 +60,10 @@ StreamReadIf::~StreamReadIf()
  */
 int StreamReadIf::readOneByte(U8 & value)
 {
-	char temp = 0;
-	m_stream->read(&temp, 1);	// TODO deal with errors
-	value = (U8)temp;
-	return m_stream->bad() ? 1 : 0;
+    char temp = 0;
+    m_stream->read(&temp, 1);    // TODO deal with errors
+    value = (U8)temp;
+    return m_stream->bad() ? 1 : 0;
 }
 
 } /* namespace tnr */

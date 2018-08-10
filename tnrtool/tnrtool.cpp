@@ -82,6 +82,23 @@ bool LoadFileToString(const char * filename, std::string & s)
 
 #define COPYRIGHT "TNR Data Manipulation Tool (c) 2013-2016"
 
+// Template object
+std::string mainObjectFile;
+
+// Library files
+vector<string> library;
+vector<string> libraryPaths;
+
+// Whether we are binary=>text or text=>binary (default with no switch)
+bool readBinary;
+bool diagArgSwitchFlag;
+bool dryRunFlag;
+bool diagObjectMapFlag;
+
+// Input and output files
+std::string inputFile;
+std::string outputFile;
+
 int main(int argc, char** argv)
 {
     int result = 0;
@@ -185,182 +202,185 @@ int main(int argc, char** argv)
         // Parsing successful so extract data values of arguments
 
         // Template object
-        std::string mainObjectFile = mainObject.getValue();
+        mainObjectFile = mainObject.getValue();
 
         // Library files
-        vector<string> library = jsonLibrary.getValue();
-        vector<string> libraryPaths = jsonLibraryPath.getValue();
+        library = jsonLibrary.getValue();
+        libraryPaths = jsonLibraryPath.getValue();
 
         // Whether we are binary=>text or text=>binary (default with no switch)
-        bool readBinary = binaryToTextSwitch.isSet();
+        readBinary = binaryToTextSwitch.isSet();
 
         // Input and output files
         std::string inputFile = inputFileObject.getValue();;
         std::string outputFile = outputFileObject.getValue();
-
-        //===============================================================================================
-        // Print arguments if this switch is set
-        if (diagArgSwitch.isSet())
-        {
-            cout << "Object file is " << mainObjectFile << endl;
-
-            // Output library files and paths
-            cout << "library files :";
-            BOOST_FOREACH(std::string & s, library)
-            {
-                cout << " " << s;
-            }
-            cout << endl;
-
-            // Output arguments
-            cout << "library paths :";
-            BOOST_FOREACH(std::string & s, libraryPaths)
-            {
-                cout << " " << s;
-            }
-            cout << endl;
-
-            cout << "Options:" << endl;
-            cout << ((readBinary) ? "Binary to Text Conversion" : "Text to Binary Conversion") << endl;
-            cout << "Read from " << inputFile << endl;
-            cout << "Write to  " << outputFile << endl;
-        }
-
-        //===============================================================================================
-        // Parse the libraries (if any)
-
-        // For now we are ignoring the library paths - that will be used when opening the files
-        cout << endl << "Parsing library files" << endl;
-        BOOST_FOREACH(std::string & libFile, library)
-        {
-            std::string library_json;
-            if (LoadFileToString(libFile.c_str(), library_json))
-            {
-                TNRContainer_ptr c(new TNRContainer("testContainer"));
-
-                // Make the tnr object from JSON
-                if (parser.parseJSONToTNR("Document", c, library_json.c_str(), 0))
-                {
-                    cout << "Parsed " << libFile << endl;
-                }
-                else
-                {
-                    cerr << "Failed to Parse " << libFile << endl;
-                }
-            }
-            else
-            {
-                cerr << "Failed to load <" << libFile << "> as TNR Object JSON" << endl;
-            }
-        }
-        cout << endl;
-
-        //===============================================================================================
-        // Parse the template
-        std::string input_json;
-
-        // Process Input to output
-        if (LoadFileToString(mainObjectFile.c_str(), input_json))
-        {
-            TNRContainer_ptr c(new TNRContainer("testContainer"));
-
-            // Make the tnr object from JSON
-            if (parser.parseJSONToTNR("Document", c, input_json.c_str(), 0))
-            {
-                // If this is NOT a dry run, process input to output
-                if (!dryRunSwitch.isSet())
-                {
-                    ios_base::openmode mode_in = ios_base::in;
-                    ios_base::openmode mode_out = ios_base::out;
-                    
-                    if (readBinary)
-                    {
-                       mode_in |= ios_base::binary;
-                    }
-                    else
-                    {
-                       mode_out |= ios_base::binary;
-                    }
-                    std::shared_ptr<std::ifstream> in_stream(new std::ifstream());
-                    std::shared_ptr<std::ofstream> out_stream(new std::ofstream());
-
-                    // try to open the input and output file
-                    in_stream->open(inputFile.c_str(), mode_in);
-                    out_stream->open(outputFile.c_str(), mode_out);
-
-                    if (in_stream->good() && out_stream->good())
-                    {
-                        cout << "Opened <" << inputFile << "> as input" << endl;
-                        cout << "Opened <" << outputFile << "> as output" << endl;
-                        if (readBinary)
-                        {
-                            StreamReadIf read_if(in_stream);
-#if 0
-                            SimpleTextWriteIf write_if(out_stream);
-#else
-                            FormattedTextWriteIf write_if(out_stream);
-#endif
-                            // Use it to read the input
-                            c->read(read_if);        // Read binary data
-                            c->write(write_if);    // Write text version
-                        }
-                        else
-                        {
-                            // Read text, write binary
-#if 0
-                            SimpleTextReadIf read_if(in_stream);
-#else
-                            FormattedTextReadIf read_if(in_stream);
-#endif
-                            StreamWriteIf write_if(out_stream);
-
-                            // Use it to read the input
-                            c->read(read_if);        // Read binary data
-                            c->write(write_if);    // Write text version
-                        }
-                    }
-                    else
-                    {
-                        // TODO can't open files
-                        if (!in_stream->good())
-                        {
-                            cerr << "Failed to open <" << inputFile << "> as input" << endl;
-                        }
-                        if (!out_stream->good())
-                        {
-                            cerr << "Failed to open <" << outputFile << "> as output" << endl;
-                        }
-                    }
-                }    // End of dry run is not set, do nothing if it IS set
-                else
-                {
-                    // Nothing to do for a dry run
-                }
-            }
-            else
-            {
-                cerr << "Failed to parse <" << mainObjectFile << "> as TNR Object JSON" << endl;
-            }
-        }
-        else
-        {
-            cerr << "Failed to load <" << mainObjectFile << "> as TNR Object JSON" << endl;
-        }
-
-        //===============================================================================================
-        // This diagnostic allows inspection of the ObjectMap at the end of JSON parsing
-        if (diagObjectMapSwitch.isSet())
-        {
-            cout << "Object Map" << endl;
-            // Output Object Map
-            om.PrintMap();
-        }
-
+        diagArgSwitchFlag = diagArgSwitch.isSet();
+        dryRunFlag = dryRunSwitch.isSet();
+        diagObjectMapFlag = diagObjectMapSwitch.isSet();
     }
     catch (TCLAP::ArgException &e)  // catch any exceptions
     {
         std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
         result = -1;
+    }
+
+
+    //===============================================================================================
+    // Print arguments if this switch is set
+    if (diagArgSwitchFlag)
+    {
+        cout << "Object file is " << mainObjectFile << endl;
+
+        // Output library files and paths
+        cout << "library files :";
+        for (std::string & s: library)
+        {
+            cout << " " << s;
+        }
+        cout << endl;
+
+        // Output arguments
+        cout << "library paths :";
+        for (std::string & s: libraryPaths)
+        {
+            cout << " " << s;
+        }
+        cout << endl;
+
+        cout << "Options:" << endl;
+        cout << ((readBinary) ? "Binary to Text Conversion" : "Text to Binary Conversion") << endl;
+        cout << "Read from " << inputFile << endl;
+        cout << "Write to  " << outputFile << endl;
+    }
+
+    //===============================================================================================
+    // Parse the libraries (if any)
+
+    // For now we are ignoring the library paths - that will be used when opening the files
+    cout << endl << "Parsing library files" << endl;
+    for (std::string & libFile: library)
+    {
+        std::string library_json;
+        if (LoadFileToString(libFile.c_str(), library_json))
+        {
+            TNRContainer_ptr c(new TNRContainer("testContainer"));
+
+            // Make the tnr object from JSON
+            if (parser.parseJSONToTNR("Document", c, library_json.c_str(), 0))
+            {
+                cout << "Parsed " << libFile << endl;
+            }
+            else
+            {
+                cerr << "Failed to Parse " << libFile << endl;
+            }
+        }
+        else
+        {
+            cerr << "Failed to load <" << libFile << "> as TNR Object JSON" << endl;
+        }
+    }
+    cout << endl;
+
+    //===============================================================================================
+    // Parse the template
+    std::string input_json;
+
+    // Process Input to output
+    if (LoadFileToString(mainObjectFile.c_str(), input_json))
+    {
+        TNRContainer_ptr c(new TNRContainer("testContainer"));
+
+        // Make the tnr object from JSON
+        if (parser.parseJSONToTNR("Document", c, input_json.c_str(), 0))
+        {
+            // If this is NOT a dry run, process input to output
+            if (!dryRunFlag)
+            {
+                ios_base::openmode mode_in = ios_base::in;
+                ios_base::openmode mode_out = ios_base::out;
+
+                if (readBinary)
+                {
+                   mode_in |= ios_base::binary;
+                }
+                else
+                {
+                   mode_out |= ios_base::binary;
+                }
+                std::shared_ptr<std::ifstream> in_stream(new std::ifstream());
+                std::shared_ptr<std::ofstream> out_stream(new std::ofstream());
+
+                // try to open the input and output file
+                in_stream->open(inputFile.c_str(), mode_in);
+                out_stream->open(outputFile.c_str(), mode_out);
+
+                if (in_stream->good() && out_stream->good())
+                {
+                    cout << "Opened <" << inputFile << "> as input" << endl;
+                    cout << "Opened <" << outputFile << "> as output" << endl;
+                    if (readBinary)
+                    {
+                        StreamReadIf read_if(in_stream);
+#if 0
+                        SimpleTextWriteIf write_if(out_stream);
+#else
+                        FormattedTextWriteIf write_if(out_stream);
+#endif
+                        // Use it to read the input
+                        c->read(read_if);        // Read binary data
+                        c->write(write_if);    // Write text version
+                    }
+                    else
+                    {
+                        // Read text, write binary
+#if 0
+                        SimpleTextReadIf read_if(in_stream);
+#else
+                        FormattedTextReadIf read_if(in_stream);
+#endif
+                        StreamWriteIf write_if(out_stream);
+
+                        // Use it to read the input
+                        c->read(read_if);        // Read binary data
+                        c->write(write_if);    // Write text version
+                    }
+                }
+                else
+                {
+                    // TODO can't open files
+                    if (!in_stream->good())
+                    {
+                        cerr << "Failed to open <" << inputFile << "> as input" << endl;
+                    }
+                    if (!out_stream->good())
+                    {
+                        cerr << "Failed to open <" << outputFile << "> as output" << endl;
+                    }
+                }
+            }    // End of dry run is not set, do nothing if it IS set
+            else
+            {
+                // Nothing to do for a dry run
+            }
+        }
+        else
+        {
+            cerr << "Failed to parse <" << mainObjectFile << "> as TNR Object JSON" << endl;
+        }
+    }
+    else
+    {
+        cerr << "Failed to load <" << mainObjectFile << "> as TNR Object JSON" << endl;
+    }
+
+    //===============================================================================================
+    // This diagnostic allows inspection of the ObjectMap at the end of JSON parsing
+    if (diagObjectMapFlag)
+    {
+        cout << "Object Map" << endl;
+        // Output Object Map
+        om.PrintMap();
     }
 
     return result;

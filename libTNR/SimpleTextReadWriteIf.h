@@ -32,57 +32,57 @@ namespace tnr {
 
 class SimpleTextWriteIf: public tnr::tnr_write_interface {
 public:
-	SimpleTextWriteIf(std::shared_ptr<std::ostream> _stream);
-	virtual ~SimpleTextWriteIf();
+    SimpleTextWriteIf(std::shared_ptr<std::ostream> _stream);
+    virtual ~SimpleTextWriteIf();
 
-	virtual int write(U8 value, std::string &description, tnr_format &format );
-	virtual int write(S8 value, std::string &description, tnr_format &format );
-	virtual int write(U16 value, std::string &description, tnr_format &format);
-	virtual int write(S16 value, std::string &description, tnr_format &format);
-	virtual int write(U24 value, std::string &description, tnr_format &format);
-	virtual int write(S24 value, std::string &description, tnr_format &format);
-	virtual int write(U32 value, std::string &description, tnr_format &format);
-	virtual int write(S32 value, std::string &description, tnr_format &format);
-	virtual int write(std::string &value, std::string &description, tnr_format &format);
+    virtual int write(U8 value, std::string &description, tnr_format &format );
+    virtual int write(S8 value, std::string &description, tnr_format &format );
+    virtual int write(U16 value, std::string &description, tnr_format &format);
+    virtual int write(S16 value, std::string &description, tnr_format &format);
+    virtual int write(U24 value, std::string &description, tnr_format &format);
+    virtual int write(S24 value, std::string &description, tnr_format &format);
+    virtual int write(U32 value, std::string &description, tnr_format &format);
+    virtual int write(S32 value, std::string &description, tnr_format &format);
+    virtual int write(std::string &value, std::string &description, tnr_format &format);
 
-	// Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-	virtual void nextLevel(tnr_format &format);
-	virtual void previousLevel(tnr_format &format);
+    // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
+    virtual void nextLevel(tnr_format &format);
+    virtual void previousLevel(tnr_format &format);
 
-	// Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
-	virtual int write(std::string &description, tnr_format &format);
+    // Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
+    virtual int write(std::string &description, tnr_format &format);
 protected:
-	//! Method to return the number of spaces corresponding to the indent level
-	std::string padding();
+    //! Method to return the number of spaces corresponding to the indent level
+    std::string padding();
 
-	unsigned int m_level;
-	std::shared_ptr<std::ostream> m_stream;
+    unsigned int m_level;
+    std::shared_ptr<std::ostream> m_stream;
 };
 
 class SimpleTextReadIf: public tnr::tnr_read_interface {
 public:
-	SimpleTextReadIf(std::shared_ptr<std::istream> _stream);
-	virtual ~SimpleTextReadIf();
+    SimpleTextReadIf(std::shared_ptr<std::istream> _stream);
+    virtual ~SimpleTextReadIf();
 
-	virtual int read(U8 & value, tnr_format &format );
-	virtual int read(S8 & value, tnr_format &format );
-	virtual int read(U16 & value, tnr_format &format);
-	virtual int read(S16 & value, tnr_format &format);
-	virtual int read(U24 & value, tnr_format &format);
-	virtual int read(S24 & value, tnr_format &format);
-	virtual int read(U32 & value, tnr_format &format);
-	virtual int read(S32 & value, tnr_format &format);
-	virtual int read(std::string &value, tnr_format &format);
+    virtual int read(U8 & value, tnr_format &format );
+    virtual int read(S8 & value, tnr_format &format );
+    virtual int read(U16 & value, tnr_format &format);
+    virtual int read(S16 & value, tnr_format &format);
+    virtual int read(U24 & value, tnr_format &format);
+    virtual int read(S24 & value, tnr_format &format);
+    virtual int read(U32 & value, tnr_format &format);
+    virtual int read(S32 & value, tnr_format &format);
+    virtual int read(std::string &value, tnr_format &format);
 
-	// Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-	virtual void nextLevel(tnr_format &format);
-	virtual void previousLevel(tnr_format &format);
+    // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
+    virtual void nextLevel(tnr_format &format);
+    virtual void previousLevel(tnr_format &format);
 
 protected:
-	int getNextNumber(U32 & value, tnr_format &format);
+    int getNextNumber(U32 & value, tnr_format &format);
 
-	unsigned int m_level;
-	std::shared_ptr<std::istream> m_stream;
+    unsigned int m_level;
+    std::shared_ptr<std::istream> m_stream;
 };
 
 } /* namespace tnr */

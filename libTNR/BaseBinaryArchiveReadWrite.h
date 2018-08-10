@@ -37,31 +37,31 @@ namespace tnr {
  */
 class BaseBinaryArchiveWrite: public tnr::tnr_write_interface {
 public:
-	BaseBinaryArchiveWrite();
-	virtual ~BaseBinaryArchiveWrite();
+    BaseBinaryArchiveWrite();
+    virtual ~BaseBinaryArchiveWrite();
 
-	virtual int write(U8 value, std::string &description, tnr_format &format );
-	virtual int write(S8 value, std::string &description, tnr_format &format );
-	virtual int write(U16 value, std::string &description, tnr_format &format);
-	virtual int write(S16 value, std::string &description, tnr_format &format);
-	virtual int write(U24 value, std::string &description, tnr_format &format);
-	virtual int write(S24 value, std::string &description, tnr_format &format);
-	virtual int write(U32 value, std::string &description, tnr_format &format);
-	virtual int write(S32 value, std::string &description, tnr_format &format);
-	virtual int write(std::string &value, std::string &description, tnr_format &format);
+    virtual int write(U8 value, std::string &description, tnr_format &format );
+    virtual int write(S8 value, std::string &description, tnr_format &format );
+    virtual int write(U16 value, std::string &description, tnr_format &format);
+    virtual int write(S16 value, std::string &description, tnr_format &format);
+    virtual int write(U24 value, std::string &description, tnr_format &format);
+    virtual int write(S24 value, std::string &description, tnr_format &format);
+    virtual int write(U32 value, std::string &description, tnr_format &format);
+    virtual int write(S32 value, std::string &description, tnr_format &format);
+    virtual int write(std::string &value, std::string &description, tnr_format &format);
 
-	// Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-	virtual void nextLevel(tnr_format &format);
-	virtual void previousLevel(tnr_format &format);
+    // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
+    virtual void nextLevel(tnr_format &format);
+    virtual void previousLevel(tnr_format &format);
 
-	// Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
-	virtual int write(std::string &description, tnr_format &format);
+    // Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
+    virtual int write(std::string &description, tnr_format &format);
 protected:
-	//! Function to write a value as N bytes - used to wrap up all the various writes
-	virtual int writeBytes(U32 value, U32 noOfBytes) = 0;		// Implemented by derived class to provide LSB or MSB
+    //! Function to write a value as N bytes - used to wrap up all the various writes
+    virtual int writeBytes(U32 value, U32 noOfBytes) = 0;        // Implemented by derived class to provide LSB or MSB
 
-	//! Write one byte to the actual storage being used
-	virtual int writeOneByte(U8 value) = 0;			// Implemented by derived classes to write to the actual storage medium
+    //! Write one byte to the actual storage being used
+    virtual int writeOneByte(U8 value) = 0;            // Implemented by derived classes to write to the actual storage medium
 };
 
 //============================================================================================
@@ -69,11 +69,11 @@ protected:
 class LSBBaseBinaryArchiveWrite: public tnr::BaseBinaryArchiveWrite
 {
 public:
-	LSBBaseBinaryArchiveWrite();
-	virtual ~LSBBaseBinaryArchiveWrite();
+    LSBBaseBinaryArchiveWrite();
+    virtual ~LSBBaseBinaryArchiveWrite();
 protected:
-	//! Function to write a value as N bytes LSB - used to wrap up all the various writes
-	virtual int writeBytes(U32 value, U32 noOfBytes);
+    //! Function to write a value as N bytes LSB - used to wrap up all the various writes
+    virtual int writeBytes(U32 value, U32 noOfBytes);
 };
 
 //============================================================================================
@@ -81,11 +81,11 @@ protected:
 class MSBBaseBinaryArchiveWrite: public tnr::BaseBinaryArchiveWrite
 {
 public:
-	MSBBaseBinaryArchiveWrite();
-	virtual ~MSBBaseBinaryArchiveWrite();
+    MSBBaseBinaryArchiveWrite();
+    virtual ~MSBBaseBinaryArchiveWrite();
 protected:
-	//! Function to write a value as N bytes MSB - used to wrap up all the various writes
-	virtual int writeBytes(U32 value, U32 noOfBytes);
+    //! Function to write a value as N bytes MSB - used to wrap up all the various writes
+    virtual int writeBytes(U32 value, U32 noOfBytes);
 };
 
 
@@ -97,31 +97,31 @@ protected:
 class BaseBinaryArchiveRead: public tnr::tnr_read_interface
 {
 public:
-	BaseBinaryArchiveRead();
-	virtual ~BaseBinaryArchiveRead();
+    BaseBinaryArchiveRead();
+    virtual ~BaseBinaryArchiveRead();
 
-	virtual int read(U8 & value, tnr_format &format );
-	virtual int read(S8 & value, tnr_format &format );
-	virtual int read(U16 & value, tnr_format &format);
-	virtual int read(S16 & value, tnr_format &format);
-	virtual int read(U24 & value, tnr_format &format);
-	virtual int read(S24 & value, tnr_format &format);
-	virtual int read(U32 & value, tnr_format &format);
-	virtual int read(S32 & value, tnr_format &format);
-	virtual int read(std::string &value, tnr_format &format);
+    virtual int read(U8 & value, tnr_format &format );
+    virtual int read(S8 & value, tnr_format &format );
+    virtual int read(U16 & value, tnr_format &format);
+    virtual int read(S16 & value, tnr_format &format);
+    virtual int read(U24 & value, tnr_format &format);
+    virtual int read(S24 & value, tnr_format &format);
+    virtual int read(U32 & value, tnr_format &format);
+    virtual int read(S32 & value, tnr_format &format);
+    virtual int read(std::string &value, tnr_format &format);
 
-	// Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-	virtual void nextLevel(tnr_format &format);
-	virtual void previousLevel(tnr_format &format);
+    // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
+    virtual void nextLevel(tnr_format &format);
+    virtual void previousLevel(tnr_format &format);
 
-//	 Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
-//	virtual int read(std::string & description);
+//     Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
+//    virtual int read(std::string & description);
 protected:
-	//! Function to write a value as N bytes - used to wrap up all the various writes
-	virtual int readBytes(U32 & value, U32 noOfBytes) = 0;		// Implemented by derived class to provide LSB or MSB
+    //! Function to write a value as N bytes - used to wrap up all the various writes
+    virtual int readBytes(U32 & value, U32 noOfBytes) = 0;        // Implemented by derived class to provide LSB or MSB
 
-	//! Write one byte to the actual storage being used
-	virtual int readOneByte(U8 & value) = 0;			// Implemented by derived classes to write to the actual storage medium
+    //! Write one byte to the actual storage being used
+    virtual int readOneByte(U8 & value) = 0;            // Implemented by derived classes to write to the actual storage medium
 };
 
 //============================================================================================
@@ -129,11 +129,11 @@ protected:
 class LSBBaseBinaryArchiveRead: public tnr::BaseBinaryArchiveRead
 {
 public:
-	LSBBaseBinaryArchiveRead();
-	virtual ~LSBBaseBinaryArchiveRead();
+    LSBBaseBinaryArchiveRead();
+    virtual ~LSBBaseBinaryArchiveRead();
 protected:
-	//! Function to write a value as N bytes LSB - used to wrap up all the various writes
-	virtual int readBytes(U32 & value, U32 noOfBytes);
+    //! Function to write a value as N bytes LSB - used to wrap up all the various writes
+    virtual int readBytes(U32 & value, U32 noOfBytes);
 };
 
 //============================================================================================
@@ -141,11 +141,11 @@ protected:
 class MSBBaseBinaryArchiveRead: public tnr::BaseBinaryArchiveRead
 {
 public:
-	MSBBaseBinaryArchiveRead();
-	virtual ~MSBBaseBinaryArchiveRead();
+    MSBBaseBinaryArchiveRead();
+    virtual ~MSBBaseBinaryArchiveRead();
 protected:
-	//! Function to write a value as N bytes MSB - used to wrap up all the various writes
-	virtual int readBytes(U32 & value, U32 noOfBytes);
+    //! Function to write a value as N bytes MSB - used to wrap up all the various writes
+    virtual int readBytes(U32 & value, U32 noOfBytes);
 };
 
 

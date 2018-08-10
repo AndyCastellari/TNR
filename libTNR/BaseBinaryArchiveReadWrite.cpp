@@ -29,71 +29,71 @@ namespace tnr {
 
 BaseBinaryArchiveWrite::BaseBinaryArchiveWrite() : tnr::tnr_write_interface()
 {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
 BaseBinaryArchiveWrite::~BaseBinaryArchiveWrite()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 // These methods wrap up sending the correct number of bytes to the derived classes
 
 int tnr::BaseBinaryArchiveWrite::write(U8 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 1);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 1);
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveWrite::write(S8 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 1);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 1);
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveWrite::write(U16 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 2);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 2);
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveWrite::write(S16 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 2);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 2);
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveWrite::write(U24 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 3);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 3);
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveWrite::write(S24 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 3);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 3);
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveWrite::write(U32 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 4);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 4);
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveWrite::write(S32 value, std::string &, tnr_format &)
 {
-	int result = 0;
-	result = writeBytes((U32)value, 4);
-	return result;	// TODO
+    int result = 0;
+    result = writeBytes((U32)value, 4);
+    return result;    // TODO
 }
 
 /**
@@ -101,16 +101,16 @@ int tnr::BaseBinaryArchiveWrite::write(S32 value, std::string &, tnr_format &)
  */
 int tnr::BaseBinaryArchiveWrite::write(std::string &value, std::string &, tnr_format &)
 {
-	int result = 0;
-	// Output characters in string
-	for (U32 i = 0; i < value.length() && (result == 0); i++)
-	{
-		result = writeOneByte(value[i]);
-	}
-	// Null-terminate the string in the output binary data
-	result = writeOneByte(0);
+    int result = 0;
+    // Output characters in string
+    for (U32 i = 0; i < value.length() && (result == 0); i++)
+    {
+        result = writeOneByte(value[i]);
+    }
+    // Null-terminate the string in the output binary data
+    result = writeOneByte(0);
 
-	return result;	// TODO
+    return result;    // TODO
 }
 
 void BaseBinaryArchiveWrite::nextLevel(tnr_format &) {
@@ -121,7 +121,7 @@ void BaseBinaryArchiveWrite::previousLevel(tnr_format &) {
 
 int BaseBinaryArchiveWrite::write(std::string &, tnr_format &)
 {
-	return 0;	// TODO check
+    return 0;    // TODO check
 }
 
 //============================================================================================
@@ -141,23 +141,23 @@ tnr::LSBBaseBinaryArchiveWrite::~LSBBaseBinaryArchiveWrite()
  */
 int tnr::LSBBaseBinaryArchiveWrite::writeBytes(U32 value, U32 noOfBytes)
 {
-	int result = 0;
+    int result = 0;
 
-	// If noOfBytes == 1 loop iterates once with value >> 0
-	// If noOfBytes == 4 loop iterates four times with
-	// value >> 0 = value >> 0
-	// value >> 1 = value >> 1
-	// value >> 2 = value >> 2
-	// value >> 3 = value >> 3
-	for (unsigned int i = 0; i < noOfBytes; i++)
-	{
-		if (result == 0)
-		{
-			result = writeOneByte((value >> (i*8)) & 0xff);
-		}
-	}
+    // If noOfBytes == 1 loop iterates once with value >> 0
+    // If noOfBytes == 4 loop iterates four times with
+    // value >> 0 = value >> 0
+    // value >> 1 = value >> 1
+    // value >> 2 = value >> 2
+    // value >> 3 = value >> 3
+    for (unsigned int i = 0; i < noOfBytes; i++)
+    {
+        if (result == 0)
+        {
+            result = writeOneByte((value >> (i*8)) & 0xff);
+        }
+    }
 
-	return result;
+    return result;
 }
 
 //============================================================================================
@@ -177,23 +177,23 @@ tnr::MSBBaseBinaryArchiveWrite::~MSBBaseBinaryArchiveWrite()
  */
 int tnr::MSBBaseBinaryArchiveWrite::writeBytes(U32 value, U32 noOfBytes)
 {
-	int result = 0;
+    int result = 0;
 
-	// If noOfBytes == 1 loop iterates once with value >> (1-1) - 0
-	// If noOfBytes == 4 loop iterates four times with
-	// value >> (4-1) - 0 = value >> 3
-	// value >> (4-1) - 1 = value >> 2
-	// value >> (4-1) - 2 = value >> 1
-	// value >> (4-1) - 3 = value >> 0
-	for (unsigned int i = 0; i < noOfBytes; i++)
-	{
-		if (result == 0)
-		{
-			result = writeOneByte((value >> (((noOfBytes-1) - i)*8)) & 0xff);
-		}
-	}
+    // If noOfBytes == 1 loop iterates once with value >> (1-1) - 0
+    // If noOfBytes == 4 loop iterates four times with
+    // value >> (4-1) - 0 = value >> 3
+    // value >> (4-1) - 1 = value >> 2
+    // value >> (4-1) - 2 = value >> 1
+    // value >> (4-1) - 3 = value >> 0
+    for (unsigned int i = 0; i < noOfBytes; i++)
+    {
+        if (result == 0)
+        {
+            result = writeOneByte((value >> (((noOfBytes-1) - i)*8)) & 0xff);
+        }
+    }
 
-	return result;
+    return result;
 }
 
 
@@ -201,106 +201,106 @@ int tnr::MSBBaseBinaryArchiveWrite::writeBytes(U32 value, U32 noOfBytes)
 
 BaseBinaryArchiveRead::BaseBinaryArchiveRead() : tnr::tnr_read_interface()
 {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
 BaseBinaryArchiveRead::~BaseBinaryArchiveRead()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 // These methods wrap up sending the correct number of bytes to the derived classes
 
 int tnr::BaseBinaryArchiveRead::read(U8 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 1);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 1);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(S8 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 1);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 1);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(U16 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 2);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 2);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(S16 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 2);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 2);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(U24 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 3);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 3);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(S24 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 3);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 3);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(U32 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 4);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 4);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(S32 & value, tnr_format &)
 {
-	int result = 0;
-	U32 temp = 0;
-	result = readBytes(temp, 4);
-	value = temp;
-	return result;	// TODO
+    int result = 0;
+    U32 temp = 0;
+    result = readBytes(temp, 4);
+    value = temp;
+    return result;    // TODO
 }
 
 int tnr::BaseBinaryArchiveRead::read(std::string &value, tnr_format &)
 {
-	int result = 0;
-	U8 c = '\0';
-	char temp[2] = { 0, 0 };
+    int result = 0;
+    U8 c = '\0';
+    char temp[2] = { 0, 0 };
 
-	do
-	{
-		result = readOneByte(c);
-		if ((result == 0) && (c != '\0'))
-		{
-			temp[0] = c;
-			value.append(temp);
-		}
-	} while (c != '\0');
+    do
+    {
+        result = readOneByte(c);
+        if ((result == 0) && (c != '\0'))
+        {
+            temp[0] = c;
+            value.append(temp);
+        }
+    } while (c != '\0');
 
-	return result;	// TODO
+    return result;    // TODO
 }
 
 void BaseBinaryArchiveRead::nextLevel(tnr_format &)
@@ -313,7 +313,7 @@ void BaseBinaryArchiveRead::previousLevel(tnr_format &)
 
 //int BaseBinaryArchiveRead::read(std::string & )
 //{
-//	return 0;	// TODO check
+//    return 0;    // TODO check
 //}
 
 //============================================================================================
@@ -333,25 +333,25 @@ tnr::LSBBaseBinaryArchiveRead::~LSBBaseBinaryArchiveRead()
  */
 int tnr::LSBBaseBinaryArchiveRead::readBytes(U32 & value, U32 noOfBytes)
 {
-	int result = 0;
+    int result = 0;
 
-	// If noOfBytes == 1 loop iterates once with value >> 0
-	// If noOfBytes == 4 loop iterates four times with
-	// value >> 0 = value >> 0
-	// value >> 1 = value >> 1
-	// value >> 2 = value >> 2
-	// value >> 3 = value >> 3
-	for (unsigned int i = 0; i < noOfBytes; i++)
-	{
-		if (result == 0)
-		{
-			U8 temp = 0;
-			result = readOneByte(temp);
-			value = value + (temp << (i*8));
-		}
-	}
+    // If noOfBytes == 1 loop iterates once with value >> 0
+    // If noOfBytes == 4 loop iterates four times with
+    // value >> 0 = value >> 0
+    // value >> 1 = value >> 1
+    // value >> 2 = value >> 2
+    // value >> 3 = value >> 3
+    for (unsigned int i = 0; i < noOfBytes; i++)
+    {
+        if (result == 0)
+        {
+            U8 temp = 0;
+            result = readOneByte(temp);
+            value = value + (temp << (i*8));
+        }
+    }
 
-	return result;
+    return result;
 }
 
 //============================================================================================
@@ -371,25 +371,25 @@ tnr::MSBBaseBinaryArchiveRead::~MSBBaseBinaryArchiveRead()
  */
 int tnr::MSBBaseBinaryArchiveRead::readBytes(U32 & value, U32 noOfBytes)
 {
-	int result = 0;
+    int result = 0;
 
-	// If noOfBytes == 1 loop iterates once with value >> (1-1) - 0
-	// If noOfBytes == 4 loop iterates four times with
-	// value >> (4-1) - 0 = value >> 3
-	// value >> (4-1) - 1 = value >> 2
-	// value >> (4-1) - 2 = value >> 1
-	// value >> (4-1) - 3 = value >> 0
-	for (unsigned int i = 0; i < noOfBytes; i++)
-	{
-		if (result == 0)
-		{
-			U8 temp = 0;
-			result = readOneByte(temp);
-			value = value + (temp << (((noOfBytes-1) - i)*8));
-		}
-	}
+    // If noOfBytes == 1 loop iterates once with value >> (1-1) - 0
+    // If noOfBytes == 4 loop iterates four times with
+    // value >> (4-1) - 0 = value >> 3
+    // value >> (4-1) - 1 = value >> 2
+    // value >> (4-1) - 2 = value >> 1
+    // value >> (4-1) - 3 = value >> 0
+    for (unsigned int i = 0; i < noOfBytes; i++)
+    {
+        if (result == 0)
+        {
+            U8 temp = 0;
+            result = readOneByte(temp);
+            value = value + (temp << (((noOfBytes-1) - i)*8));
+        }
+    }
 
-	return result;
+    return result;
 }
 
 
