@@ -5,7 +5,7 @@ project (tnrdsltool VERSION 1.3.1 LANGUAGES CXX)
 
 add_executable(tnrdsltool tnrdsltool.cpp)
 
-target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap-1.2.1/include/)
+target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap-1.2.2/include/)
 
 target_link_libraries(tnrdsltool TNRlib)
 
@@ -23,6 +23,5 @@ target_link_libraries(tnrdsltool TNRlib)
 
 #enable_testing()
 
-#add_test(script_test2 test2.sh) 
+#add_test(script_test2 test2.sh)
 #add_test(script_test3 test3.sh)
- 
