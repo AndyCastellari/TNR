@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 if [ -e temp3.bin ]
     then
         rm temp3.bin

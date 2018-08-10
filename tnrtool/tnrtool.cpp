@@ -212,8 +212,8 @@ int main(int argc, char** argv)
         readBinary = binaryToTextSwitch.isSet();
 
         // Input and output files
-        std::string inputFile = inputFileObject.getValue();;
-        std::string outputFile = outputFileObject.getValue();
+        inputFile = inputFileObject.getValue();;
+        outputFile = outputFileObject.getValue();
         diagArgSwitchFlag = diagArgSwitch.isSet();
         dryRunFlag = dryRunSwitch.isSet();
         diagObjectMapFlag = diagObjectMapSwitch.isSet();

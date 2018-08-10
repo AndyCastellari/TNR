@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 if [ -e temp2.bin ]
     then
         rm temp2.bin
