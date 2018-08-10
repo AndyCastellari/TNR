@@ -30,51 +30,51 @@ namespace tnr {
 
 ObjectMap::ObjectMap() : m_objectDirectory()
 {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
 ObjectMap::~ObjectMap()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 bool ObjectMap::AddObject(tnr_baseData_ptr& object)
 {
-	bool result = true;
+    bool result = true;
 
-	std::pair<std::map<std::string, tnr_baseData_ptr>::iterator, bool> check;
-//	printf("ObjectMap::AddObject   <%s>\n", object->getDescription().c_str());
-	check = m_objectDirectory.insert(std::pair<std::string, tnr_baseData_ptr>(object->getDescription(), object->clone()));
+    std::pair<std::map<std::string, tnr_baseData_ptr>::iterator, bool> check;
+//    printf("ObjectMap::AddObject   <%s>\n", object->getDescription().c_str());
+    check = m_objectDirectory.insert(std::pair<std::string, tnr_baseData_ptr>(object->getDescription(), object->clone()));
 
-	result = check.second;
-	return result;
+    result = check.second;
+    return result;
 }
 
 bool ObjectMap::FindObject(std::string& objectName, tnr_baseData_ptr& object)
 {
-	bool result = true;
-	std::map<std::string, tnr_baseData_ptr>::iterator it;
-	it = m_objectDirectory.find(objectName);
-	if (it != m_objectDirectory.end())
-	{
-			object = (it->second)->clone();
-	}
-	else
-	{
-		result = false;
-	}
-	return result;
+    bool result = true;
+    std::map<std::string, tnr_baseData_ptr>::iterator it;
+    it = m_objectDirectory.find(objectName);
+    if (it != m_objectDirectory.end())
+    {
+            object = (it->second)->clone();
+    }
+    else
+    {
+        result = false;
+    }
+    return result;
 }
 
 void ObjectMap::PrintMap()
 {
-	std::map<std::string, tnr_baseData_ptr>::iterator it;
-	printf("The original key values of m_objectDirectory\n");
-	for ( it = m_objectDirectory.begin( ); it != m_objectDirectory.end( ); it++ )
-	{
-		printf("Key is %s with value %u\n", it -> first.c_str(), it->second->getCount());
-	}
+    std::map<std::string, tnr_baseData_ptr>::iterator it;
+    printf("The original key values of m_objectDirectory\n");
+    for ( it = m_objectDirectory.begin( ); it != m_objectDirectory.end( ); it++ )
+    {
+        printf("Key is %s with value %u\n", it -> first.c_str(), it->second->getCount());
+    }
 
 }
 

@@ -29,7 +29,7 @@ namespace tnr
 {
 void tnr_format::printFormat(const char * name)
 {
-	printf("Object (%s) - Description(%s), NewLine(%s)\n",  name, this->m_outputDescription ? "on" : "off", this->m_outputNewline ? "on" : "off");
+    printf("Object (%s) - Description(%s), NewLine(%s)\n",  name, this->m_outputDescription ? "on" : "off", this->m_outputNewline ? "on" : "off");
 }
 
 //======================================================
@@ -43,7 +43,7 @@ tnr_baseData::tnr_baseData(const char * description) : m_description(description
 
 tnr_baseData::~tnr_baseData()
 {
-	// Nothing to do - default destructors OK
+    // Nothing to do - default destructors OK
 }
 
 tnr::TNRContainer::TNRContainer(const std::string &description) : tnr_baseData(description), m_values()
@@ -64,85 +64,85 @@ tnr::TNRContainer::~TNRContainer()
  */
 void tnr::TNRContainer::Add(tnr_baseData_ptr value)
 {
-	m_values.push_back(value);
+    m_values.push_back(value);
 }
 
 int tnr::TNRContainer::write(tnr_write_interface& write_if)
 {
-	int result = 0;
+    int result = 0;
 
-	write_if.startSection(m_format);
+    write_if.startSection(m_format);
 
-	write_if.write(m_description, m_format);
-	write_if.nextLevel(m_format);
+    write_if.write(m_description, m_format);
+    write_if.nextLevel(m_format);
 
-	for (tnr_baseData_ptr value: m_values)
-	{
-		result = value->write(write_if);
-	}
+    for (tnr_baseData_ptr value: m_values)
+    {
+        result = value->write(write_if);
+    }
 
-	write_if.previousLevel(m_format);
+    write_if.previousLevel(m_format);
 
-	write_if.endSection(m_format);
+    write_if.endSection(m_format);
 
-	return result;
+    return result;
 }
 
 int tnr::TNRContainer::read(tnr_read_interface& read_if)
 {
-	int result = 0;
+    int result = 0;
 
-	for (tnr_baseData_ptr value: m_values)
-	{
-		result = value->read(read_if);
-	}
+    for (tnr_baseData_ptr value: m_values)
+    {
+        result = value->read(read_if);
+    }
 
-	return result;
+    return result;
 }
 
 
 tnr_baseData_ptr TNRContainer::clone()
 {
-	std::shared_ptr< TNRContainer > c(new TNRContainer(m_description));
-	c->m_format = this->m_format;
+    std::shared_ptr< TNRContainer > c(new TNRContainer(m_description));
+    c->m_format = this->m_format;
 
-	// New object has same count, record type and array of objects as original but array _may_ not have same values
-	for (U32 i = 0; i < m_values.size(); i++)
-	{
-		if (m_values[i] != NULL)
-		{
-			tnr_baseData_ptr newRecord = m_values[i]->clone();
-			c->Add(newRecord);
-		}
-	}
+    // New object has same count, record type and array of objects as original but array _may_ not have same values
+    for (U32 i = 0; i < m_values.size(); i++)
+    {
+        if (m_values[i] != NULL)
+        {
+            tnr_baseData_ptr newRecord = m_values[i]->clone();
+            c->Add(newRecord);
+        }
+    }
 
-	return c;
+    return c;
 }
 
 //===============================================================================================
 
-tnr::TNRFixedArray::TNRFixedArray(	const std::string &description, U32 count, tnr_baseData_ptr recordType) :
-														tnr_baseData(description), m_count(count), m_values()
+tnr::TNRFixedArray::TNRFixedArray(    const std::string &description, U32 count, tnr_baseData_ptr recordType) :
+                                                        tnr_baseData(description), m_count(count), m_values()
 {
-	m_recordType = recordType->clone();
-	// Fill array with correct number of items (we don't know what type these items are)
-	for (unsigned int i = 0; i < m_count; i++)
-	{
-		tnr_baseData_ptr newRecord = m_recordType->clone();
-		m_values.push_back(newRecord);
-	}
+    m_recordType = recordType->clone();
+    // Fill array with correct number of items (we don't know what type these items are)
+    for (unsigned int i = 0; i < m_count; i++)
+    {
+        tnr_baseData_ptr newRecord = m_recordType->clone();
+        m_values.push_back(newRecord);
+    }
 }
 
-tnr::TNRFixedArray::TNRFixedArray(	const char * description, U32 count, tnr_baseData_ptr recordType) :
-														tnr_baseData(description), m_count(count), m_values()
+tnr::TNRFixedArray::TNRFixedArray(    const char * description, U32 count, tnr_baseData_ptr recordType) :
+                                                        tnr_baseData(description), m_count(count), m_values()
 {
-	m_recordType = recordType->clone();
-	// Fill array with correct number of items (we don't know what type these items are)
-	for (unsigned int i = 0; i < m_count; i++)
-	{
-		tnr_baseData_ptr newRecord = m_recordType->clone();
-		m_values.push_back(newRecord);
-	}
+    m_recordType = recordType->clone();
+    // Fill array with correct number of items (we don't know what type these items are)
+    for (unsigned int i = 0; i < m_count; i++)
+    {
+        tnr_baseData_ptr newRecord = m_recordType->clone();
+        m_values.push_back(newRecord);
+    }
 }
 
 tnr::TNRFixedArray::~TNRFixedArray()
@@ -151,7 +151,7 @@ tnr::TNRFixedArray::~TNRFixedArray()
 
 tnr_baseData_ptr & tnr::TNRFixedArray::operator [](U32 index)
 {
-	return m_values[index];
+    return m_values[index];
 }
 
 /**
@@ -159,17 +159,17 @@ tnr_baseData_ptr & tnr::TNRFixedArray::operator [](U32 index)
  */
 int tnr::TNRFixedArray::write(tnr_write_interface& write_if)
 {
-	int result = 0;
-	write_if.startSection(m_format);
-	write_if.write(m_description, m_format);
-	write_if.nextLevel(m_format);
-	for (tnr_baseData_ptr value: m_values)
-	{
-		result = value->write(write_if);
-	}
-	write_if.previousLevel(m_format);
-	write_if.endSection(m_format);
-	return result;
+    int result = 0;
+    write_if.startSection(m_format);
+    write_if.write(m_description, m_format);
+    write_if.nextLevel(m_format);
+    for (tnr_baseData_ptr value: m_values)
+    {
+        result = value->write(write_if);
+    }
+    write_if.previousLevel(m_format);
+    write_if.endSection(m_format);
+    return result;
 }
 
 /**
@@ -177,14 +177,14 @@ int tnr::TNRFixedArray::write(tnr_write_interface& write_if)
  */
 int tnr::TNRFixedArray::read(tnr_read_interface& read_if)
 {
-	int result = 0;
-	read_if.nextLevel(m_format);
-	for (tnr_baseData_ptr value: m_values)
-	{
-		result = value->read(read_if);
-	}
-	read_if.previousLevel(m_format);
-	return result;
+    int result = 0;
+    read_if.nextLevel(m_format);
+    for (tnr_baseData_ptr value: m_values)
+    {
+        result = value->read(read_if);
+    }
+    read_if.previousLevel(m_format);
+    return result;
 }
 
 /**
@@ -193,47 +193,47 @@ int tnr::TNRFixedArray::read(tnr_read_interface& read_if)
  */
 tnr_baseData_ptr TNRFixedArray::clone()
 {
-	std::shared_ptr< TNRFixedArray > c(new TNRFixedArray(m_description, m_count, m_recordType));
-	c->m_format = this->m_format;
+    std::shared_ptr< TNRFixedArray > c(new TNRFixedArray(m_description, m_count, m_recordType));
+    c->m_format = this->m_format;
 
-	// New object has same count, record type and array of objects as original but array _may_ not have same values
-	for (U32 i = 0; i < m_values.size(); i++)
-	{
-		c->m_values[i] = m_values[i]->clone();
-	}
+    // New object has same count, record type and array of objects as original but array _may_ not have same values
+    for (U32 i = 0; i < m_values.size(); i++)
+    {
+        c->m_values[i] = m_values[i]->clone();
+    }
 
-	return c;
+    return c;
 }
 
 
 //===============================================================================================
 
-tnr::TNRCountedArray::TNRCountedArray(	const std::string &description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
-																						tnr_baseData(description), m_values()
+tnr::TNRCountedArray::TNRCountedArray(    const std::string &description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
+                                                                                        tnr_baseData(description), m_values()
 {
-	m_count = countType->clone();
-	m_recordType = recordType->clone();
+    m_count = countType->clone();
+    m_recordType = recordType->clone();
 
-	// Fill array with correct number of items (we don't know what type these items are)
-	for (unsigned int i = 0; i < m_count->getCount(); i++)
-	{
-		tnr_baseData_ptr newRecord = m_recordType->clone();
-		m_values.push_back(newRecord);
-	}
+    // Fill array with correct number of items (we don't know what type these items are)
+    for (unsigned int i = 0; i < m_count->getCount(); i++)
+    {
+        tnr_baseData_ptr newRecord = m_recordType->clone();
+        m_values.push_back(newRecord);
+    }
 }
 
-tnr::TNRCountedArray::TNRCountedArray(	const char * description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
-																						tnr_baseData(description), m_values()
+tnr::TNRCountedArray::TNRCountedArray(    const char * description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
+                                                                                        tnr_baseData(description), m_values()
 {
-	m_count = countType->clone();
-	m_recordType = recordType->clone();
+    m_count = countType->clone();
+    m_recordType = recordType->clone();
 
-	// Fill array with correct number of items (we don't know what type these items are)
-	for (unsigned int i = 0; i < m_count->getCount(); i++)
-	{
-		tnr_baseData_ptr newRecord = m_recordType->clone();
-		m_values.push_back(newRecord);
-	}
+    // Fill array with correct number of items (we don't know what type these items are)
+    for (unsigned int i = 0; i < m_count->getCount(); i++)
+    {
+        tnr_baseData_ptr newRecord = m_recordType->clone();
+        m_values.push_back(newRecord);
+    }
 }
 
 tnr::TNRCountedArray::~TNRCountedArray()
@@ -242,66 +242,66 @@ tnr::TNRCountedArray::~TNRCountedArray()
 
 tnr_baseData_ptr & tnr::TNRCountedArray::operator [](U32 index)
 {
-	return m_values[index];
+    return m_values[index];
 }
 
 int tnr::TNRCountedArray::write(tnr_write_interface& write_if)
 {
-	int result = 0;
+    int result = 0;
 
-	write_if.startSection(m_format);
+    write_if.startSection(m_format);
 
-	result = write_if.write(m_description, m_format);
-	write_if.nextLevel(m_format);
+    result = write_if.write(m_description, m_format);
+    write_if.nextLevel(m_format);
 
-	result = m_count->write(write_if);
+    result = m_count->write(write_if);
 
-	for (tnr_baseData_ptr value: m_values)
-	{
-		result = value->write(write_if);
-	}
+    for (tnr_baseData_ptr value: m_values)
+    {
+        result = value->write(write_if);
+    }
 
-	write_if.previousLevel(m_format);
-	write_if.endSection(m_format);
+    write_if.previousLevel(m_format);
+    write_if.endSection(m_format);
 
-	return result;
+    return result;
 }
 
 int tnr::TNRCountedArray::read(tnr_read_interface& read_if)
 {
-	int result = 0;
+    int result = 0;
 
-	read_if.nextLevel(m_format);
+    read_if.nextLevel(m_format);
 
-	// Read the count variable
-	m_count->read(read_if);
+    // Read the count variable
+    m_count->read(read_if);
 
-	// Reset the variable array and then populate it with new items read from the stream
-	m_values.clear();
+    // Reset the variable array and then populate it with new items read from the stream
+    m_values.clear();
 
-	for (U32 i = 0; i < m_count->getCount(); i++)
-	{
-		tnr_baseData_ptr newRecord = m_recordType->clone();
-		newRecord->read(read_if);
-		m_values.push_back(newRecord);
-	}
+    for (U32 i = 0; i < m_count->getCount(); i++)
+    {
+        tnr_baseData_ptr newRecord = m_recordType->clone();
+        newRecord->read(read_if);
+        m_values.push_back(newRecord);
+    }
 
-	read_if.previousLevel(m_format);
-	return result;
+    read_if.previousLevel(m_format);
+    return result;
 }
 
 tnr_baseData_ptr TNRCountedArray::clone()
 {
-	std::shared_ptr< TNRCountedArray > c(new TNRCountedArray(m_description, m_count, m_recordType));
-	c->m_format = this->m_format;
+    std::shared_ptr< TNRCountedArray > c(new TNRCountedArray(m_description, m_count, m_recordType));
+    c->m_format = this->m_format;
 
-	// New object has same count, record type and array of objects as original but array _may_ not have same values
-	for (U32 i = 0; i < m_values.size(); i++)
-	{
-		c->m_values[i] = m_values[i]->clone();
-	}
+    // New object has same count, record type and array of objects as original but array _may_ not have same values
+    for (U32 i = 0; i < m_values.size(); i++)
+    {
+        c->m_values[i] = m_values[i]->clone();
+    }
 
-	return c;
+    return c;
 }
 
 //===============================================================================================
@@ -318,44 +318,44 @@ tnr::TNR_C_String::~TNR_C_String()
 // Define methods that must be implemented by the child classes
 int tnr::TNR_C_String::write(tnr_write_interface &write_if)
 {
-	int result = 0;
+    int result = 0;
 
-	write_if.startSection(m_format);
-//	write_if.nextLevel(m_format);
+    write_if.startSection(m_format);
+//    write_if.nextLevel(m_format);
 
-	// Write the string as text
-	result = write_if.write(m_Cstring, m_description, m_format);
+    // Write the string as text
+    result = write_if.write(m_Cstring, m_description, m_format);
 
-//	write_if.previousLevel(m_format);
-	write_if.endSection(m_format);
+//    write_if.previousLevel(m_format);
+    write_if.endSection(m_format);
 
-	return result;
+    return result;
 }
 
 int tnr::TNR_C_String::read(tnr_read_interface &read_if)
 {
-	int result = 0;
+    int result = 0;
 
-	read_if.nextLevel(m_format);
+    read_if.nextLevel(m_format);
 
-	// Reset the variable array and then populate it with new items read from the stream
-	m_Cstring.clear();
+    // Reset the variable array and then populate it with new items read from the stream
+    m_Cstring.clear();
 
-	// Read the string
-	result = read_if.read(m_Cstring, m_format);
+    // Read the string
+    result = read_if.read(m_Cstring, m_format);
 
-	read_if.previousLevel(m_format);
-	return result;
+    read_if.previousLevel(m_format);
+    return result;
 }
 
 tnr_baseData_ptr tnr::TNR_C_String::clone()
 {
-	std::shared_ptr< TNR_C_String > c(new TNR_C_String(m_Cstring, m_description));
-	c->m_format = this->m_format;
+    std::shared_ptr< TNR_C_String > c(new TNR_C_String(m_Cstring, m_description));
+    c->m_format = this->m_format;
 
-//	c->m_Cstring = this->m_Cstring;
+//    c->m_Cstring = this->m_Cstring;
 
-	return c;
+    return c;
 }
 
 //===============================================================================================

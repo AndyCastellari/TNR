@@ -33,9 +33,9 @@
 #include <sstream>
 #include <fstream>
 
-#include "rapidjson/prettywriter.h"	// for stringify JSON
-#include "rapidjson/filereadstream.h"	// wrapper of C stream for prettywriter as output
-#include "rapidjson/filewritestream.h"	// wrapper of C stream for prettywriter as output
+#include "rapidjson/prettywriter.h"    // for stringify JSON
+#include "rapidjson/filereadstream.h"    // wrapper of C stream for prettywriter as output
+#include "rapidjson/filewritestream.h"    // wrapper of C stream for prettywriter as output
 #include <cstdio>
 
 #include "tnr.h"
@@ -50,12 +50,12 @@ using namespace tnr;
 using namespace std;
 
 JSONTester::JSONTester() {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
 JSONTester::~JSONTester() {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 /**
@@ -63,22 +63,22 @@ JSONTester::~JSONTester() {
  */
 bool JSONTester::testParsing()
 {
-	bool result  = true;
+    bool result  = true;
 
-	rapidjson::Document document;
-	std::string test =  "{\"a\":{\"z\":21}} ";
-	if ( document.Parse<0>( test.c_str() ).HasParseError() ) {
-	    std::cout << "Error parsing" << std::endl;
-	} else {
-	    if ( document[ "a" ].IsObject() ) {
-	        rapidjson::StringBuffer sb;
-	        rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
-	        document[ "a" ].Accept( writer );
-	        std::cout << sb.GetString() << std::endl;
-	    }
-	}
+    rapidjson::Document document;
+    std::string test =  "{\"a\":{\"z\":21}} ";
+    if ( document.Parse<0>( test.c_str() ).HasParseError() ) {
+        std::cout << "Error parsing" << std::endl;
+    } else {
+        if ( document[ "a" ].IsObject() ) {
+            rapidjson::StringBuffer sb;
+            rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
+            document[ "a" ].Accept( writer );
+            std::cout << sb.GetString() << std::endl;
+        }
+    }
 
-	return result;
+    return result;
 }
 
 /**
@@ -87,163 +87,163 @@ bool JSONTester::testParsing()
 
 bool LoadFileToString(const char * filename, std::string & s)
 {
-	bool result = true;
+    bool result = true;
 
-	s.clear();
+    s.clear();
 
-	try
-	{
-		std::ifstream t(filename, std::ios_base::in);
-		if (t.is_open())
-		{
-			std::cout << "LoadFileToString(" << filename << ") succeeded" << endl;
+    try
+    {
+        std::ifstream t(filename, std::ios_base::in);
+        if (t.is_open())
+        {
+            std::cout << "LoadFileToString(" << filename << ") succeeded" << endl;
 
-			std::stringstream buffer;
-			buffer << t.rdbuf();
-			s = buffer.str();
-		}
-		else
-		{
-			std::cout << "LoadFileToString(" << filename << ") failed" << endl;
-			result = false;
-		}
-	}
-	catch (const std::exception &e)
-	{
-		result = false;
-	}
+            std::stringstream buffer;
+            buffer << t.rdbuf();
+            s = buffer.str();
+        }
+        else
+        {
+            std::cout << "LoadFileToString(" << filename << ") failed" << endl;
+            result = false;
+        }
+    }
+    catch (const std::exception &e)
+    {
+        result = false;
+    }
 
-	return result;
+    return result;
 }
 
 //! Quick print a string of binary values out
 void JSONprintString(const char * title, const std::string &s)
 {
-	printf("%s : ", title);
-	for (char c: s)
-	{
-		printf("%02x", (U8)c);
-	}
-	printf("\n");
+    printf("%s : ", title);
+    for (char c: s)
+    {
+        printf("%02x", (U8)c);
+    }
+    printf("\n");
 }
 
 //! Helper to indent while developing
 std::string padding(int depth)
 {
-	return std::string(depth, ' ');
+    return std::string(depth, ' ');
 }
 
 bool parseJSONObject(const char * input_json, int depth)
 {
-	bool result = true;
+    bool result = true;
 
-	rapidjson::Document document;
+    rapidjson::Document document;
 
-	if ( document.Parse<0>( input_json ).HasParseError() )
-	{
-		std::cout << "Error parsing" << std::endl;
-		result = false;
-	}
-	else
-	{
-		// Iterating object members
-		static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
-		for (auto itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
-		{
-			printf("%sType of member <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), kTypeNames[itr->value.GetType()]);
+    if ( document.Parse<0>( input_json ).HasParseError() )
+    {
+        std::cout << "Error parsing" << std::endl;
+        result = false;
+    }
+    else
+    {
+        // Iterating object members
+        static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
+        for (auto itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
+        {
+            printf("%sType of member <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), kTypeNames[itr->value.GetType()]);
 
-			if ( itr->value.IsObject() )
-			{
-				printf("%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), kTypeNames[itr->value.GetType()]);
-				rapidjson::StringBuffer sb;
-				rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
-				itr->value.Accept( writer );
-//				std::cout << padding(depth) << sb.GetString() << std::endl;
+            if ( itr->value.IsObject() )
+            {
+                printf("%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), kTypeNames[itr->value.GetType()]);
+                rapidjson::StringBuffer sb;
+                rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
+                itr->value.Accept( writer );
+//                std::cout << padding(depth) << sb.GetString() << std::endl;
 
-				parseJSONObject(sb.GetString(), depth + 4);
-			}
-			else if ( itr->value.IsString() )
-			{
-				printf("%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
-				if (strcmp(itr->value.GetString(), "FixedArray") == 0)
-				{
-					// Save value for later
-					printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
-				}
-				if (strcmp(itr->value.GetString(), "CountedArray") == 0)
-				{
-					// Save value for later
-					printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
-				}
-				if (strcmp(itr->value.GetString(), "count_type") == 0)
-				{
-					// Save value for later
-					printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
-				}
-				if (strcmp(itr->value.GetString(), "record") == 0)
-				{
-					// Save value for later
-					printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
-				}
-			}
-			else if ( itr->value.IsInt() )
-			{
-				printf("%sMember <%s> is <%d>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetInt());
-				if (strcmp(itr->name.GetString(), "count") == 0)
-				{
-					// Save value for later
-					printf("****%sMember <%s> is <%d>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetInt());
-				}
+                parseJSONObject(sb.GetString(), depth + 4);
+            }
+            else if ( itr->value.IsString() )
+            {
+                printf("%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
+                if (strcmp(itr->value.GetString(), "FixedArray") == 0)
+                {
+                    // Save value for later
+                    printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
+                }
+                if (strcmp(itr->value.GetString(), "CountedArray") == 0)
+                {
+                    // Save value for later
+                    printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
+                }
+                if (strcmp(itr->value.GetString(), "count_type") == 0)
+                {
+                    // Save value for later
+                    printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
+                }
+                if (strcmp(itr->value.GetString(), "record") == 0)
+                {
+                    // Save value for later
+                    printf("****%sMember <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetString());
+                }
+            }
+            else if ( itr->value.IsInt() )
+            {
+                printf("%sMember <%s> is <%d>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetInt());
+                if (strcmp(itr->name.GetString(), "count") == 0)
+                {
+                    // Save value for later
+                    printf("****%sMember <%s> is <%d>\n", padding(depth).c_str(), itr->name.GetString(), itr->value.GetInt());
+                }
 
-			}
+            }
 
-		}
-	}
+        }
+    }
 
-	return result;
+    return result;
 }
 
 // Array of bytes conforming to pattern of testObject1.json with real arrays and values
 const unsigned char testBytes[] = {
-		0x07,					// Allowed applications U8
-		0x01, 0x00,				// Transaction performance on U16
-		0x02, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00,	// Application priority U8[8]
-		0x1f,					// Physical Card type U8
+        0x07,                    // Allowed applications U8
+        0x01, 0x00,                // Transaction performance on U16
+        0x02, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00,    // Application priority U8[8]
+        0x1f,                    // Physical Card type U8
 
-		0x04, 0x00, 0x00,		// Bin Values: "CountedArray", "count": "U24" = 4,
-		0x12, 0x34, 0x56, 0x78,	// "record": "U32"
-		0x34, 0x56, 0x78, 0x12, 	// "record": "U32"
-		0x56, 0x78, 0x12, 0x34,  	// "record": "U32"
-		0xAA, 0xBB, 0xCC, 0xDD,  	// "record": "U32"
+        0x04, 0x00, 0x00,        // Bin Values: "CountedArray", "count": "U24" = 4,
+        0x12, 0x34, 0x56, 0x78,    // "record": "U32"
+        0x34, 0x56, 0x78, 0x12,     // "record": "U32"
+        0x56, 0x78, 0x12, 0x34,      // "record": "U32"
+        0xAA, 0xBB, 0xCC, 0xDD,      // "record": "U32"
 
-		0x02, 0x00, 0x00, 0x00,		// Bin Ranges: "CountedArray", "count": "U32" = 4,
-		0x12, 0x34, 0x56, 0x78,	// "record": "U16/U16"
-		0x34, 0x56, 0x78, 0x12, 	// "record": "U16/U16"
-		0x99						// SALT
+        0x02, 0x00, 0x00, 0x00,        // Bin Ranges: "CountedArray", "count": "U32" = 4,
+        0x12, 0x34, 0x56, 0x78,    // "record": "U16/U16"
+        0x34, 0x56, 0x78, 0x12,     // "record": "U16/U16"
+        0x99                        // SALT
 };
 
 bool JSONTester::testJSON_to_Container()
 {
-	bool result  = true;
-	TNRContainer_ptr c = make_shared<TNRContainer>("testContainer");
-	std::string input_json;
-	std::shared_ptr<std::stringstream> wstream1(new std::stringstream());
-	std::shared_ptr<std::stringstream> wstream2(new std::stringstream());
-	std::shared_ptr<std::stringstream> wstream3(new std::stringstream());
-	std::shared_ptr<std::stringstream> wstream4(new std::stringstream());
-	ObjectMap om;
-	BasicJSONParser parser(om);
+    bool result  = true;
+    TNRContainer_ptr c = make_shared<TNRContainer>("testContainer");
+    std::string input_json;
+    std::shared_ptr<std::stringstream> wstream1(new std::stringstream());
+    std::shared_ptr<std::stringstream> wstream2(new std::stringstream());
+    std::shared_ptr<std::stringstream> wstream3(new std::stringstream());
+    std::shared_ptr<std::stringstream> wstream4(new std::stringstream());
+    ObjectMap om;
+    BasicJSONParser parser(om);
 
-	TextLogWriteIf tlwif(wstream1);
-	SimpleTextWriteIf stwif(wstream2);
-	SimpleTextReadIf strif(wstream3);
-	SimpleTextWriteIf stwif2(wstream4);
+    TextLogWriteIf tlwif(wstream1);
+    SimpleTextWriteIf stwif(wstream2);
+    SimpleTextReadIf strif(wstream3);
+    SimpleTextWriteIf stwif2(wstream4);
 
-	if (LoadFileToString("testobject1.json", input_json))
-	{
+    if (LoadFileToString("testobject1.json", input_json))
+    {
 
-		// Create input stream to populate the template container just created
-		std::string tempString((const char *)testBytes, sizeof(testBytes));
+        // Create input stream to populate the template container just created
+        std::string tempString((const char *)testBytes, sizeof(testBytes));
 
         std::shared_ptr<std::istream> _rstream(new std::stringstream(tempString));
         StreamReadIf msrif(_rstream);
@@ -251,34 +251,34 @@ bool JSONTester::testJSON_to_Container()
         std::shared_ptr<std::stringstream> _wstream = make_shared<stringstream>(ios_base::out);
         StreamWriteIf mswif(_wstream);
 
-		JSONprintString("rstream ", std::dynamic_pointer_cast<std::stringstream>(_rstream)->str());
+        JSONprintString("rstream ", std::dynamic_pointer_cast<std::stringstream>(_rstream)->str());
 
-		// Make the tnr object from JSON
-		parser.parseJSONToTNR("Document", c, input_json.c_str(), 0);
+        // Make the tnr object from JSON
+        parser.parseJSONToTNR("Document", c, input_json.c_str(), 0);
 
-		// Use it to read binary data
-		c->read(msrif);		// Read binary data
+        // Use it to read binary data
+        c->read(msrif);        // Read binary data
 
-		// Write out the object as text, long version
-		c->write(tlwif);
-		cout << ">>>>>>>>Text Log Output" << endl << wstream1->str() << endl << "<<<<<<<<<<End of Text Log Output" << endl;
+        // Write out the object as text, long version
+        c->write(tlwif);
+        cout << ">>>>>>>>Text Log Output" << endl << wstream1->str() << endl << "<<<<<<<<<<End of Text Log Output" << endl;
 
-		// Write out in more concise text version
-		c->write(stwif);	// Write text version
-		cout << ">>>>>>>>Simple Text Output" << endl << wstream2->str()<< endl << "<<<<<<<<<<End of Simple Text Log Output"  << endl;
+        // Write out in more concise text version
+        c->write(stwif);    // Write text version
+        cout << ">>>>>>>>Simple Text Output" << endl << wstream2->str()<< endl << "<<<<<<<<<<End of Simple Text Log Output"  << endl;
 
-		// Now read back from simple text version and then write it out again
-		*wstream3 << wstream2->str();		// Copy text output and check it copied OK
-//		cout << "wstream3 is " << endl << wstream3->str() << endl;
-//		cout << "wstream2 is " << endl << wstream2->str() << endl;
+        // Now read back from simple text version and then write it out again
+        *wstream3 << wstream2->str();        // Copy text output and check it copied OK
+//        cout << "wstream3 is " << endl << wstream3->str() << endl;
+//        cout << "wstream2 is " << endl << wstream2->str() << endl;
 
-		c->read(strif);
+        c->read(strif);
 
-		wstream2->str("");		// Clear the write interface to no data
-		cout << "After clearing wstream2 is " << endl << wstream2->str() << endl;
-		// Then write it again from the new contents ofthe object
-		c->write(stwif2);	// Write text version
-		cout << ">>>>>>>>>>Simple Text Output after readback" << endl << wstream4->str() << endl << "<<<<<<<<<<End of Simple Text Output after readback" << endl;
+        wstream2->str("");        // Clear the write interface to no data
+        cout << "After clearing wstream2 is " << endl << wstream2->str() << endl;
+        // Then write it again from the new contents ofthe object
+        c->write(stwif2);    // Write text version
+        cout << ">>>>>>>>>>Simple Text Output after readback" << endl << wstream4->str() << endl << "<<<<<<<<<<End of Simple Text Output after readback" << endl;
 
         c->write(mswif);
 
@@ -290,13 +290,13 @@ bool JSONTester::testJSON_to_Container()
             result = false;
         }
 
-	}
-	else
-	{
-		result = false;
-	}
+    }
+    else
+    {
+        result = false;
+    }
 
-	return result;
+    return result;
 }
 
 

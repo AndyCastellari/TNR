@@ -12,9 +12,9 @@ if [ -e temp2.txt ]
 diff testObject2.bin temp2.bin
 if [ $? -ne 0 ]
     then
-	echo "FAILED"
-	exit -1
+    echo "FAILED"
+    exit -1
     else
-	echo "PASS"
-	exit 0
+    echo "PASS"
+    exit 0
     fi

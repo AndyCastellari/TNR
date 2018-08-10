@@ -29,28 +29,28 @@
 class POD_Tester
 {
 public:
-	POD_Tester();
-	virtual ~POD_Tester();
+    POD_Tester();
+    virtual ~POD_Tester();
 
-	bool testPODType();
+    bool testPODType();
 
-	bool testFixedArray();
+    bool testFixedArray();
 
-	bool testCountedArray();
+    bool testCountedArray();
 
-	bool testMemoryStreamIf();
+    bool testMemoryStreamIf();
 
-	bool testTNRContainer();
+    bool testTNRContainer();
 
-	bool testTNRNestedContainer();
+    bool testTNRNestedContainer();
 
-	bool testTNR_C_String();
+    bool testTNR_C_String();
 
-	bool testTextLogWriteIf();
-	bool testSimpleTextWriteIf();
-	bool testTextWriteIf(tnr::tnr_write_interface & wif);
+    bool testTextLogWriteIf();
+    bool testSimpleTextWriteIf();
+    bool testTextWriteIf(tnr::tnr_write_interface & wif);
 
-	bool testObjectMap();
+    bool testObjectMap();
 };
 
 #endif /* PODTESTER_H_ */

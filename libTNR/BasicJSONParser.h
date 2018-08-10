@@ -35,32 +35,32 @@ namespace tnr {
 
 class BasicJSONParser {
 public:
-	BasicJSONParser(ObjectMap & om);
-	virtual ~BasicJSONParser();
+    BasicJSONParser(ObjectMap & om);
+    virtual ~BasicJSONParser();
 
-	// TBC fix this daft name
-	//! From the type name, retrieve an object of that type from the Object (Type) Map and assign it the name passed in
-	bool FindTypeFromName(const char * name, const char * type, tnr_baseData_ptr &retObj);
+    // TBC fix this daft name
+    //! From the type name, retrieve an object of that type from the Object (Type) Map and assign it the name passed in
+    bool FindTypeFromName(const char * name, const char * type, tnr_baseData_ptr &retObj);
 
-	//! From the type name, retrieve an object, name it, apply the format and add it to the container
-	bool AddItemToContainer(TNRContainer_ptr &c, const char * name, const char * type,
-			tnr_format &output_format);
+    //! From the type name, retrieve an object, name it, apply the format and add it to the container
+    bool AddItemToContainer(TNRContainer_ptr &c, const char * name, const char * type,
+            tnr_format &output_format);
 
-	bool AddFixedArrayToContainer(const char * containerName, TNRContainer_ptr c, U32 count,
-			rapidjson::Value &recordType, int depth, bool addToOM, std::string ObjectName,
-			tnr_format &output_format);
+    bool AddFixedArrayToContainer(const char * containerName, TNRContainer_ptr c, U32 count,
+            rapidjson::Value &recordType, int depth, bool addToOM, std::string ObjectName,
+            tnr_format &output_format);
 
-	bool AddCountedArrayToContainer(const char * containerName, TNRContainer_ptr c, rapidjson::Value &count,
-			rapidjson::Value &recordType, int depth, bool addToOM, std::string ObjectName,
-			tnr_format &output_format);
+    bool AddCountedArrayToContainer(const char * containerName, TNRContainer_ptr c, rapidjson::Value &count,
+            rapidjson::Value &recordType, int depth, bool addToOM, std::string ObjectName,
+            tnr_format &output_format);
 
-	bool parseTNRObject(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth,
-			tnr_format &output_format);
+    bool parseTNRObject(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth,
+            tnr_format &output_format);
 
-	bool parseJSONToTNR(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth);
+    bool parseJSONToTNR(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth);
 
 protected:
-	ObjectMap &m_om;
+    ObjectMap &m_om;
 };
 
 } /* namespace tnr */

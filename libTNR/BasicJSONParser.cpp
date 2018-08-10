@@ -36,40 +36,40 @@ namespace tnr {
 //! Helper to indent while developing
 std::string padding(int depth)
 {
-	return std::string(depth, ' ');
+    return std::string(depth, ' ');
 }
 
 BasicJSONParser::BasicJSONParser(ObjectMap & om) : m_om(om)
 {
-	// Fill the object map with default types - maybe as a test but not sure
-	tnr_baseData_ptr  u8(new POD_U8( 0x00, "U8"));
-	tnr_baseData_ptr u16(new POD_U16(0x00, "U16"));
-	tnr_baseData_ptr u24(new POD_U24(0x00, "U24"));
-	tnr_baseData_ptr u32(new POD_U32(0x00, "U32"));
+    // Fill the object map with default types - maybe as a test but not sure
+    tnr_baseData_ptr  u8(new POD_U8( 0x00, "U8"));
+    tnr_baseData_ptr u16(new POD_U16(0x00, "U16"));
+    tnr_baseData_ptr u24(new POD_U24(0x00, "U24"));
+    tnr_baseData_ptr u32(new POD_U32(0x00, "U32"));
 
-	tnr_baseData_ptr  s8(new POD_S8( 0x00, "S8"));
-	tnr_baseData_ptr s16(new POD_S16(0x00, "S16"));
-	tnr_baseData_ptr s24(new POD_S24(0x00, "S24"));
-	tnr_baseData_ptr s32(new POD_S32(0x00, "S32"));
+    tnr_baseData_ptr  s8(new POD_S8( 0x00, "S8"));
+    tnr_baseData_ptr s16(new POD_S16(0x00, "S16"));
+    tnr_baseData_ptr s24(new POD_S24(0x00, "S24"));
+    tnr_baseData_ptr s32(new POD_S32(0x00, "S32"));
 
-	tnr_baseData_ptr ascii(new TNR_C_String("", "STRING"));
+    tnr_baseData_ptr ascii(new TNR_C_String("", "STRING"));
 
-	m_om.AddObject(u8);
-	m_om.AddObject(u16);
-	m_om.AddObject(u24);
-	m_om.AddObject(u32);
+    m_om.AddObject(u8);
+    m_om.AddObject(u16);
+    m_om.AddObject(u24);
+    m_om.AddObject(u32);
 
-	m_om.AddObject(s8);
-	m_om.AddObject(s16);
-	m_om.AddObject(s24);
-	m_om.AddObject(s32);
+    m_om.AddObject(s8);
+    m_om.AddObject(s16);
+    m_om.AddObject(s24);
+    m_om.AddObject(s32);
 
-	m_om.AddObject(ascii);
+    m_om.AddObject(ascii);
 }
 
 BasicJSONParser::~BasicJSONParser()
 {
-	// Nothing dynamic to explicitly delete, everything uses smart pointers
+    // Nothing dynamic to explicitly delete, everything uses smart pointers
 }
 
 /**
@@ -80,25 +80,25 @@ BasicJSONParser::~BasicJSONParser()
  */
 bool BasicJSONParser::FindTypeFromName(const char * name, const char * type, tnr_baseData_ptr &retObj)
 {
-	bool result = true;
-	std::string typeStr(type);
-	std::string nameStr(name);
+    bool result = true;
+    std::string typeStr(type);
+    std::string nameStr(name);
 
-	// FindObject returns a clone of the object in the objectDirectory matching type, e.g ."U8"
-	// Set the new objects name to be the name of the item from the JSON, e.g. "ApplicationAllowed"
-	if (m_om.FindObject(typeStr, retObj))
-	{
-		// JSON would be like "MyFieldName" : "PredefinedType"
-		// Although retObj is a clone of the type PredefinedType the description must be updated to "MyFieldName"
-		retObj->setDescription(nameStr);
-	}
-	else
-	{
-		printf("type <%s> not found in object map\n", type);
-		result = false;
-	}
+    // FindObject returns a clone of the object in the objectDirectory matching type, e.g ."U8"
+    // Set the new objects name to be the name of the item from the JSON, e.g. "ApplicationAllowed"
+    if (m_om.FindObject(typeStr, retObj))
+    {
+        // JSON would be like "MyFieldName" : "PredefinedType"
+        // Although retObj is a clone of the type PredefinedType the description must be updated to "MyFieldName"
+        retObj->setDescription(nameStr);
+    }
+    else
+    {
+        printf("type <%s> not found in object map\n", type);
+        result = false;
+    }
 
-	return result;
+    return result;
 }
 
 
@@ -108,22 +108,22 @@ bool BasicJSONParser::FindTypeFromName(const char * name, const char * type, tnr
  */
 bool BasicJSONParser::AddItemToContainer(TNRContainer_ptr &c, const char * name, const char * type, tnr_format &output_format)
 {
-	bool result = true;
+    bool result = true;
 
-	tnr_baseData_ptr recordObj;
-	result = FindTypeFromName(name, type, recordObj);
-	if (result)
-	{
-		recordObj->setFormat(output_format);
-		c->Add(recordObj);
-	}
-	else
-	{
-		printf("Failure in AddItemToContainer\n");
-		result = false;
-	}
+    tnr_baseData_ptr recordObj;
+    result = FindTypeFromName(name, type, recordObj);
+    if (result)
+    {
+        recordObj->setFormat(output_format);
+        c->Add(recordObj);
+    }
+    else
+    {
+        printf("Failure in AddItemToContainer\n");
+        result = false;
+    }
 
-	return result;
+    return result;
 }
 
 /**
@@ -136,60 +136,60 @@ bool BasicJSONParser::AddItemToContainer(TNRContainer_ptr &c, const char * name,
  * In case 2, the value following "record" is recursively parsed
  */
 bool BasicJSONParser::AddFixedArrayToContainer( const char * containerName,
-												TNRContainer_ptr c,
-												U32 count,
-												Value &recordType,
-												int depth,
-												bool addToOM,
-												std::string ObjectName,
-												tnr_format &output_format)
+                                                TNRContainer_ptr c,
+                                                U32 count,
+                                                Value &recordType,
+                                                int depth,
+                                                bool addToOM,
+                                                std::string ObjectName,
+                                                tnr_format &output_format)
 {
-	bool result = true;
-	tnr_baseData_ptr recordObj;
+    bool result = true;
+    tnr_baseData_ptr recordObj;
 
-	// Parse count as number and record as either String or Object
-	if (recordType.IsString())
-	{
-		// If this is a name value pair, the value must be a known type
-		// (in a final parser, we will check an object for known types, for now check for U8, etc.)
-		result = FindTypeFromName("item", recordType.GetString(), recordObj);
+    // Parse count as number and record as either String or Object
+    if (recordType.IsString())
+    {
+        // If this is a name value pair, the value must be a known type
+        // (in a final parser, we will check an object for known types, for now check for U8, etc.)
+        result = FindTypeFromName("item", recordType.GetString(), recordObj);
 
-		recordObj->setFormat(output_format);
-	}
-	else	// Must be object
-	{
-		TNRContainer_ptr local_c(new TNRContainer("Record"));
-		rapidjson::StringBuffer sb;
-		rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
-		recordType.Accept( writer );
+        recordObj->setFormat(output_format);
+    }
+    else    // Must be object
+    {
+        TNRContainer_ptr local_c(new TNRContainer("Record"));
+        rapidjson::StringBuffer sb;
+        rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
+        recordType.Accept( writer );
 
-		local_c->setFormat(output_format);
+        local_c->setFormat(output_format);
 
-		result = parseTNRObject(containerName, local_c, sb.GetString(), depth + 4, output_format);	// WRONG, this is part of the fixed array, not the parent container
+        result = parseTNRObject(containerName, local_c, sb.GetString(), depth + 4, output_format);    // WRONG, this is part of the fixed array, not the parent container
 
-		if (result)
-		{
-			recordObj = local_c;	// Hack to allow single place addition
-		}
-	}
+        if (result)
+        {
+            recordObj = local_c;    // Hack to allow single place addition
+        }
+    }
 
-	if (result)
-	{
-		// Create Fixed Array Object with count.GetUint() and item type recordObj and add to container
-		TNRFixedArray_ptr fixed(new TNRFixedArray(containerName, count, recordObj));
-		fixed->setFormat(output_format);
-		c->Add(fixed);
+    if (result)
+    {
+        // Create Fixed Array Object with count.GetUint() and item type recordObj and add to container
+        TNRFixedArray_ptr fixed(new TNRFixedArray(containerName, count, recordObj));
+        fixed->setFormat(output_format);
+        c->Add(fixed);
 
-		if (addToOM)
-		{
-			// Add parent object to dictionary, i.e. c with name found earlier
-			tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( fixed );
-			t->setDescription(ObjectName);
-			result = m_om.AddObject(t);
-		}
-	}
+        if (addToOM)
+        {
+            // Add parent object to dictionary, i.e. c with name found earlier
+            tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( fixed );
+            t->setDescription(ObjectName);
+            result = m_om.AddObject(t);
+        }
+    }
 
-	return result;
+    return result;
 }
 
 /**
@@ -201,63 +201,63 @@ bool BasicJSONParser::AddFixedArrayToContainer( const char * containerName,
  * In case 1, the value following "record" must be a known type
  * In case 2, the value following "record" is recursively parsed
  */
-bool BasicJSONParser::AddCountedArrayToContainer(	const char * containerName,
-													TNRContainer_ptr c,
-													Value &count,
-													Value &recordType,
-													int depth,
-													bool addToOM,
-													std::string ObjectName,
-													tnr_format &output_format)
+bool BasicJSONParser::AddCountedArrayToContainer(    const char * containerName,
+                                                    TNRContainer_ptr c,
+                                                    Value &count,
+                                                    Value &recordType,
+                                                    int depth,
+                                                    bool addToOM,
+                                                    std::string ObjectName,
+                                                    tnr_format &output_format)
 {
-	bool result = true;
-	tnr_baseData_ptr recordObj;
+    bool result = true;
+    tnr_baseData_ptr recordObj;
 
-	// Parse count as number and record as either String or Object
-	if (recordType.IsString())
-	{
-		// If this is a name value pair, the value must be a known type
-		// (in a final parser, we will check an object for known types, for now check for U8, etc.)
-		result = FindTypeFromName("Item", recordType.GetString(), recordObj);
+    // Parse count as number and record as either String or Object
+    if (recordType.IsString())
+    {
+        // If this is a name value pair, the value must be a known type
+        // (in a final parser, we will check an object for known types, for now check for U8, etc.)
+        result = FindTypeFromName("Item", recordType.GetString(), recordObj);
 
-		recordObj->setFormat(output_format);
-	}
-	else	// Must be object
-	{
-		TNRContainer_ptr local_c(new TNRContainer("Record"));
-		rapidjson::StringBuffer sb;
-		rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
-		recordType.Accept( writer );
+        recordObj->setFormat(output_format);
+    }
+    else    // Must be object
+    {
+        TNRContainer_ptr local_c(new TNRContainer("Record"));
+        rapidjson::StringBuffer sb;
+        rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
+        recordType.Accept( writer );
 
-		local_c->setFormat(output_format);
+        local_c->setFormat(output_format);
 
-		result = parseTNRObject(containerName, local_c, sb.GetString(), depth + 4, output_format);
+        result = parseTNRObject(containerName, local_c, sb.GetString(), depth + 4, output_format);
 
-		if (result)
-		{
-			recordObj = local_c;	// Hack to allow single place addition
-		}
-	}
+        if (result)
+        {
+            recordObj = local_c;    // Hack to allow single place addition
+        }
+    }
 
-	if (result)
-	{
-		// Get type of count
-		tnr_baseData_ptr countType;
-		result = FindTypeFromName("Count", count.GetString(), countType);
-		countType->setFormat(output_format);	// This makes count look like first value when Description is turned off
+    if (result)
+    {
+        // Get type of count
+        tnr_baseData_ptr countType;
+        result = FindTypeFromName("Count", count.GetString(), countType);
+        countType->setFormat(output_format);    // This makes count look like first value when Description is turned off
 
-		if (result)
-		{
-			// Create Counted Array Object with countType and item type recordObj and add to parent container
-			TNRCountedArray_ptr counted(new TNRCountedArray(containerName, countType, recordObj));
-			counted->setFormat(output_format);
-			c->Add(counted);
+        if (result)
+        {
+            // Create Counted Array Object with countType and item type recordObj and add to parent container
+            TNRCountedArray_ptr counted(new TNRCountedArray(containerName, countType, recordObj));
+            counted->setFormat(output_format);
+            c->Add(counted);
 
-			if (addToOM)
-			{
-				// Add parent object to dictionary, i.e. c with name found earlier
-				tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( counted );
-				t->setDescription(ObjectName);
+            if (addToOM)
+            {
+                // Add parent object to dictionary, i.e. c with name found earlier
+                tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( counted );
+        		t->setDescription(ObjectName);
 				result = m_om.AddObject(t);
 			}
 		}

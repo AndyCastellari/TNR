@@ -43,28 +43,28 @@ typedef unsigned int U32;
 typedef struct u24
 {
 public:
-	u24(U32 value) { c[0] = value & 0xff; c[1] = (value >> 8) & 0xff; c[2] = (value >> 16) & 0xff; };
-	operator U32() { U32 t = 0; t = (c[2] << 16) + (c[1] << 8) + (c[0] << 0); return t; };
-//	bool operator==(const U32 rhs) { return U32() == rhs; };
+    u24(U32 value) { c[0] = value & 0xff; c[1] = (value >> 8) & 0xff; c[2] = (value >> 16) & 0xff; };
+    operator U32() { U32 t = 0; t = (c[2] << 16) + (c[1] << 8) + (c[0] << 0); return t; };
+//    bool operator==(const U32 rhs) { return U32() == rhs; };
 //protected:
-	U8 c[3];
+    U8 c[3];
 } U24;
 
 
 typedef struct s24
 {
 public:
-	s24(S32 value) { U32 t = (U32)value; c[0] = t & 0xff; c[1] = (t >> 8) & 0xff; c[2] = (t >> 16) & 0xff; };
-	operator S32()
-			{
-		U32 t = 0;
-		t = (c[2] << 16) + (c[1] << 8) + (c[0] << 0);
-		// Sign extend negative 24-bit value to 32-bits
-		if (t & 0x800000) t = t | 0xff000000;
-		return (S32)t; };
-//	bool operator==(const S32 rhs) { return S32() == rhs; };
+    s24(S32 value) { U32 t = (U32)value; c[0] = t & 0xff; c[1] = (t >> 8) & 0xff; c[2] = (t >> 16) & 0xff; };
+    operator S32()
+            {
+        U32 t = 0;
+        t = (c[2] << 16) + (c[1] << 8) + (c[0] << 0);
+        // Sign extend negative 24-bit value to 32-bits
+        if (t & 0x800000) t = t | 0xff000000;
+        return (S32)t; };
+//    bool operator==(const S32 rhs) { return S32() == rhs; };
 //protected:
-	U8 c[3];
+    U8 c[3];
 } S24;
 
 

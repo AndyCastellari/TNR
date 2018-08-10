@@ -34,16 +34,16 @@ namespace tnr {
 class ObjectMap
 {
 public:
-	ObjectMap();
-	virtual ~ObjectMap();
-	//! Adds a clone of the object to the map with the given name
-	bool AddObject(tnr_baseData_ptr & object);
-	//! Returns a clone of the object with the name
-	bool FindObject(std::string &objectName, tnr_baseData_ptr & object);
-	//! Print the contents of the map
-	void PrintMap();
+    ObjectMap();
+    virtual ~ObjectMap();
+    //! Adds a clone of the object to the map with the given name
+    bool AddObject(tnr_baseData_ptr & object);
+    //! Returns a clone of the object with the name
+    bool FindObject(std::string &objectName, tnr_baseData_ptr & object);
+    //! Print the contents of the map
+    void PrintMap();
 protected:
-	std::map<std::string, tnr_baseData_ptr> m_objectDirectory;
+    std::map<std::string, tnr_baseData_ptr> m_objectDirectory;
 };
 
 } /* namespace tnr */

@@ -8,14 +8,14 @@ project(TNRlib VERSION 1.3.1 LANGUAGES CXX)
 
 if(NOT TARGET TNRlib)
     set(TNRlib_SRC 
-    	BaseBinaryArchiveReadWrite.cpp
-		BasicJSONParser.cpp
-		FormattedTextReadWriteIf.cpp
-		ObjectMap.cpp
-		SimpleTextReadWriteIf.cpp
-		StreamReadWriteIf.cpp
-		TextLogWriteIf.cpp
-		tnr.cpp
+        BaseBinaryArchiveReadWrite.cpp
+        BasicJSONParser.cpp
+        FormattedTextReadWriteIf.cpp
+        ObjectMap.cpp
+        SimpleTextReadWriteIf.cpp
+        StreamReadWriteIf.cpp
+        TextLogWriteIf.cpp
+        tnr.cpp
     )
  
     add_library(TNRlib STATIC ${TNRlib_SRC})

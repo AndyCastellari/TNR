@@ -31,61 +31,61 @@ namespace tnr {
 
 TextLogWriteIf::TextLogWriteIf(std::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream)
 {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
 TextLogWriteIf::~TextLogWriteIf()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 int TextLogWriteIf::write(U8 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
+    return 0;
 }
 
 int TextLogWriteIf::write(S8 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << (S16)value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << (S16)value << endl;
+    return 0;
 }
 
 int TextLogWriteIf::write(U16 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return 0;
 }
 
 int TextLogWriteIf::write(S16 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return 0;
 }
 
 int TextLogWriteIf::write(U24 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return 0;
 }
 
 int TextLogWriteIf::write(S24 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return 0;
 }
 
 int TextLogWriteIf::write(U32 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return 0;
 }
 
 int TextLogWriteIf::write(S32 value, std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
-	return 0;
+    *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
+    return 0;
 }
 
 /**
@@ -94,16 +94,16 @@ int TextLogWriteIf::write(S32 value, std::string &description, tnr_format &forma
  */
 int tnr::TextLogWriteIf::write(std::string &value, std::string &description, tnr_format &format)
 {
-	int result = 0;
-	*m_stream << padding() << description << " : " << '"' << value << '"' << endl;
-	return result;
+    int result = 0;
+    *m_stream << padding() << description << " : " << '"' << value << '"' << endl;
+    return result;
 
 }
 
 int TextLogWriteIf::write(std::string &description, tnr_format &format)
 {
-	*m_stream << padding() << description << endl;
-	return 0;
+    *m_stream << padding() << description << endl;
+    return 0;
 }
 
 /**
@@ -111,8 +111,8 @@ int TextLogWriteIf::write(std::string &description, tnr_format &format)
  */
 void TextLogWriteIf::nextLevel(tnr_format &format)
 {
-	*m_stream << padding() << "{" << endl;
-	m_level++;
+    *m_stream << padding() << "{" << endl;
+    m_level++;
 }
 
 /**
@@ -121,20 +121,20 @@ void TextLogWriteIf::nextLevel(tnr_format &format)
  */
 void TextLogWriteIf::previousLevel(tnr_format &format)
 {
-	if (m_level > 0)
-	{
-		m_level--;
-	}
-	else
-	{
-//		TODO deal with error
-	}
-	*m_stream << padding() << "}" << endl;
+    if (m_level > 0)
+    {
+        m_level--;
+    }
+    else
+    {
+//        TODO deal with error
+    }
+    *m_stream << padding() << "}" << endl;
 }
 
 std::string TextLogWriteIf::padding()
 {
-	return std::string(m_level * 2, ' ');
+    return std::string(m_level * 2, ' ');
 }
 
 } /* namespace tnr */

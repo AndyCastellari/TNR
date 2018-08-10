@@ -29,13 +29,13 @@
 class JSONTester
 {
 public:
-	JSONTester();
-	virtual ~JSONTester();
+    JSONTester();
+    virtual ~JSONTester();
 
-	//! Simple test that rapidjson is working
-	bool testParsing();
+    //! Simple test that rapidjson is working
+    bool testParsing();
 
-	//! Build an object from JSON
-	bool testJSON_to_Container();
+    //! Build an object from JSON
+    bool testJSON_to_Container();
 };
 #endif /* JSONTESTER_H_ */

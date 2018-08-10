@@ -32,31 +32,31 @@ namespace tnr {
 
 class TextLogWriteIf: public tnr::tnr_write_interface {
 public:
-	TextLogWriteIf(std::shared_ptr<std::ostream> _stream);
-	virtual ~TextLogWriteIf();
+    TextLogWriteIf(std::shared_ptr<std::ostream> _stream);
+    virtual ~TextLogWriteIf();
 
-	virtual int write(U8 value, std::string &description, tnr_format &format );
-	virtual int write(S8 value, std::string &description, tnr_format &format );
-	virtual int write(U16 value, std::string &description, tnr_format &format);
-	virtual int write(S16 value, std::string &description, tnr_format &format);
-	virtual int write(U24 value, std::string &description, tnr_format &format);
-	virtual int write(S24 value, std::string &description, tnr_format &format);
-	virtual int write(U32 value, std::string &description, tnr_format &format);
-	virtual int write(S32 value, std::string &description, tnr_format &format);
-	virtual int write(std::string &value, std::string &description, tnr_format &format);
+    virtual int write(U8 value, std::string &description, tnr_format &format );
+    virtual int write(S8 value, std::string &description, tnr_format &format );
+    virtual int write(U16 value, std::string &description, tnr_format &format);
+    virtual int write(S16 value, std::string &description, tnr_format &format);
+    virtual int write(U24 value, std::string &description, tnr_format &format);
+    virtual int write(S24 value, std::string &description, tnr_format &format);
+    virtual int write(U32 value, std::string &description, tnr_format &format);
+    virtual int write(S32 value, std::string &description, tnr_format &format);
+    virtual int write(std::string &value, std::string &description, tnr_format &format);
 
-	// Methods to describe an object when this data may not be part of the output stream
-	virtual int write(std::string &description, tnr_format &format);
+    // Methods to describe an object when this data may not be part of the output stream
+    virtual int write(std::string &description, tnr_format &format);
 
-	// Methods to indicate when a new level of nesting is starting/ending
-	virtual void nextLevel(tnr_format &format);
-	virtual void previousLevel(tnr_format &format);
+    // Methods to indicate when a new level of nesting is starting/ending
+    virtual void nextLevel(tnr_format &format);
+    virtual void previousLevel(tnr_format &format);
 protected:
-	//! Method to return the number of spaces corresponding to the indent level
-	std::string padding();
+    //! Method to return the number of spaces corresponding to the indent level
+    std::string padding();
 
-	unsigned int m_level;
-	std::shared_ptr<std::ostream> m_stream;
+    unsigned int m_level;
+    std::shared_ptr<std::ostream> m_stream;
 };
 
 } /* namespace tnr */

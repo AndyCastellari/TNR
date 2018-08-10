@@ -3,28 +3,28 @@
     "Bitmask": "U8",
     "U16 value": "U16",
     "Fixed Array": {
-    	"NewLine" : "off",
-    	"Description" : "off",
+        "NewLine" : "off",
+        "Description" : "off",
         "type": "FixedArray",
         "count": 8,
         "record": "U8"
     },
     "Another U8 value": "U8",
     "Variable array (24 bit count, 32 bit values)": {
-    	"NewLine" : "off",
-    	"Description" : "off",
+        "NewLine" : "off",
+        "Description" : "off",
         "type": "CountedArray",
         "count": "U24",
         "record": "U32"
     },
     "Variable array (32 bit count,  values are structure of two 16 bit numbers)": {
-    	"NewLine" : "on",
-    	"Description" : "on",
+        "NewLine" : "on",
+        "Description" : "on",
         "type": "CountedArray",
         "count": "U32",
         "record": {
-	    	"NewLine" : "off",
-	    	"Description" : "on",
+            "NewLine" : "off",
+            "Description" : "on",
             "Start": "U16",
             "End": "U16"
         }

@@ -37,32 +37,32 @@ using namespace std;
 #include "SimpleTextReadWriteIf.h"
 
 int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
-	POD_Tester pt;
-	JSONTester jt;
-	bool b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12;
-	bool allTests;
+    cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+    POD_Tester pt;
+    JSONTester jt;
+    bool b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12;
+    bool allTests;
 
-	printf("Test testPODType %s\n", (b1 = pt.testPODType()) ? "PASSED" : "FAILED");
-	printf("Test testFixedArray %s\n", (b2 = pt.testFixedArray()) ? "PASSED" : "FAILED");
-	printf("Test testCountedArray %s\n", (b3 = pt.testCountedArray()) ? "PASSED" : "FAILED");
-	printf("Test testMemoryStreamIf %s\n", (b4 = pt.testMemoryStreamIf()) ? "PASSED" : "FAILED");
-	printf("Test testTNRContainer %s\n", (b5 = pt.testTNRContainer()) ? "PASSED" : "FAILED");
-	printf("Test testTNRNestedContainer %s\n", (b6 = pt.testTNRNestedContainer()) ? "PASSED" : "FAILED");
-	printf("Test testTextLogWriteIf %s\n", (b7 = pt.testTextLogWriteIf()) ? "PASSED" : "FAILED");
-	printf("Test testTextLogWriteIf %s\n", (b8 = pt.testSimpleTextWriteIf()) ? "PASSED" : "FAILED");
+    printf("Test testPODType %s\n", (b1 = pt.testPODType()) ? "PASSED" : "FAILED");
+    printf("Test testFixedArray %s\n", (b2 = pt.testFixedArray()) ? "PASSED" : "FAILED");
+    printf("Test testCountedArray %s\n", (b3 = pt.testCountedArray()) ? "PASSED" : "FAILED");
+    printf("Test testMemoryStreamIf %s\n", (b4 = pt.testMemoryStreamIf()) ? "PASSED" : "FAILED");
+    printf("Test testTNRContainer %s\n", (b5 = pt.testTNRContainer()) ? "PASSED" : "FAILED");
+    printf("Test testTNRNestedContainer %s\n", (b6 = pt.testTNRNestedContainer()) ? "PASSED" : "FAILED");
+    printf("Test testTextLogWriteIf %s\n", (b7 = pt.testTextLogWriteIf()) ? "PASSED" : "FAILED");
+    printf("Test testTextLogWriteIf %s\n", (b8 = pt.testSimpleTextWriteIf()) ? "PASSED" : "FAILED");
 
-	printf("Test testTNR_C_String %s\n", (b9 = pt.testTNR_C_String()) ? "PASSED" : "FAILED");
+    printf("Test testTNR_C_String %s\n", (b9 = pt.testTNR_C_String()) ? "PASSED" : "FAILED");
 
-	printf("Test testObjectMap %s\n", (b10 = pt.testObjectMap()) ? "PASSED" : "FAILED");
-	
-	printf("Test JSONTester::testParsing %s\n", (b11 = jt.testParsing()) ? "PASSED" : "FAILED");
-	printf("Test JSONTester::testJSON_to_Container %s\n", (b12 = jt.testJSON_to_Container()) ? "PASSED" : "FAILED");
+    printf("Test testObjectMap %s\n", (b10 = pt.testObjectMap()) ? "PASSED" : "FAILED");
 
-	allTests = (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && b10 && b11 && b12);
+    printf("Test JSONTester::testParsing %s\n", (b11 = jt.testParsing()) ? "PASSED" : "FAILED");
+    printf("Test JSONTester::testJSON_to_Container %s\n", (b12 = jt.testJSON_to_Container()) ? "PASSED" : "FAILED");
 
-	printf("\nOverall Test %s\n\n", allTests ? "PASSED" : "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FAILED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    allTests = (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && b10 && b11 && b12);
+
+    printf("\nOverall Test %s\n\n", allTests ? "PASSED" : "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FAILED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
 
-	return 0;
+    return 0;
 }
