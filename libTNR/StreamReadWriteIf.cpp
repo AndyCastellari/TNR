@@ -24,11 +24,10 @@
  */
 
 #include "StreamReadWriteIf.h"
-#include <boost/foreach.hpp>
 
 namespace tnr {
 
-StreamWriteIf::StreamWriteIf(boost::shared_ptr<std::ostream> _stream) : LSBBaseBinaryArchiveWrite(), m_stream(_stream)
+StreamWriteIf::StreamWriteIf(std::shared_ptr<std::ostream> _stream) : LSBBaseBinaryArchiveWrite(), m_stream(_stream)
 {
 }
 
@@ -47,7 +46,7 @@ int StreamWriteIf::writeOneByte(U8 value)
 	return m_stream->bad() ? 1 : 0;
 }
 
-StreamReadIf::StreamReadIf(boost::shared_ptr<std::istream> _stream) : LSBBaseBinaryArchiveRead(), m_stream(_stream)
+StreamReadIf::StreamReadIf(std::shared_ptr<std::istream> _stream) : LSBBaseBinaryArchiveRead(), m_stream(_stream)
 {
 }
 

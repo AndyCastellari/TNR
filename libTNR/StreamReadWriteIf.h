@@ -30,14 +30,13 @@
 #include "BaseBinaryArchiveReadWrite.h"
 #include <sstream>
 
-#include <boost/shared_ptr.hpp>
 
 namespace tnr {
 
 class StreamWriteIf: public tnr::LSBBaseBinaryArchiveWrite
 {
 public:
-	StreamWriteIf(boost::shared_ptr<std::ostream> _stream);
+	StreamWriteIf(std::shared_ptr<std::ostream> _stream);
 	virtual ~StreamWriteIf();
 
 protected:
@@ -46,13 +45,13 @@ protected:
 
 protected:
 //	U32 m_level;
-	boost::shared_ptr<std::ostream> m_stream;
+	std::shared_ptr<std::ostream> m_stream;
 };
 
 class StreamReadIf: public tnr::LSBBaseBinaryArchiveRead
 {
 public:
-	StreamReadIf(boost::shared_ptr<std::istream> _stream);
+	StreamReadIf(std::shared_ptr<std::istream> _stream);
 	virtual ~StreamReadIf();
 
 //	bool operator==(std::string &rhs);
@@ -63,7 +62,7 @@ protected:
 
 protected:
 //	U32 m_level;
-	boost::shared_ptr<std::istream> m_stream;
+	std::shared_ptr<std::istream> m_stream;
 };
 
 } /* namespace tnr */

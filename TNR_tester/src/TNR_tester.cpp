@@ -32,7 +32,6 @@ using namespace std;
 #include "PODTester.h"
 #include "JSONTester.h"
 #include <rapidjson/rapidjson.h>
-#include <boost/foreach.hpp>
 
 #include "TextLogWriteIf.h"
 #include "SimpleTextReadWriteIf.h"

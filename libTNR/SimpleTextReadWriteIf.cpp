@@ -31,7 +31,7 @@ using namespace std;
 namespace tnr {
 
 
-tnr::SimpleTextWriteIf::SimpleTextWriteIf(boost::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream)
+tnr::SimpleTextWriteIf::SimpleTextWriteIf(std::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream)
 {
 }
 
@@ -142,7 +142,7 @@ int tnr::SimpleTextWriteIf::write(std::string &description, tnr_format &format)
  * The way text is written, each value is after the colon on a line. The parser reads a line of text,
  * if there is a colon, it reads a number after the colon
  */
-tnr::SimpleTextReadIf::SimpleTextReadIf(boost::shared_ptr<std::istream> _stream): m_level(0), m_stream(_stream)
+tnr::SimpleTextReadIf::SimpleTextReadIf(std::shared_ptr<std::istream> _stream): m_level(0), m_stream(_stream)
 {
 }
 

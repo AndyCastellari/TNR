@@ -31,12 +31,11 @@
 #include <vector>
 #include <stack>
 #include <list>
-#include <boost/foreach.hpp>
-#include <boost/shared_ptr.hpp>
 
 #include <iostream>
 #include <typeinfo>
 #include <stdio.h>
+#include <memory>
 
 
 namespace tnr
@@ -130,7 +129,7 @@ public:
  */
 
 class tnr_baseData;
-typedef boost::shared_ptr<tnr_baseData> tnr_baseData_ptr;
+typedef std::shared_ptr<tnr_baseData> tnr_baseData_ptr;
 
 //! Common base class - covers common data for all classes
 class tnr_baseData
@@ -208,7 +207,7 @@ public:
 	//! Create a deep copy of the variable
 	virtual tnr_baseData_ptr clone()
 	{
-		boost::shared_ptr< POD<T> > c(new POD<T>(m_value, m_description));
+		std::shared_ptr< POD<T> > c(new POD<T>(m_value, m_description));
 		// In case the default format was changed, copy that over as well
 		c->m_format = this->m_format;
 		return c;
@@ -237,17 +236,14 @@ typedef POD<S16> POD_S16;
 typedef POD<S24> POD_S24;
 typedef POD<S32> POD_S32;
 
-typedef boost::shared_ptr<POD_U8>  POD_U8_ptr;
-typedef boost::shared_ptr<POD_U16> POD_U16_ptr;
-typedef boost::shared_ptr<POD_U24> POD_U24_ptr;
-typedef boost::shared_ptr<POD_U32> POD_U32_ptr;
-typedef boost::shared_ptr<POD_S8>  POD_S8_ptr;
-typedef boost::shared_ptr<POD_S16> POD_S16_ptr;
-typedef boost::shared_ptr<POD_S24> POD_S24_ptr;
-typedef boost::shared_ptr<POD_S32> POD_S32_ptr;
-
-//typedef POD<CHAR> POD_CHAR;
-//typedef boost::shared_ptr<POD_CHAR>  POD_CHAR_ptr;
+typedef std::shared_ptr<POD_U8>  POD_U8_ptr;
+typedef std::shared_ptr<POD_U16> POD_U16_ptr;
+typedef std::shared_ptr<POD_U24> POD_U24_ptr;
+typedef std::shared_ptr<POD_U32> POD_U32_ptr;
+typedef std::shared_ptr<POD_S8>  POD_S8_ptr;
+typedef std::shared_ptr<POD_S16> POD_S16_ptr;
+typedef std::shared_ptr<POD_S24> POD_S24_ptr;
+typedef std::shared_ptr<POD_S32> POD_S32_ptr;
 
 // TODO Define composite data class containers
 
@@ -290,7 +286,7 @@ protected:
 	std::vector<tnr_baseData_ptr> m_values;
 };
 
-typedef boost::shared_ptr<TNRContainer> TNRContainer_ptr;
+typedef std::shared_ptr<TNRContainer> TNRContainer_ptr;
 
 class TNRFixedArray : public tnr_baseData
 {
@@ -317,7 +313,7 @@ protected:
 	std::vector<tnr_baseData_ptr> m_values;
 };
 
-typedef boost::shared_ptr<TNRFixedArray> TNRFixedArray_ptr;
+typedef std::shared_ptr<TNRFixedArray> TNRFixedArray_ptr;
 
 class TNRCountedArray : public tnr_baseData
 {
@@ -344,7 +340,7 @@ protected:
 	std::vector<tnr_baseData_ptr> m_values;
 };
 
-typedef boost::shared_ptr<TNRCountedArray> TNRCountedArray_ptr;
+typedef std::shared_ptr<TNRCountedArray> TNRCountedArray_ptr;
 
 // Delimited c-style string
 class TNR_C_String : public tnr_baseData
@@ -366,7 +362,7 @@ protected:
 	std::string m_Cstring;
 };
 
-typedef boost::shared_ptr<TNR_C_String> TNR_C_String_ptr;
+typedef std::shared_ptr<TNR_C_String> TNR_C_String_ptr;
 
 }	// end of namespace
 

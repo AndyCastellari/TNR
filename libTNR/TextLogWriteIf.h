@@ -32,7 +32,7 @@ namespace tnr {
 
 class TextLogWriteIf: public tnr::tnr_write_interface {
 public:
-	TextLogWriteIf(boost::shared_ptr<std::ostream> _stream);
+	TextLogWriteIf(std::shared_ptr<std::ostream> _stream);
 	virtual ~TextLogWriteIf();
 
 	virtual int write(U8 value, std::string &description, tnr_format &format );
@@ -56,7 +56,7 @@ protected:
 	std::string padding();
 
 	unsigned int m_level;
-	boost::shared_ptr<std::ostream> m_stream;
+	std::shared_ptr<std::ostream> m_stream;
 };
 
 } /* namespace tnr */

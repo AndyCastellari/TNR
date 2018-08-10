@@ -120,7 +120,7 @@ bool LoadFileToString(const char * filename, std::string & s)
 void JSONprintString(const char * title, const std::string &s)
 {
 	printf("%s : ", title);
-	BOOST_FOREACH(char c, s)
+	for (char c: s)
 	{
 		printf("%02x", (U8)c);
 	}
@@ -148,7 +148,7 @@ bool parseJSONObject(const char * input_json, int depth)
 	{
 		// Iterating object members
 		static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
-		for (Value::ConstMemberIterator itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
+		for (auto itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
 		{
 			printf("%sType of member <%s> is <%s>\n", padding(depth).c_str(), itr->name.GetString(), kTypeNames[itr->value.GetType()]);
 
@@ -227,10 +227,10 @@ bool JSONTester::testJSON_to_Container()
 	bool result  = true;
 	TNRContainer_ptr c(new TNRContainer("testContainer"));
 	std::string input_json;
-	boost::shared_ptr<std::stringstream> wstream1(new std::stringstream());
-	boost::shared_ptr<std::stringstream> wstream2(new std::stringstream());
-	boost::shared_ptr<std::stringstream> wstream3(new std::stringstream());
-	boost::shared_ptr<std::stringstream> wstream4(new std::stringstream());
+	std::shared_ptr<std::stringstream> wstream1(new std::stringstream());
+	std::shared_ptr<std::stringstream> wstream2(new std::stringstream());
+	std::shared_ptr<std::stringstream> wstream3(new std::stringstream());
+	std::shared_ptr<std::stringstream> wstream4(new std::stringstream());
 	ObjectMap om;
 	BasicJSONParser parser(om);
 
@@ -239,16 +239,16 @@ bool JSONTester::testJSON_to_Container()
 	SimpleTextReadIf strif(wstream3);
 	SimpleTextWriteIf stwif2(wstream4);
 
-	if (LoadFileToString("/home/andy/development/cmake/build_ubuntu/TNR_tester/testobject1.json", input_json))
+	if (LoadFileToString("testobject1.json", input_json))
 	{
 
 		// Create input stream to populate the template container just created
 		std::string tempString((const char *)testBytes, sizeof(testBytes));
 
-		boost::shared_ptr<std::istream> _rstream(new std::stringstream(tempString));
+		std::shared_ptr<std::istream> _rstream(new std::stringstream(tempString));
 		StreamReadIf msrif(_rstream);
 
-		JSONprintString("rstream ", boost::dynamic_pointer_cast<std::stringstream>(_rstream)->str());
+		JSONprintString("rstream ", std::dynamic_pointer_cast<std::stringstream>(_rstream)->str());
 
 		// Make the tnr object from JSON
 		parser.parseJSONToTNR("Document", c, input_json.c_str(), 0);

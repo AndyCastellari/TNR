@@ -24,7 +24,7 @@
  */
 
 #include "tnr.h"
-#include <stdio.h>
+
 namespace tnr
 {
 void tnr_format::printFormat(const char * name)
@@ -76,7 +76,7 @@ int tnr::TNRContainer::write(tnr_write_interface& write_if)
 	write_if.write(m_description, m_format);
 	write_if.nextLevel(m_format);
 
-	BOOST_FOREACH(tnr_baseData_ptr value, m_values)
+	for (tnr_baseData_ptr value: m_values)
 	{
 		result = value->write(write_if);
 	}
@@ -92,7 +92,7 @@ int tnr::TNRContainer::read(tnr_read_interface& read_if)
 {
 	int result = 0;
 
-	BOOST_FOREACH(tnr_baseData_ptr value, m_values)
+	for (tnr_baseData_ptr value: m_values)
 	{
 		result = value->read(read_if);
 	}
@@ -103,7 +103,7 @@ int tnr::TNRContainer::read(tnr_read_interface& read_if)
 
 tnr_baseData_ptr TNRContainer::clone()
 {
-	boost::shared_ptr< TNRContainer > c(new TNRContainer(m_description));
+	std::shared_ptr< TNRContainer > c(new TNRContainer(m_description));
 	c->m_format = this->m_format;
 
 	// New object has same count, record type and array of objects as original but array _may_ not have same values
@@ -163,7 +163,7 @@ int tnr::TNRFixedArray::write(tnr_write_interface& write_if)
 	write_if.startSection(m_format);
 	write_if.write(m_description, m_format);
 	write_if.nextLevel(m_format);
-	BOOST_FOREACH(tnr_baseData_ptr value, m_values)
+	for (tnr_baseData_ptr value: m_values)
 	{
 		result = value->write(write_if);
 	}
@@ -179,7 +179,7 @@ int tnr::TNRFixedArray::read(tnr_read_interface& read_if)
 {
 	int result = 0;
 	read_if.nextLevel(m_format);
-	BOOST_FOREACH(tnr_baseData_ptr value, m_values)
+	for (tnr_baseData_ptr value: m_values)
 	{
 		result = value->read(read_if);
 	}
@@ -193,7 +193,7 @@ int tnr::TNRFixedArray::read(tnr_read_interface& read_if)
  */
 tnr_baseData_ptr TNRFixedArray::clone()
 {
-	boost::shared_ptr< TNRFixedArray > c(new TNRFixedArray(m_description, m_count, m_recordType));
+	std::shared_ptr< TNRFixedArray > c(new TNRFixedArray(m_description, m_count, m_recordType));
 	c->m_format = this->m_format;
 
 	// New object has same count, record type and array of objects as original but array _may_ not have same values
@@ -256,7 +256,7 @@ int tnr::TNRCountedArray::write(tnr_write_interface& write_if)
 
 	result = m_count->write(write_if);
 
-	BOOST_FOREACH(tnr_baseData_ptr value, m_values)
+	for (tnr_baseData_ptr value: m_values)
 	{
 		result = value->write(write_if);
 	}
@@ -292,7 +292,7 @@ int tnr::TNRCountedArray::read(tnr_read_interface& read_if)
 
 tnr_baseData_ptr TNRCountedArray::clone()
 {
-	boost::shared_ptr< TNRCountedArray > c(new TNRCountedArray(m_description, m_count, m_recordType));
+	std::shared_ptr< TNRCountedArray > c(new TNRCountedArray(m_description, m_count, m_recordType));
 	c->m_format = this->m_format;
 
 	// New object has same count, record type and array of objects as original but array _may_ not have same values
@@ -350,7 +350,7 @@ int tnr::TNR_C_String::read(tnr_read_interface &read_if)
 
 tnr_baseData_ptr tnr::TNR_C_String::clone()
 {
-	boost::shared_ptr< TNR_C_String > c(new TNR_C_String(m_Cstring, m_description));
+	std::shared_ptr< TNR_C_String > c(new TNR_C_String(m_Cstring, m_description));
 	c->m_format = this->m_format;
 
 //	c->m_Cstring = this->m_Cstring;

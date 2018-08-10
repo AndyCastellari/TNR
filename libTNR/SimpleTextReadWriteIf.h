@@ -32,7 +32,7 @@ namespace tnr {
 
 class SimpleTextWriteIf: public tnr::tnr_write_interface {
 public:
-	SimpleTextWriteIf(boost::shared_ptr<std::ostream> _stream);
+	SimpleTextWriteIf(std::shared_ptr<std::ostream> _stream);
 	virtual ~SimpleTextWriteIf();
 
 	virtual int write(U8 value, std::string &description, tnr_format &format );
@@ -56,12 +56,12 @@ protected:
 	std::string padding();
 
 	unsigned int m_level;
-	boost::shared_ptr<std::ostream> m_stream;
+	std::shared_ptr<std::ostream> m_stream;
 };
 
 class SimpleTextReadIf: public tnr::tnr_read_interface {
 public:
-	SimpleTextReadIf(boost::shared_ptr<std::istream> _stream);
+	SimpleTextReadIf(std::shared_ptr<std::istream> _stream);
 	virtual ~SimpleTextReadIf();
 
 	virtual int read(U8 & value, tnr_format &format );
@@ -82,7 +82,7 @@ protected:
 	int getNextNumber(U32 & value, tnr_format &format);
 
 	unsigned int m_level;
-	boost::shared_ptr<std::istream> m_stream;
+	std::shared_ptr<std::istream> m_stream;
 };
 
 } /* namespace tnr */

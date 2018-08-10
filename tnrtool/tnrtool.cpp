@@ -281,8 +281,8 @@ int main(int argc, char** argv)
                     {
                        mode_out |= ios_base::binary;
                     }
-    				boost::shared_ptr<std::ifstream> in_stream(new std::ifstream());
-    				boost::shared_ptr<std::ofstream> out_stream(new std::ofstream());
+    				std::shared_ptr<std::ifstream> in_stream(new std::ifstream());
+    				std::shared_ptr<std::ofstream> out_stream(new std::ofstream());
 
     				// try to open the input and output file
     				in_stream->open(inputFile.c_str(), mode_in);

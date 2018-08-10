@@ -31,7 +31,7 @@ using namespace std;
 namespace tnr {
 
 
-tnr::FormattedTextWriteIf::FormattedTextWriteIf(boost::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream), m_PreviousFormats()
+tnr::FormattedTextWriteIf::FormattedTextWriteIf(std::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream), m_PreviousFormats()
 {
 	// To save checking for an empty stack, we start off with a value of NewLine On
 	m_PreviousFormats.push(true);
@@ -288,7 +288,7 @@ int tnr::FormattedTextWriteIf::write(std::string &description, tnr_format &forma
  * The way text is written, each value is after the colon on a line. The parser reads a line of text,
  * if there is a colon, it reads a number after the colon
  */
-tnr::FormattedTextReadIf::FormattedTextReadIf(boost::shared_ptr<std::istream> _stream): m_level(0), m_stream(_stream)
+tnr::FormattedTextReadIf::FormattedTextReadIf(std::shared_ptr<std::istream> _stream): m_level(0), m_stream(_stream)
 {
 }
 

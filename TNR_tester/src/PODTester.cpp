@@ -49,7 +49,7 @@ POD_Tester::~POD_Tester()
 void printString(const char * title, const std::string &s)
 {
 	printf("%s : ", title);
-	BOOST_FOREACH(char c, s)
+	for (char c: s)
 	{
 		printf("%02x", (U8)c);
 	}
@@ -59,7 +59,7 @@ void printString(const char * title, const std::string &s)
 bool POD_Tester::testTextLogWriteIf()
 {
 	bool result = true;
-	boost::shared_ptr<std::stringstream> wstream1(new std::stringstream());
+	std::shared_ptr<std::stringstream> wstream1(new std::stringstream());
 	TextLogWriteIf tlwif(wstream1);
 	result = testTextWriteIf(tlwif);
 	cout << wstream1->str() << endl;
@@ -69,7 +69,7 @@ bool POD_Tester::testTextLogWriteIf()
 bool POD_Tester::testSimpleTextWriteIf()
 {
 	bool result = true;
-	boost::shared_ptr<std::stringstream> wstream2(new std::stringstream());
+	std::shared_ptr<std::stringstream> wstream2(new std::stringstream());
 	SimpleTextWriteIf stwif(wstream2);
 	result = testTextWriteIf(stwif);
 	cout << wstream2->str() << endl;
@@ -80,7 +80,7 @@ bool POD_Tester::testSimpleTextWriteIf()
 bool POD_Tester::testTextWriteIf(tnr::tnr_write_interface & wif)
 {
 	bool result = true;
-//	boost::shared_ptr<std::stringstream> _wstream(new std::stringstream());
+//	std::shared_ptr<std::stringstream> _wstream(new std::stringstream());
 
 //	TextLogWriteIf mswif(_wstream);
 
@@ -160,8 +160,8 @@ bool POD_Tester::testTNRNestedContainer()
 
 	std::string rhs((const char *)testBytes);
 
-	boost::shared_ptr<std::stringstream> _wstream(new std::stringstream());
-	boost::shared_ptr<std::stringstream> _rstream(new std::stringstream(rhs));
+	std::shared_ptr<std::stringstream> _wstream(new std::stringstream());
+	std::shared_ptr<std::stringstream> _rstream(new std::stringstream(rhs));
 
 	StreamWriteIf mswif(_wstream);
 	StreamReadIf msrif(_rstream);
@@ -316,8 +316,8 @@ bool POD_Tester::testTNRContainer()
 
 	std::string rhs((const char *)testBytes);
 
-	boost::shared_ptr<std::stringstream> _wstream(new std::stringstream());
-	boost::shared_ptr<std::stringstream> _rstream(new std::stringstream(rhs));
+	std::shared_ptr<std::stringstream> _wstream(new std::stringstream());
+	std::shared_ptr<std::stringstream> _rstream(new std::stringstream(rhs));
 
 	StreamWriteIf mswif(_wstream);
 	StreamReadIf msrif(_rstream);
@@ -491,7 +491,7 @@ bool POD_Tester::testPODType()
 bool POD_Tester::testMemoryStreamIf()
 {
 	bool result = true;
-	boost::shared_ptr<std::ostream> _wstream(new std::stringstream);
+	std::shared_ptr<std::ostream> _wstream(new std::stringstream);
 
 	StreamWriteIf mswif(_wstream);
 
@@ -545,11 +545,11 @@ bool POD_Tester::testMemoryStreamIf()
 
 	// Is the string in the output stream equal to the predicted stream?
 	// Tricky casting to turn the generic ostream pointer into the actual stringstream
-	result = result && (boost::dynamic_pointer_cast<std::stringstream>(_wstream)->str() == rhs);
+	result = result && (std::dynamic_pointer_cast<std::stringstream>(_wstream)->str() == rhs);
 
-	boost::shared_ptr<std::istream> _rstream(new std::stringstream(rhs));
+	std::shared_ptr<std::istream> _rstream(new std::stringstream(rhs));
 	StreamReadIf msrif(_rstream);
-	printString("rstream ", boost::dynamic_pointer_cast<std::stringstream>(_rstream)->str());
+	printString("rstream ", std::dynamic_pointer_cast<std::stringstream>(_rstream)->str());
 
 	// Now push the contents of the write stream into the input stream
 
@@ -608,7 +608,7 @@ bool POD_Tester::testMemoryStreamIf()
 bool POD_Tester::testFixedArray()
 {
 	bool result = true;
-	boost::shared_ptr<std::ostream> _stream(new std::stringstream);
+	std::shared_ptr<std::ostream> _stream(new std::stringstream);
 	StreamWriteIf mswif(_stream);
 
 	POD_U32_ptr val1(new POD_U32(0x11111111, "val"));
@@ -652,17 +652,17 @@ bool POD_Tester::testFixedArray()
 	result = result && (u32array2.write(mswif) == 0);
 
 	// Is the string in the output stream equal to the predicted stream?
-	printString("stream", boost::dynamic_pointer_cast<std::stringstream>(_stream)->str());
+	printString("stream", std::dynamic_pointer_cast<std::stringstream>(_stream)->str());
 	printString("rhs   ", rhs);
 
 	// Is the string in the output stream equal to the predicted stream?
 	// Tricky casting to turn the generic ostream pointer into the actual stringstream
-	result = result && (boost::dynamic_pointer_cast<std::stringstream>(_stream)->str() == rhs);
+	result = result && (std::dynamic_pointer_cast<std::stringstream>(_stream)->str() == rhs);
 
 	// Readback test - create a new empty FixedArray and read it back from the stream
 	TNRFixedArray read_u32array1("Readback Array of U32", 6, recordType1);
 	TNRFixedArray read_u32array2("Array of 3 U32", 3, recordType2);
-	boost::shared_ptr<std::istream> _rstream(new std::stringstream(rhs));
+	std::shared_ptr<std::istream> _rstream(new std::stringstream(rhs));
 	StreamReadIf msrif(_rstream);
 
 	result = result && (read_u32array1.read(msrif) == 0);
@@ -689,7 +689,7 @@ bool POD_Tester::testFixedArray()
 bool POD_Tester::testCountedArray()
 {
 	bool result = true;
-	boost::shared_ptr<std::ostream> _stream(new std::stringstream);
+	std::shared_ptr<std::ostream> _stream(new std::stringstream);
 	StreamWriteIf mswif(_stream);
 
 	POD_U16_ptr val1(new POD_U16(0x1234, "val"));
@@ -737,11 +737,11 @@ bool POD_Tester::testCountedArray()
 	result = result && (u16array2.write(mswif) == 0);
 
 	// Is the string in the output stream equal to the predicted stream?
-	printString("stream", boost::dynamic_pointer_cast<std::stringstream>(_stream)->str());
+	printString("stream", std::dynamic_pointer_cast<std::stringstream>(_stream)->str());
 	printString("rhs   ", rhs);
 
 	// Tricky casting to turn the generic ostream pointer into the actual stringstream
-	result = result && (boost::dynamic_pointer_cast<std::stringstream>(_stream)->str() == rhs);
+	result = result && (std::dynamic_pointer_cast<std::stringstream>(_stream)->str() == rhs);
 
 	// Readback test - create a new empty CountedArray and read it back from the stream
 	tnr_baseData_ptr read_countType1(new POD_U8(0, "POD_U8 countType1"));
@@ -752,7 +752,7 @@ bool POD_Tester::testCountedArray()
 	tnr_baseData_ptr read_recordType2(new POD_U16(0, "POD_U16 recordType2"));
 	TNRCountedArray read_u16array2("Array of U32", read_countType2, read_recordType1);
 
-	boost::shared_ptr<std::istream> _rstream(new std::stringstream(rhs));
+	std::shared_ptr<std::istream> _rstream(new std::stringstream(rhs));
 	StreamReadIf msrif(_rstream);
 
 	result = result && (read_u16array1.read(msrif) == 0);
@@ -793,10 +793,10 @@ bool POD_Tester::testTNR_C_String()
 	rhs.append("Teddy");
 	rhs.push_back('\0');
 
-	boost::shared_ptr<std::stringstream> _wstream(new std::stringstream());
-	boost::shared_ptr<std::stringstream> _rstream(new std::stringstream(rhs));
+	std::shared_ptr<std::stringstream> _wstream(new std::stringstream());
+	std::shared_ptr<std::stringstream> _rstream(new std::stringstream(rhs));
 
-//	boost::shared_ptr<std::ostream> _stream(new std::stringstream);
+//	std::shared_ptr<std::ostream> _stream(new std::stringstream);
 	StreamWriteIf mswif(_wstream);
 	StreamReadIf msrif(_rstream);
 

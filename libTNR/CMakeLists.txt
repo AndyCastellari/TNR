@@ -22,7 +22,6 @@ if(NOT TARGET TNRlib)
 
     target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 
-    target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../boost_1_64_0/)
     target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../rapidjson/include/)
 
 # Set default compile flags for GCC

@@ -29,7 +29,7 @@ using namespace std;
 
 namespace tnr {
 
-TextLogWriteIf::TextLogWriteIf(boost::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream)
+TextLogWriteIf::TextLogWriteIf(std::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream)
 {
 	// TODO Auto-generated constructor stub
 

@@ -183,7 +183,7 @@ bool BasicJSONParser::AddFixedArrayToContainer( const char * containerName,
 		if (addToOM)
 		{
 			// Add parent object to dictionary, i.e. c with name found earlier
-			tnr_baseData_ptr t = boost::dynamic_pointer_cast<tnr_baseData>( fixed );
+			tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( fixed );
 			t->setDescription(ObjectName);
 			result = m_om.AddObject(t);
 		}
@@ -256,7 +256,7 @@ bool BasicJSONParser::AddCountedArrayToContainer(	const char * containerName,
 			if (addToOM)
 			{
 				// Add parent object to dictionary, i.e. c with name found earlier
-				tnr_baseData_ptr t = boost::dynamic_pointer_cast<tnr_baseData>( counted );
+				tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( counted );
 				t->setDescription(ObjectName);
 				result = m_om.AddObject(t);
 			}
@@ -380,7 +380,7 @@ bool BasicJSONParser::parseTNRObject(const char * containerName, TNRContainer_pt
 			local_c->setFormat(child_format);	// Set format of this record
 
 			// Iterate over members
-			for (Value::ConstMemberIterator itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
+			for (auto itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
 			{
 				if ( itr->value.IsObject() )
 				{
@@ -432,7 +432,7 @@ bool BasicJSONParser::parseTNRObject(const char * containerName, TNRContainer_pt
 			if (result && addToOM)
 			{
 				// Add parent object to dictionary, i.e. c with name found earlier
-				tnr_baseData_ptr t = boost::dynamic_pointer_cast<tnr_baseData>( local_c );
+				tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( local_c );
 				t->setDescription(objectName);
 				result = m_om.AddObject(t);
 			}
@@ -469,7 +469,7 @@ bool BasicJSONParser::parseJSONToTNR(const char * containerName, TNRContainer_pt
 	else
 	{
 		// Iterate over members
-		for (Value::ConstMemberIterator itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
+        for (auto itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr)
 		{
 			if ( itr->value.IsObject() )
 			{
@@ -507,7 +507,7 @@ bool BasicJSONParser::parseJSONToTNR(const char * containerName, TNRContainer_pt
 	if (result && addToOM)
 	{
 		// Add parent object to dictionary, i.e. c with name found earlier
-		tnr_baseData_ptr t = boost::dynamic_pointer_cast<tnr_baseData>( c );
+		tnr_baseData_ptr t = std::dynamic_pointer_cast<tnr_baseData>( c );
 		t->setDescription(objectName);
 		result = m_om.AddObject(t);
 	}

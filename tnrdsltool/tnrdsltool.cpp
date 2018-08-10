@@ -206,7 +206,7 @@ int main(int argc, char** argv)
 
     		// Output library files and paths
     		cout << "library files :";
-    		BOOST_FOREACH(std::string & s, library)
+    		for (std::string & s: library)
 			{
     			cout << " " << s;
 			}
@@ -214,7 +214,7 @@ int main(int argc, char** argv)
 
     		// Output arguments
     		cout << "library paths :";
-    		BOOST_FOREACH(std::string & s, libraryPaths)
+    		for (std::string & s: libraryPaths)
 			{
     			cout << " " << s;
 			}
@@ -231,7 +231,7 @@ int main(int argc, char** argv)
 
     	// For now we are ignoring the library paths - that will be used when opening the files
 		cout << endl << "Parsing library files" << endl;
-		BOOST_FOREACH(std::string & libFile, library)
+		for (std::string & libFile: library)
 		{
 			std::string library_json;
 	    	if (LoadFileToString(libFile.c_str(), library_json))
@@ -281,8 +281,8 @@ int main(int argc, char** argv)
                     {
                        mode_out |= ios_base::binary;
                     }
-    				boost::shared_ptr<std::ifstream> in_stream(new std::ifstream());
-    				boost::shared_ptr<std::ofstream> out_stream(new std::ofstream());
+    				std::shared_ptr<std::ifstream> in_stream(new std::ifstream());
+    				std::shared_ptr<std::ofstream> out_stream(new std::ofstream());
 
     				// try to open the input and output file
     				in_stream->open(inputFile.c_str(), mode_in);

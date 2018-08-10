@@ -33,7 +33,7 @@ namespace tnr {
 class FormattedTextWriteIf: public tnr::tnr_write_interface
 {
 public:
-	FormattedTextWriteIf(boost::shared_ptr<std::ostream> _stream);
+	FormattedTextWriteIf(std::shared_ptr<std::ostream> _stream);
 	virtual ~FormattedTextWriteIf();
 
 	virtual int write(U8 value, std::string &description, tnr_format &format );
@@ -72,14 +72,14 @@ protected:
 	//! Tracks how many levels we are nested to allow indenting text output
 	unsigned int m_level;
 	//! The output stream where output is written
-	boost::shared_ptr<std::ostream> m_stream;
+	std::shared_ptr<std::ostream> m_stream;
 	//! Keeps a stack of whether the higher level had newline enabled or not
 	std::stack<bool> m_PreviousFormats;
 };
 
 class FormattedTextReadIf: public tnr::tnr_read_interface {
 public:
-	FormattedTextReadIf(boost::shared_ptr<std::istream> _stream);
+	FormattedTextReadIf(std::shared_ptr<std::istream> _stream);
 	virtual ~FormattedTextReadIf();
 
 	virtual int read(U8 & value, tnr_format &format );
@@ -101,7 +101,7 @@ protected:
 	int getNextNumber(U32 & value, tnr_format &format);
 
 	unsigned int m_level;
-	boost::shared_ptr<std::istream> m_stream;
+	std::shared_ptr<std::istream> m_stream;
 };
 
 } /* namespace tnr */
