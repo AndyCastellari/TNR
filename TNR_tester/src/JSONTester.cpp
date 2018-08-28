@@ -69,12 +69,15 @@ bool JSONTester::testParsing()
     std::string test =  "{\"a\":{\"z\":21}} ";
     if ( document.Parse<0>( test.c_str() ).HasParseError() ) {
         std::cout << "Error parsing" << std::endl;
-    } else {
+        result = false;
+    } else
+    {
         if ( document[ "a" ].IsObject() ) {
             rapidjson::StringBuffer sb;
             rapidjson::Writer<rapidjson::StringBuffer> writer( sb );
             document[ "a" ].Accept( writer );
-            std::cout << sb.GetString() << std::endl;
+            std::cout << "<" << sb.GetString() << ">" << std::endl;
+            result = (strcmp(sb.GetString(), "{\"z\":21}") == 0);
         }
     }
 
