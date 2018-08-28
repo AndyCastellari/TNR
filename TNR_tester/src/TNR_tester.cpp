@@ -32,10 +32,79 @@ using namespace std;
 #include "PODTester.h"
 #include "JSONTester.h"
 #include <rapidjson/rapidjson.h>
+#include <gtest/gtest.h>
 
 #include "TextLogWriteIf.h"
 #include "SimpleTextReadWriteIf.h"
 
+TEST(TNRTestCase, testPODType)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testPODType());
+}
+
+TEST(TNRTestCase, testFixedArray)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testFixedArray());
+}
+
+TEST(TNRTestCase, testCountedArray)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testCountedArray());
+}
+
+TEST(TNRTestCase, testMemoryStreamIf)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testMemoryStreamIf());
+}
+TEST(TNRTestCase, testTNRContainer)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testTNRContainer());
+}
+TEST(TNRTestCase, testTNRNestedContainer)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testTNRNestedContainer());
+}
+TEST(TNRTestCase, testTextLogWriteIf)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testTextLogWriteIf());
+}
+TEST(TNRTestCase, testSimpleTextWriteIf)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testSimpleTextWriteIf());
+}
+TEST(TNRTestCase, testTNR_C_String)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testTNR_C_String());
+}
+TEST(TNRTestCase, testObjectMap)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testObjectMap());
+}
+
+TEST(TNRTestCase, JSONTesterTestParsing)
+{
+    JSONTester jt;
+    ASSERT_TRUE(jt.testParsing());
+}
+
+
+TEST(TNRTestCase, testJSON_to_Container)
+{
+    JSONTester jt;
+    ASSERT_TRUE(jt.testJSON_to_Container());
+}
+
+#if 0
 int main() {
     cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
     POD_Tester pt;
@@ -50,7 +119,7 @@ int main() {
     printf("Test testTNRContainer %s\n", (b5 = pt.testTNRContainer()) ? "PASSED" : "FAILED");
     printf("Test testTNRNestedContainer %s\n", (b6 = pt.testTNRNestedContainer()) ? "PASSED" : "FAILED");
     printf("Test testTextLogWriteIf %s\n", (b7 = pt.testTextLogWriteIf()) ? "PASSED" : "FAILED");
-    printf("Test testTextLogWriteIf %s\n", (b8 = pt.testSimpleTextWriteIf()) ? "PASSED" : "FAILED");
+    printf("Test testSimpleTextWriteIf %s\n", (b8 = pt.testSimpleTextWriteIf()) ? "PASSED" : "FAILED");
 
     printf("Test testTNR_C_String %s\n", (b9 = pt.testTNR_C_String()) ? "PASSED" : "FAILED");
 
@@ -66,3 +135,4 @@ int main() {
 
     return 0;
 }
+#endif
