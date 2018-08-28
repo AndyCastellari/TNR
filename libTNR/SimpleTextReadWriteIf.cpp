@@ -44,56 +44,56 @@ std::string tnr::SimpleTextWriteIf::padding()
         return std::string(m_level * 2, ' ');
 }
 
-int tnr::SimpleTextWriteIf::write(U8 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(U8 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << std::setw(2) << "0x" << (U16)value << endl;
     return result;
 }
 
-int tnr::SimpleTextWriteIf::write(S8 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(S8 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
     return result;
 }
 
-int tnr::SimpleTextWriteIf::write(U16 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(U16 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
     return result;
 }
 
-int tnr::SimpleTextWriteIf::write(S16 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(S16 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
     return result;
 }
 
-int tnr::SimpleTextWriteIf::write(U24 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(U24 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return result;
 }
 
-int tnr::SimpleTextWriteIf::write(S24 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(S24 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return result;
 }
 
-int tnr::SimpleTextWriteIf::write(U32 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(U32 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return result;
 }
 
-int tnr::SimpleTextWriteIf::write(S32 value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(S32 value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
@@ -104,7 +104,7 @@ int tnr::SimpleTextWriteIf::write(S32 value, std::string &description, tnr_forma
  * Write a textual description of a string enclosing with double quotes
  * TBC Currently can't cope with a double quote in the string itself
  */
-int tnr::SimpleTextWriteIf::write(std::string &value, std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(std::string &value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << '"' << value << '"' << endl;
@@ -112,12 +112,12 @@ int tnr::SimpleTextWriteIf::write(std::string &value, std::string &description, 
 
 }
 
-void tnr::SimpleTextWriteIf::nextLevel(tnr_format &format)
+void tnr::SimpleTextWriteIf::nextLevel(tnr_format &)
 {
     m_level++;
 }
 
-void tnr::SimpleTextWriteIf::previousLevel(tnr_format &format)
+void tnr::SimpleTextWriteIf::previousLevel(tnr_format &)
 {
     if (m_level > 0)
     {
@@ -129,7 +129,7 @@ void tnr::SimpleTextWriteIf::previousLevel(tnr_format &format)
     }
 }
 
-int tnr::SimpleTextWriteIf::write(std::string &description, tnr_format &format)
+int tnr::SimpleTextWriteIf::write(std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << endl;
@@ -227,7 +227,7 @@ int tnr::SimpleTextReadIf::read(S32& value, tnr_format &format)
  * Reading a string consists of reading until the " : " then
  * skipping the
  */
-int tnr::SimpleTextReadIf::read(std::string &value, tnr_format &format)
+int tnr::SimpleTextReadIf::read(std::string &value, tnr_format &)
 {
     int result = 0;
 
@@ -254,15 +254,15 @@ int tnr::SimpleTextReadIf::read(std::string &value, tnr_format &format)
     return result;    // TODO
 }
 
-void tnr::SimpleTextReadIf::nextLevel(tnr_format &format)
+void tnr::SimpleTextReadIf::nextLevel(tnr_format &)
 {
 }
 
-void tnr::SimpleTextReadIf::previousLevel(tnr_format &format)
+void tnr::SimpleTextReadIf::previousLevel(tnr_format &)
 {
 }
 
-int tnr::SimpleTextReadIf::getNextNumber(U32 & value, tnr_format &format)
+int tnr::SimpleTextReadIf::getNextNumber(U32 & value, tnr_format &)
 {
     std::string temp;
     do
