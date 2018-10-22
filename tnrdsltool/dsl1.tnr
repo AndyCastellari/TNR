@@ -1,0 +1,49 @@
+define header =
+{
+    U8("Type");
+    U16("Height");
+    U32("Height", "Weight", newline=on, description=off, format="<%s>");
+    U24();
+    FixedArray(5, "FixedArray", newline=off) : U8();
+    CountedArray(U16("Number", format="%02d"), "Variable Array") : { U32("P1"); String("Driver");  }
+}
+
+
+define header =
+{   /* define */
+    Union(U8("Selector"), "My first Union") :
+    {   /* Union */
+        U8("First variant");
+        {   /* Second variant */
+            String("Second Variant");
+            U16("16-bit");
+        }   /* end of second variant */
+        String("Third Variant");
+    }   /* End Union */
+}   /* end define */
+
+main =
+{   /* main */
+    U8("Type");
+    U16("");
+    CountedArray(U32("Count"), "Keys", newline=off) : U8(description=off);
+    FixedArray(8, "Fixed") :
+    {  /* Fixed array */
+        String("Phone Model");
+        U16("Number of Contacts");
+        U32("Version");
+    }  /* End of fixed array */
+    Union(U8("Selector"), format="0x%04x") :
+    {  /* union */
+        case 1:
+           U8("8-bit");
+        case 12:
+        case 13:
+        {  /* case 12, 13 */
+            String("Name");
+            U16("16-bit");
+        }  /* end case 12,13 */
+        String("Another Name");
+    }  /* end of union */
+}   /* end of main */
+
