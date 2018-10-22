@@ -40,49 +40,49 @@ TextLogWriteIf::~TextLogWriteIf()
     // TODO Auto-generated destructor stub
 }
 
-int TextLogWriteIf::write(U8 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(U8 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << (U16)value << endl;
     return 0;
 }
 
-int TextLogWriteIf::write(S8 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(S8 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << (S16)value << endl;
     return 0;
 }
 
-int TextLogWriteIf::write(U16 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(U16 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return 0;
 }
 
-int TextLogWriteIf::write(S16 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(S16 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return 0;
 }
 
-int TextLogWriteIf::write(U24 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(U24 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return 0;
 }
 
-int TextLogWriteIf::write(S24 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(S24 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return 0;
 }
 
-int TextLogWriteIf::write(U32 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(U32 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return 0;
 }
 
-int TextLogWriteIf::write(S32 value, std::string &description, tnr_format &format)
+int TextLogWriteIf::write(S32 value, std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << " : " << std::hex << "0x" << value << endl;
     return 0;
@@ -92,7 +92,7 @@ int TextLogWriteIf::write(S32 value, std::string &description, tnr_format &forma
  * Write a textual description of a string enclosing with double quotes
  * TBC Currently can't cope with a double quote in the string itself
  */
-int tnr::TextLogWriteIf::write(std::string &value, std::string &description, tnr_format &format)
+int tnr::TextLogWriteIf::write(std::string &value, std::string &description, tnr_format &)
 {
     int result = 0;
     *m_stream << padding() << description << " : " << '"' << value << '"' << endl;
@@ -100,7 +100,7 @@ int tnr::TextLogWriteIf::write(std::string &value, std::string &description, tnr
 
 }
 
-int TextLogWriteIf::write(std::string &description, tnr_format &format)
+int TextLogWriteIf::write(std::string &description, tnr_format &)
 {
     *m_stream << padding() << description << endl;
     return 0;
@@ -109,7 +109,7 @@ int TextLogWriteIf::write(std::string &description, tnr_format &format)
 /**
  * nextLevel creates a new brace level at the current indent and then increases the indent level
  */
-void TextLogWriteIf::nextLevel(tnr_format &format)
+void TextLogWriteIf::nextLevel(tnr_format &)
 {
     *m_stream << padding() << "{" << endl;
     m_level++;
@@ -119,7 +119,7 @@ void TextLogWriteIf::nextLevel(tnr_format &format)
  * previousLevel ends a nested section, so the brace should be at the same level as the matching
  * nextLevel - hence decrease level then write brace.
  */
-void TextLogWriteIf::previousLevel(tnr_format &format)
+void TextLogWriteIf::previousLevel(tnr_format &)
 {
     if (m_level > 0)
     {
