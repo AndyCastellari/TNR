@@ -68,12 +68,12 @@ void ParseDsl(std::string mainObject,
         CommonTokenStream tokens(&lexer);
 
         tokens.fill();
-        for (auto token : tokens.getTokens()) {
-            std::cout << token->toString() << std::endl;
-        }
+//        for (auto token : tokens.getTokens()) {
+//            std::cout << token->toString() << std::endl;
+//        }
 
         TNRDSLParser parser(&tokens);
-        tree::ParseTree *tree = parser.main();
+        tree::ParseTree *tree = parser.startRuleName();
 
         std::cout << tree->toStringTree(&parser) << std::endl;
         tnrDslFile.close();
