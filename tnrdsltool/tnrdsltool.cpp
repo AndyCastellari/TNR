@@ -41,9 +41,45 @@
 #include <fstream>
 
 
+#include "antlr4-runtime.h"
+#include "TNRDSLLexer.h"
+#include "TNRDSLParser.h"
+
+using namespace antlr4;
+
 using namespace rapidjson;
 using namespace tnr;
 using namespace std;
+
+void ParseDsl(std::string mainObject,
+              vector<string> library,
+              vector<string> libraryPaths,
+              std::string inputFile,
+              std::string outputFile,
+              bool  binaryToText,
+              bool  dryRun,
+              bool  printObjectMap)
+{
+    string line;
+    ifstream tnrDslFile (mainObject);
+    if (tnrDslFile.is_open()) {
+        ANTLRInputStream input(tnrDslFile);
+        TNRDSLLexer lexer(&input);
+        CommonTokenStream tokens(&lexer);
+
+        tokens.fill();
+        for (auto token : tokens.getTokens()) {
+            std::cout << token->toString() << std::endl;
+        }
+
+        TNRDSLParser parser(&tokens);
+        tree::ParseTree *tree = parser.main();
+
+        std::cout << tree->toStringTree(&parser) << std::endl;
+        tnrDslFile.close();
+    }
+
+}
 
 /**
  * Read file into string
@@ -226,9 +262,20 @@ int main(int argc, char** argv)
             cout << "Write to  " << outputFile << endl;
         }
 
-        //===============================================================================================
-        // Parse the libraries (if any)
 
+        //===============================================================================================
+#if 1
+        // DSL Parsing
+        // Parse the libraries (if any)
+        ParseDsl(mainObjectFile,
+                 library,
+                 libraryPaths,
+                 inputFile,
+                 outputFile,
+                 binaryToTextSwitch.isSet(),
+                 dryRunSwitch.isSet(),
+                 diagObjectMapSwitch.isSet());
+#else
         // For now we are ignoring the library paths - that will be used when opening the files
         cout << endl << "Parsing library files" << endl;
         for (std::string & libFile: library)
@@ -272,7 +319,7 @@ int main(int argc, char** argv)
                 {
                     ios_base::openmode mode_in = ios_base::in;
                     ios_base::openmode mode_out = ios_base::out;
-                    
+
                     if (readBinary)
                     {
                        mode_in |= ios_base::binary;
@@ -355,7 +402,7 @@ int main(int argc, char** argv)
             // Output Object Map
             om.PrintMap();
         }
-
+#endif
     }
     catch (TCLAP::ArgException &e)  // catch any exceptions
     {

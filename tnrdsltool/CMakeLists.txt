@@ -1,13 +1,21 @@
 cmake_minimum_required(VERSION 2.8.9)
 
 cmake_policy(SET CMP0048 NEW)
-project (tnrdsltool VERSION 1.3.1 LANGUAGES CXX)
+project (TnrDslParser VERSION 1.3.1 LANGUAGES CXX)
 
-add_executable(tnrdsltool tnrdsltool.cpp)
+add_executable(tnrdsltool tnrdsltool.cpp
+        TNRDSLBaseListener.cpp
+        TNRDSLLexer.cpp
+        TNRDSLListener.cpp
+        TNRDSLParser.cpp
+        )
 
-target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap-1.2.2/include/)
+target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap-1.2.2/include/
+        ${CMAKE_CURRENT_LIST_DIR}/../../antlr4-cpp-runtime/run/usr/local/include/antlr4-runtime)
 
-target_link_libraries(tnrdsltool TNRlib)
+target_link_libraries(tnrdsltool TNRlib
+        ${CMAKE_CURRENT_LIST_DIR}/../../antlr4-cpp-runtime/dist/libantlr4-runtime.a
+        )
 
 # copy files to test tnrtool
 #configure_file(testObject1.json testObject1.json COPYONLY)
