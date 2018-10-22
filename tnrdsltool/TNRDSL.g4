@@ -6,7 +6,7 @@ definition : 'define' ID '=' expression ;
 main : 'main' '=' expression ;
 
 expression : '{' (expression)+ '}'
-           | variable ';' ;
+           | variable ';';
 
 variable : simple_variable
             | fixed_array
@@ -14,8 +14,8 @@ variable : simple_variable
             | variant ;
 
 simple_variable : ID '(' optional_parameters ')' ;
-fixed_array : 'FixedArray' '(' NUMBER optional_parameters ')' ':' expression ;
-counted_array : 'CountedArray' '(' simple_variable optional_parameters ')' ':' expression ;
+fixed_array : 'FixedArray' '(' NUMBER optional_parameters ')' ':' (expression | variable) ;
+counted_array : 'CountedArray' '(' simple_variable optional_parameters ')' ':' (expression | variable) ;
 variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_parameters '}';
 
 union_parameters : (union_param)* ;

@@ -4,8 +4,8 @@ define header =
     U16("Height");
     U32("Height", "Weight", newline=on, description=off, format="<%s>");
     U24();
-    FixedArray(5, "FixedArray", newline=off) : U8();;
-    FixedArray(5) : U8();;
+    FixedArray(5, "FixedArray", newline=off) : U8();
+    FixedArray(5) : U8();
     CountedArray(U16("Number", format="%02d"), "Variable Array") : { U32("P1"); String("Driver");  };
 }
 
