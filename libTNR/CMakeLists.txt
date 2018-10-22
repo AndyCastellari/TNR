@@ -7,7 +7,7 @@ cmake_policy(SET CMP0048 NEW)
 project(TNRlib VERSION 1.3.1 LANGUAGES CXX)
 
 if(NOT TARGET TNRlib)
-    set(TNRlib_SRC 
+    set(TNRlib_SRC
         BaseBinaryArchiveReadWrite.cpp
         BasicJSONParser.cpp
         FormattedTextReadWriteIf.cpp
@@ -17,12 +17,12 @@ if(NOT TARGET TNRlib)
         TextLogWriteIf.cpp
         tnr.cpp
     )
- 
+
     add_library(TNRlib STATIC ${TNRlib_SRC})
 
     target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 
-    target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../rapidjson/include/)
+    target_include_directories(TNRlib SYSTEM PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../rapidjson/include/)
 
 # Set default compile flags for GCC
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -34,6 +34,6 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(TNRlib)
 endif()
 
- 
 
- 
+
+
