@@ -5,6 +5,7 @@ project (TnrDslParser VERSION 1.3.1 LANGUAGES CXX)
 
 add_executable(tnrdsltool tnrdsltool.cpp
         TNRDSLBaseListener.cpp
+        TNRDSLBaseVisitor.cpp
         TNRDSLLexer.cpp
         TNRDSLListener.cpp
         TNRDSLParser.cpp
