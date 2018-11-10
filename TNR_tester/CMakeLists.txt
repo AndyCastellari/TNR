@@ -4,7 +4,7 @@ cmake_policy(SET CMP0048 NEW)
 project (TNRtester VERSION 1.3.1 LANGUAGES CXX)
 
 if (NOT TARGET gtest)
-    add_subdirectory(../../GoogleTestFramework GoogleTestFramework)
+    add_subdirectory(../../googletest GoogleTestFramework)
 endif ()
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
