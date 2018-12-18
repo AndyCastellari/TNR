@@ -38,24 +38,25 @@ namespace tnr {
 class BaseBinaryArchiveWrite: public tnr::tnr_write_interface {
 public:
     BaseBinaryArchiveWrite();
-    virtual ~BaseBinaryArchiveWrite();
 
-    virtual int write(U8 value, std::string &description, tnr_format &format );
-    virtual int write(S8 value, std::string &description, tnr_format &format );
-    virtual int write(U16 value, std::string &description, tnr_format &format);
-    virtual int write(S16 value, std::string &description, tnr_format &format);
-    virtual int write(U24 value, std::string &description, tnr_format &format);
-    virtual int write(S24 value, std::string &description, tnr_format &format);
-    virtual int write(U32 value, std::string &description, tnr_format &format);
-    virtual int write(S32 value, std::string &description, tnr_format &format);
-    virtual int write(std::string &value, std::string &description, tnr_format &format);
+    ~BaseBinaryArchiveWrite() override;
+
+    int write(U8 value, std::string &description, tnr_format &format ) override;
+    int write(S8 value, std::string &description, tnr_format &format ) override;
+    int write(U16 value, std::string &description, tnr_format &format) override;
+    int write(S16 value, std::string &description, tnr_format &format) override;
+    int write(U24 value, std::string &description, tnr_format &format) override;
+    int write(S24 value, std::string &description, tnr_format &format) override;
+    int write(U32 value, std::string &description, tnr_format &format) override;
+    int write(S32 value, std::string &description, tnr_format &format) override;
+    int write(std::string &value, std::string &description, tnr_format &format) override;
 
     // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-    virtual void nextLevel(tnr_format &format);
-    virtual void previousLevel(tnr_format &format);
+    void nextLevel(tnr_format &format) override;
+    void previousLevel(tnr_format &format) override;
 
     // Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
-    virtual int write(std::string &description, tnr_format &format);
+    int write(std::string &description, tnr_format &format) override;
 protected:
     //! Function to write a value as N bytes - used to wrap up all the various writes
     virtual int writeBytes(U32 value, U32 noOfBytes) = 0;        // Implemented by derived class to provide LSB or MSB
@@ -70,10 +71,11 @@ class LSBBaseBinaryArchiveWrite: public tnr::BaseBinaryArchiveWrite
 {
 public:
     LSBBaseBinaryArchiveWrite();
-    virtual ~LSBBaseBinaryArchiveWrite();
+
+    ~LSBBaseBinaryArchiveWrite() override;
 protected:
     //! Function to write a value as N bytes LSB - used to wrap up all the various writes
-    virtual int writeBytes(U32 value, U32 noOfBytes);
+    int writeBytes(U32 value, U32 noOfBytes) override;
 };
 
 //============================================================================================
@@ -82,10 +84,10 @@ class MSBBaseBinaryArchiveWrite: public tnr::BaseBinaryArchiveWrite
 {
 public:
     MSBBaseBinaryArchiveWrite();
-    virtual ~MSBBaseBinaryArchiveWrite();
+    ~MSBBaseBinaryArchiveWrite() override;
 protected:
     //! Function to write a value as N bytes MSB - used to wrap up all the various writes
-    virtual int writeBytes(U32 value, U32 noOfBytes);
+    int writeBytes(U32 value, U32 noOfBytes) override;
 };
 
 
@@ -98,21 +100,21 @@ class BaseBinaryArchiveRead: public tnr::tnr_read_interface
 {
 public:
     BaseBinaryArchiveRead();
-    virtual ~BaseBinaryArchiveRead();
+    ~BaseBinaryArchiveRead() override;
 
-    virtual int read(U8 & value, tnr_format &format );
-    virtual int read(S8 & value, tnr_format &format );
-    virtual int read(U16 & value, tnr_format &format);
-    virtual int read(S16 & value, tnr_format &format);
-    virtual int read(U24 & value, tnr_format &format);
-    virtual int read(S24 & value, tnr_format &format);
-    virtual int read(U32 & value, tnr_format &format);
-    virtual int read(S32 & value, tnr_format &format);
-    virtual int read(std::string &value, tnr_format &format);
+    int read(U8 & value, tnr_format &format ) override;
+    int read(S8 & value, tnr_format &format ) override;
+    int read(U16 & value, tnr_format &format) override;
+    int read(S16 & value, tnr_format &format) override;
+    int read(U24 & value, tnr_format &format) override;
+    int read(S24 & value, tnr_format &format) override;
+    int read(U32 & value, tnr_format &format) override;
+    int read(S32 & value, tnr_format &format) override;
+    int read(std::string &value, tnr_format &format) override;
 
     // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-    virtual void nextLevel(tnr_format &format);
-    virtual void previousLevel(tnr_format &format);
+    void nextLevel(tnr_format &format) override;
+    void previousLevel(tnr_format &format) override;
 
 //     Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
 //    virtual int read(std::string & description);
@@ -130,10 +132,11 @@ class LSBBaseBinaryArchiveRead: public tnr::BaseBinaryArchiveRead
 {
 public:
     LSBBaseBinaryArchiveRead();
-    virtual ~LSBBaseBinaryArchiveRead();
+
+    ~LSBBaseBinaryArchiveRead() override;
 protected:
     //! Function to write a value as N bytes LSB - used to wrap up all the various writes
-    virtual int readBytes(U32 & value, U32 noOfBytes);
+    int readBytes(U32 & value, U32 noOfBytes) override;
 };
 
 //============================================================================================
@@ -142,10 +145,10 @@ class MSBBaseBinaryArchiveRead: public tnr::BaseBinaryArchiveRead
 {
 public:
     MSBBaseBinaryArchiveRead();
-    virtual ~MSBBaseBinaryArchiveRead();
+    ~MSBBaseBinaryArchiveRead() override;
 protected:
     //! Function to write a value as N bytes MSB - used to wrap up all the various writes
-    virtual int readBytes(U32 & value, U32 noOfBytes);
+    int readBytes(U32 & value, U32 noOfBytes) override;
 };
 
 

@@ -32,18 +32,15 @@ void tnr_format::printFormat(const char * name)
     printf("Object (%s) - Description(%s), NewLine(%s)\n",  name, this->m_outputDescription ? "on" : "off", this->m_outputNewline ? "on" : "off");
 }
 
-//======================================================
+    tnr_format::tnr_format(const tnr_format &c) = default;
+
+    //======================================================
 tnr_baseData::tnr_baseData(const std::string &description) : m_description(description)
 {
 }
 
 tnr_baseData::tnr_baseData(const char * description) : m_description(description)
 {
-}
-
-tnr_baseData::~tnr_baseData()
-{
-    // Nothing to do - default destructors OK
 }
 
 tnr::TNRContainer::TNRContainer(const std::string &description) : tnr_baseData(description), m_values()
@@ -54,11 +51,9 @@ tnr::TNRContainer::TNRContainer(const char * description) : tnr_baseData(descrip
 {
 }
 
-tnr::TNRContainer::~TNRContainer()
-{
-}
+tnr::TNRContainer::~TNRContainer() = default;
 
-/**
+    /**
  * This method adds new values (which are not necessarily the same type)
  * to the vector to make a collection of types
  */
@@ -76,7 +71,7 @@ int tnr::TNRContainer::write(tnr_write_interface& write_if)
     write_if.write(m_description, m_format);
     write_if.nextLevel(m_format);
 
-    for (tnr_baseData_ptr value: m_values)
+    for (const auto &value: m_values)
     {
         result = value->write(write_if);
     }
@@ -92,7 +87,7 @@ int tnr::TNRContainer::read(tnr_read_interface& read_if)
 {
     int result = 0;
 
-    for (tnr_baseData_ptr value: m_values)
+    for (const auto &value: m_values)
     {
         result = value->read(read_if);
     }
@@ -107,17 +102,18 @@ tnr_baseData_ptr TNRContainer::clone()
     c->m_format = this->m_format;
 
     // New object has same count, record type and array of objects as original but array _may_ not have same values
-    for (U32 i = 0; i < m_values.size(); i++)
-    {
-        if (m_values[i] != NULL)
+    for (auto &m_value : m_values) {
+        if (m_value != nullptr)
         {
-            tnr_baseData_ptr newRecord = m_values[i]->clone();
+            tnr_baseData_ptr newRecord = m_value->clone();
             c->Add(newRecord);
         }
     }
 
     return c;
 }
+
+U32 TNRContainer::getItemCount() { return m_values.size(); }
 
 //===============================================================================================
 
@@ -145,9 +141,7 @@ tnr::TNRFixedArray::TNRFixedArray(    const char * description, U32 count, tnr_b
     }
 }
 
-tnr::TNRFixedArray::~TNRFixedArray()
-{
-}
+tnr::TNRFixedArray::~TNRFixedArray() = default;
 
 tnr_baseData_ptr & tnr::TNRFixedArray::operator [](U32 index)
 {
@@ -163,7 +157,7 @@ int tnr::TNRFixedArray::write(tnr_write_interface& write_if)
     write_if.startSection(m_format);
     write_if.write(m_description, m_format);
     write_if.nextLevel(m_format);
-    for (tnr_baseData_ptr value: m_values)
+    for (const auto &value: m_values)
     {
         result = value->write(write_if);
     }
@@ -179,7 +173,7 @@ int tnr::TNRFixedArray::read(tnr_read_interface& read_if)
 {
     int result = 0;
     read_if.nextLevel(m_format);
-    for (tnr_baseData_ptr value: m_values)
+    for (const tnr_baseData_ptr &value: m_values)
     {
         result = value->read(read_if);
     }
@@ -204,6 +198,8 @@ tnr_baseData_ptr TNRFixedArray::clone()
 
     return c;
 }
+
+U32 TNRFixedArray::getItemCount() { U32 result = m_values.size(); return result; }
 
 
 //===============================================================================================
@@ -236,11 +232,9 @@ tnr::TNRCountedArray::TNRCountedArray(    const char * description, tnr_baseData
     }
 }
 
-tnr::TNRCountedArray::~TNRCountedArray()
-{
-}
+tnr::TNRCountedArray::~TNRCountedArray() = default;
 
-tnr_baseData_ptr & tnr::TNRCountedArray::operator [](U32 index)
+    tnr_baseData_ptr & tnr::TNRCountedArray::operator [](U32 index)
 {
     return m_values[index];
 }
@@ -256,7 +250,7 @@ int tnr::TNRCountedArray::write(tnr_write_interface& write_if)
 
     result = m_count->write(write_if);
 
-    for (tnr_baseData_ptr value: m_values)
+    for (const tnr_baseData_ptr &value: m_values)
     {
         result = value->write(write_if);
     }
@@ -304,18 +298,17 @@ tnr_baseData_ptr TNRCountedArray::clone()
     return c;
 }
 
+U32 TNRCountedArray::getItemCount() { U32 result = m_values.size(); return result; }
+
 //===============================================================================================
 tnr::TNR_C_String::TNR_C_String(const std::string &value, const std::string &description) : tnr_baseData(description), m_Cstring(value)
 {
 
 }
 
-tnr::TNR_C_String::~TNR_C_String()
-{
+tnr::TNR_C_String::~TNR_C_String() = default;
 
-}
-
-// Define methods that must be implemented by the child classes
+    // Define methods that must be implemented by the child classes
 int tnr::TNR_C_String::write(tnr_write_interface &write_if)
 {
     int result = 0;

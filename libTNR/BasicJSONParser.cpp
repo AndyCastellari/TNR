@@ -67,10 +67,7 @@ BasicJSONParser::BasicJSONParser(ObjectMap & om) : m_om(om)
     m_om.AddObject(ascii);
 }
 
-BasicJSONParser::~BasicJSONParser()
-{
-    // Nothing dynamic to explicitly delete, everything uses smart pointers
-}
+BasicJSONParser::~BasicJSONParser() = default;
 
 /**
  * Find Type from Name looks up a type like U8 and
@@ -447,7 +444,7 @@ bool BasicJSONParser::parseTNRObject(const char * containerName, TNRContainer_pt
  * This is the top-level parses that whole JSON document
  * The top level document cannot be an array (currently)
  */
-bool BasicJSONParser::parseJSONToTNR(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth)
+bool BasicJSONParser::parseJSONToTNR(const char *, TNRContainer_ptr c, const char * input_json, int depth)
 {
     bool result = true;
     tnr_format output_format;

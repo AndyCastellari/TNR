@@ -35,7 +35,7 @@ namespace tnr {
 
 class BasicJSONParser {
 public:
-    BasicJSONParser(ObjectMap & om);
+    explicit BasicJSONParser(ObjectMap & om);
     virtual ~BasicJSONParser();
 
     // TBC fix this daft name

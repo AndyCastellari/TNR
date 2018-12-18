@@ -34,7 +34,6 @@
 
 #include <iostream>
 #include <typeinfo>
-#include <stdio.h>
 #include <memory>
 
 
@@ -53,8 +52,8 @@ class tnr_format
 {
     public:
         tnr_format() : m_outputNewline(true), m_outputDescription(true) {};
-        tnr_format(const tnr_format &c) : m_outputNewline(c.m_outputNewline), m_outputDescription(c.m_outputDescription) {};
-        ~tnr_format() {};
+        tnr_format(const tnr_format &c);;
+        ~tnr_format() = default;
 
         // Setters and getters for format booleans
         // There could more later on and not necessarily booleans, for example, make the " : " able to specified
@@ -77,8 +76,8 @@ class tnr_format
 class tnr_write_interface
 {
 protected:
-    tnr_write_interface() { };
-    virtual ~tnr_write_interface() { };
+    tnr_write_interface() = default;
+    virtual ~tnr_write_interface() = default;
 public:
     virtual int write(U8 value, std::string &description, tnr_format &format) = 0;
     virtual int write(S8 value, std::string &description, tnr_format &format) = 0;
@@ -105,8 +104,8 @@ public:
 class tnr_read_interface
 {
 protected:
-    tnr_read_interface() { };
-    virtual ~tnr_read_interface() { };
+    tnr_read_interface() = default;;
+    virtual ~tnr_read_interface() = default;;
 public:
     virtual int read(U8 &value, tnr_format &format) = 0;
     virtual int read(S8 &value, tnr_format &format) = 0;
@@ -136,11 +135,11 @@ class tnr_baseData
 {
 public:
     //! Construct from a string
-    tnr_baseData(const std::string &description);
+    explicit tnr_baseData(const std::string &description);
     //! Construct from a null terminated string (for convenience)
-    tnr_baseData(const char * description);
+    explicit tnr_baseData(const char * description);
     //! Destructor is virtual to force all the derived classes to be virtual
-    virtual ~tnr_baseData();
+    virtual ~tnr_baseData() = default;
 
     // Define methods that must be implemented by the child classes
     virtual int write(tnr_write_interface &write_if) = 0;
@@ -163,7 +162,7 @@ public:
     void setOutputDescription(bool onOff) { m_format.setOutputDescription(onOff); };
     bool getOutputDescription() { return m_format.getOutputDescription(); };
     //! Apply an existing format to the object
-    void setFormat(tnr_format output_format) { m_format = output_format; };
+    void setFormat(const tnr_format &output_format) { m_format = output_format; };
 
 protected:
     std::string m_description;
@@ -187,25 +186,16 @@ public:
     {
     }
     //!  Nothing dynamic so destructor doesn't need to do anything
-    virtual ~POD()
-    {
-    }
+    ~POD() override = default;
 
     //! Output the POD type to the write interface
-    virtual int write(tnr_write_interface &write_if)
-    {
-        return write_if.write(m_value, m_description, m_format);
-    }
+    int write(tnr_write_interface &write_if) override;
 
     //! Read the POD type from the read interface
-    virtual int read(tnr_read_interface &read_if)
-    {
-        int result = read_if.read(m_value, m_format);
-        return result;
-    }
+    int read(tnr_read_interface &read_if) override;
 
     //! Create a deep copy of the variable
-    virtual tnr_baseData_ptr clone()
+    tnr_baseData_ptr clone() override
     {
         std::shared_ptr< POD<T> > c(new POD<T>(m_value, m_description));
         // In case the default format was changed, copy that over as well
@@ -214,17 +204,28 @@ public:
     }
 
     //! This method is used when using the class as a counter of a counted array
-    virtual U32 getCount() { return (U32)m_value; };
+    U32 getCount() override { return (U32)m_value; };
 
     virtual T getValue() { return m_value; };
 //    virtual std::string & getDescription() { return m_description; };
 
     //! Can't remember why I wrote this one
-    operator T() { return getValue(); };
+    explicit operator T() { return getValue(); };
 
 protected:
     T m_value;
 };
+
+    template<class T>
+    int POD<T>::write(tnr_write_interface &write_if) {
+        return write_if.write(m_value, m_description, m_format);
+    }
+
+    template<class T>
+    int POD<T>::read(tnr_read_interface &read_if) {
+        int result = read_if.read(m_value, m_format);
+        return result;
+    }
 
 // Make a set of predefined types for the basic integer types
 typedef POD<U8> POD_U8;
@@ -265,22 +266,23 @@ typedef std::shared_ptr<POD_S32> POD_S32_ptr;
 class TNRContainer : public tnr_baseData
 {
 public:
-    TNRContainer(const std::string &description);
-    TNRContainer(const char * description);
-    virtual ~TNRContainer();
+    explicit TNRContainer(const std::string &description);
+    explicit TNRContainer(const char * description);
+
+    ~TNRContainer() override;
 
     //! Add a new field to the container
     void Add(tnr_baseData_ptr value);
 
     // Methods to describe an object when this data may not be part of the output stream
-//    virtual int write(std::string description);
+
     // Define methods that must be implemented by the child classes
-    virtual int write(tnr_write_interface &write_if);
-    virtual int read(tnr_read_interface &read_if);
+    int write(tnr_write_interface &write_if) override;
+    int read(tnr_read_interface &read_if) override;
     //! The object provides a copy of itself: the same class and contents
-    virtual tnr_baseData_ptr clone();
+    tnr_baseData_ptr clone() override;
     //! Return number of items in the array
-    virtual U32 getItemCount() { return m_values.size(); };
+    U32 getItemCount() override;;
 
 protected:
     std::vector<tnr_baseData_ptr> m_values;
@@ -293,17 +295,19 @@ class TNRFixedArray : public tnr_baseData
 public:
     TNRFixedArray(const std::string &description, U32 count, tnr_baseData_ptr recordType);
     TNRFixedArray(const char * description, U32 count, tnr_baseData_ptr recordType);
-    virtual ~TNRFixedArray();
+
+    ~TNRFixedArray() override;
 
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
     tnr_baseData_ptr & operator[](U32 index);
 
     // Define methods that must be implemented by the child classes
-    virtual int write(tnr_write_interface &write_if);
-    virtual int read(tnr_read_interface &read_if);
-    virtual tnr_baseData_ptr clone();
+    int write(tnr_write_interface &write_if) override;
+    int read(tnr_read_interface &read_if) override;
+
+    tnr_baseData_ptr clone() override;
     //! Return number of items in the array
-    virtual U32 getItemCount() { U32 result = m_values.size(); return result; };
+    U32 getItemCount() override;;
 protected:
     //! Number of items in the fixed array - not serialised (needed?)
     U32 m_count;
@@ -320,17 +324,20 @@ class TNRCountedArray : public tnr_baseData
 public:
     TNRCountedArray(const std::string &description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
     TNRCountedArray(const char * description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
-    virtual ~TNRCountedArray();
+
+    ~TNRCountedArray() override;
 
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
     tnr_baseData_ptr & operator[](U32 index);
 
     // Define methods that must be implemented by the child classes
-    virtual int write(tnr_write_interface &write_if);
-    virtual int read(tnr_read_interface &read_if);
-    virtual tnr_baseData_ptr clone();
+    int write(tnr_write_interface &write_if) override;
+
+    int read(tnr_read_interface &read_if) override;
+
+    tnr_baseData_ptr clone() override;
     //! Return number of items in the array
-    virtual U32 getItemCount() { U32 result = m_values.size(); return result; };
+    U32 getItemCount() override;;
 protected:
     //! Number of items in the fixed array - not serialised
     tnr_baseData_ptr m_count;
@@ -348,14 +355,16 @@ class TNR_C_String : public tnr_baseData
 public:
     TNR_C_String(const std::string &value, const std::string &description);
 //    TNR_C_String(const std::string &description, const char * description);
-    virtual ~TNR_C_String();
+    ~TNR_C_String() override;
 
     // Define methods that must be implemented by the child classes
-    virtual int write(tnr_write_interface &write_if);
-    virtual int read(tnr_read_interface &read_if);
-    virtual tnr_baseData_ptr clone();
+    int write(tnr_write_interface &write_if) override;
+
+    int read(tnr_read_interface &read_if) override;
+
+    tnr_baseData_ptr clone() override;
     //! Return number of items in the array
-    virtual U32 getItemCount() { U32 result = m_Cstring.size(); return result; };
+    U32 getItemCount() override { U32 result = m_Cstring.size(); return result; };
     std::string getValue() { return m_Cstring; };
 protected:
     //! Store the string value

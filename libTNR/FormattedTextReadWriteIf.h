@@ -33,29 +33,29 @@ namespace tnr {
 class FormattedTextWriteIf: public tnr::tnr_write_interface
 {
 public:
-    FormattedTextWriteIf(std::shared_ptr<std::ostream> _stream);
-    virtual ~FormattedTextWriteIf();
+    explicit FormattedTextWriteIf(std::shared_ptr<std::ostream> _stream);
+    ~FormattedTextWriteIf() override;
 
-    virtual int write(U8 value, std::string &description, tnr_format &format );
-    virtual int write(S8 value, std::string &description, tnr_format &format );
-    virtual int write(U16 value, std::string &description, tnr_format &format);
-    virtual int write(S16 value, std::string &description, tnr_format &format);
-    virtual int write(U24 value, std::string &description, tnr_format &format);
-    virtual int write(S24 value, std::string &description, tnr_format &format);
-    virtual int write(U32 value, std::string &description, tnr_format &format);
-    virtual int write(S32 value, std::string &description, tnr_format &format);
-    virtual int write(std::string &value, std::string &description, tnr_format &format);
+    int write(U8 value, std::string &description, tnr_format &format ) override;
+    int write(S8 value, std::string &description, tnr_format &format ) override;
+    int write(U16 value, std::string &description, tnr_format &format) override;
+    int write(S16 value, std::string &description, tnr_format &format) override;
+    int write(U24 value, std::string &description, tnr_format &format) override;
+    int write(S24 value, std::string &description, tnr_format &format) override;
+    int write(U32 value, std::string &description, tnr_format &format) override;
+    int write(S32 value, std::string &description, tnr_format &format) override;
+    int write(std::string &value, std::string &description, tnr_format &format) override;
 
     // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-    virtual void nextLevel(tnr_format &format);
-    virtual void previousLevel(tnr_format &format);
+    void nextLevel(tnr_format &format) override;
+    void previousLevel(tnr_format &format) override;
 
     // Methods to indicate when a set of data (like the values in an array) are going to be written
-    virtual void startSection(tnr_format &format);
-    virtual void endSection(tnr_format &format);
+    void startSection(tnr_format &format) override;
+    void endSection(tnr_format &format) override;
 
     // Methods to describe an object when this data may not be part of the output stream - not relevant to plain binary streams
-    virtual int write(std::string &description, tnr_format &format);
+    int write(std::string &description, tnr_format &format) override;
 protected:
     //! Method to return the number of spaces corresponding to the indent level
     std::string padding();
@@ -79,22 +79,22 @@ protected:
 
 class FormattedTextReadIf: public tnr::tnr_read_interface {
 public:
-    FormattedTextReadIf(std::shared_ptr<std::istream> _stream);
-    virtual ~FormattedTextReadIf();
+    explicit FormattedTextReadIf(std::shared_ptr<std::istream> _stream);
+    ~FormattedTextReadIf() override;
 
-    virtual int read(U8 & value, tnr_format &format );
-    virtual int read(S8 & value, tnr_format &format );
-    virtual int read(U16 & value, tnr_format &format);
-    virtual int read(S16 & value, tnr_format &format);
-    virtual int read(U24 & value, tnr_format &format);
-    virtual int read(S24 & value, tnr_format &format);
-    virtual int read(U32 & value, tnr_format &format);
-    virtual int read(S32 & value, tnr_format &format);
-    virtual int read(std::string &value, tnr_format &format);
+    int read(U8 & value, tnr_format &format ) override;
+    int read(S8 & value, tnr_format &format ) override;
+    int read(U16 & value, tnr_format &format) override;
+    int read(S16 & value, tnr_format &format) override;
+    int read(U24 & value, tnr_format &format) override;
+    int read(S24 & value, tnr_format &format) override;
+    int read(U32 & value, tnr_format &format) override;
+    int read(S32 & value, tnr_format &format) override;
+    int read(std::string &value, tnr_format &format) override;
 
     // Methods to indicate when a new level of nesting is starting/ending - not relevant to plain binary streams
-    virtual void nextLevel(tnr_format &format);
-    virtual void previousLevel(tnr_format &format);
+    void nextLevel(tnr_format &format) override;
+    void previousLevel(tnr_format &format) override;
 
 protected:
     //! Search for the next number in text stream
