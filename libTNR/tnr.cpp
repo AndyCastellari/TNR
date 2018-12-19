@@ -35,19 +35,11 @@ void tnr_format::printFormat(const char * name)
     tnr_format::tnr_format(const tnr_format &c) = default;
 
     //======================================================
-tnr_baseData::tnr_baseData(const std::string &description) : m_description(description)
+tnr_baseData::tnr_baseData(const std::string description) : m_description(description)
 {
 }
 
-tnr_baseData::tnr_baseData(const char * description) : m_description(description)
-{
-}
-
-tnr::TNRContainer::TNRContainer(const std::string &description) : tnr_baseData(description), m_values()
-{
-}
-
-tnr::TNRContainer::TNRContainer(const char * description) : tnr_baseData(description), m_values()
+tnr::TNRContainer::TNRContainer(const std::string description) : tnr_baseData(description), m_values()
 {
 }
 
@@ -117,19 +109,7 @@ U32 TNRContainer::getItemCount() { return m_values.size(); }
 
 //===============================================================================================
 
-tnr::TNRFixedArray::TNRFixedArray(    const std::string &description, U32 count, tnr_baseData_ptr recordType) :
-                                                        tnr_baseData(description), m_count(count), m_values()
-{
-    m_recordType = recordType->clone();
-    // Fill array with correct number of items (we don't know what type these items are)
-    for (unsigned int i = 0; i < m_count; i++)
-    {
-        tnr_baseData_ptr newRecord = m_recordType->clone();
-        m_values.push_back(newRecord);
-    }
-}
-
-tnr::TNRFixedArray::TNRFixedArray(    const char * description, U32 count, tnr_baseData_ptr recordType) :
+tnr::TNRFixedArray::TNRFixedArray(    const std::string description, U32 count, tnr_baseData_ptr recordType) :
                                                         tnr_baseData(description), m_count(count), m_values()
 {
     m_recordType = recordType->clone();
@@ -201,24 +181,9 @@ tnr_baseData_ptr TNRFixedArray::clone()
 
 U32 TNRFixedArray::getItemCount() { U32 result = m_values.size(); return result; }
 
-
 //===============================================================================================
 
-tnr::TNRCountedArray::TNRCountedArray(    const std::string &description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
-                                                                                        tnr_baseData(description), m_values()
-{
-    m_count = countType->clone();
-    m_recordType = recordType->clone();
-
-    // Fill array with correct number of items (we don't know what type these items are)
-    for (unsigned int i = 0; i < m_count->getCount(); i++)
-    {
-        tnr_baseData_ptr newRecord = m_recordType->clone();
-        m_values.push_back(newRecord);
-    }
-}
-
-tnr::TNRCountedArray::TNRCountedArray(    const char * description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
+tnr::TNRCountedArray::TNRCountedArray(    const std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
                                                                                         tnr_baseData(description), m_values()
 {
     m_count = countType->clone();
@@ -301,9 +266,9 @@ tnr_baseData_ptr TNRCountedArray::clone()
 U32 TNRCountedArray::getItemCount() { U32 result = m_values.size(); return result; }
 
 //===============================================================================================
-tnr::TNR_C_String::TNR_C_String(const std::string &value, const std::string &description) : tnr_baseData(description), m_Cstring(value)
+tnr::TNR_C_String::TNR_C_String(const std::string &value, const std::string description) : tnr_baseData(description),
+                                                                                            m_Cstring(value)
 {
-
 }
 
 tnr::TNR_C_String::~TNR_C_String() = default;
@@ -314,12 +279,10 @@ int tnr::TNR_C_String::write(tnr_write_interface &write_if)
     int result = 0;
 
     write_if.startSection(m_format);
-//    write_if.nextLevel(m_format);
 
     // Write the string as text
     result = write_if.write(m_Cstring, m_description, m_format);
 
-//    write_if.previousLevel(m_format);
     write_if.endSection(m_format);
 
     return result;
@@ -345,11 +308,10 @@ tnr_baseData_ptr tnr::TNR_C_String::clone()
 {
     std::shared_ptr< TNR_C_String > c(new TNR_C_String(m_Cstring, m_description));
     c->m_format = this->m_format;
-
-//    c->m_Cstring = this->m_Cstring;
-
     return c;
 }
+
+U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result; }
 
 //===============================================================================================
 
