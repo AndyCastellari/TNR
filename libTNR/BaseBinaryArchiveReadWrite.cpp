@@ -27,17 +27,6 @@
 
 namespace tnr {
 
-BaseBinaryArchiveWrite::BaseBinaryArchiveWrite() : tnr::tnr_write_interface()
-{
-    // TODO Auto-generated constructor stub
-
-}
-
-BaseBinaryArchiveWrite::~BaseBinaryArchiveWrite()
-{
-    // TODO Auto-generated destructor stub
-}
-
 // These methods wrap up sending the correct number of bytes to the derived classes
 
 int tnr::BaseBinaryArchiveWrite::write(U8 value, std::string &, tnr_format &)
@@ -127,14 +116,6 @@ int BaseBinaryArchiveWrite::write(std::string &, tnr_format &)
 //============================================================================================
 // LSB Implementation - overrides writeBytes
 
-tnr::LSBBaseBinaryArchiveWrite::LSBBaseBinaryArchiveWrite() : BaseBinaryArchiveWrite()
-{
-}
-
-tnr::LSBBaseBinaryArchiveWrite::~LSBBaseBinaryArchiveWrite()
-{
-}
-
 /**
  * Converts the value passed in to a series of bytes in LSB order and writes them
  * using the pure virtual method writeOneByte(), which is implemented by derived classes
@@ -153,7 +134,7 @@ int tnr::LSBBaseBinaryArchiveWrite::writeBytes(U32 value, U32 noOfBytes)
     {
         if (result == 0)
         {
-            result = writeOneByte((value >> (i*8)) & 0xff);
+            result = writeOneByte((value >> (i*8)) & 0xffU);
         }
     }
 
@@ -162,14 +143,6 @@ int tnr::LSBBaseBinaryArchiveWrite::writeBytes(U32 value, U32 noOfBytes)
 
 //============================================================================================
 // MSB Implementation - overrides writeBytes
-
-tnr::MSBBaseBinaryArchiveWrite::MSBBaseBinaryArchiveWrite() : BaseBinaryArchiveWrite()
-{
-}
-
-tnr::MSBBaseBinaryArchiveWrite::~MSBBaseBinaryArchiveWrite()
-{
-}
 
 /**
  * Converts the value passed in to a series of bytes in MSB order and writes them
@@ -189,7 +162,7 @@ int tnr::MSBBaseBinaryArchiveWrite::writeBytes(U32 value, U32 noOfBytes)
     {
         if (result == 0)
         {
-            result = writeOneByte((value >> (((noOfBytes-1) - i)*8)) & 0xff);
+            result = writeOneByte((value >> (((noOfBytes-1) - i)*8)) & 0xffU);
         }
     }
 
@@ -198,17 +171,6 @@ int tnr::MSBBaseBinaryArchiveWrite::writeBytes(U32 value, U32 noOfBytes)
 
 
 //================================READ IMPLEMENTATION====================================================================
-
-BaseBinaryArchiveRead::BaseBinaryArchiveRead() : tnr::tnr_read_interface()
-{
-    // TODO Auto-generated constructor stub
-
-}
-
-BaseBinaryArchiveRead::~BaseBinaryArchiveRead()
-{
-    // TODO Auto-generated destructor stub
-}
 
 // These methods wrap up sending the correct number of bytes to the derived classes
 
@@ -311,21 +273,9 @@ void BaseBinaryArchiveRead::previousLevel(tnr_format &)
 {
 }
 
-//int BaseBinaryArchiveRead::read(std::string & )
-//{
-//    return 0;    // TODO check
-//}
 
 //============================================================================================
 // LSB Implementation - overrides writeBytes
-
-tnr::LSBBaseBinaryArchiveRead::LSBBaseBinaryArchiveRead() : BaseBinaryArchiveRead()
-{
-}
-
-tnr::LSBBaseBinaryArchiveRead::~LSBBaseBinaryArchiveRead()
-{
-}
 
 /**
  * Converts the value passed in to a series of bytes in LSB order and writes them
@@ -357,14 +307,6 @@ int tnr::LSBBaseBinaryArchiveRead::readBytes(U32 & value, U32 noOfBytes)
 //============================================================================================
 // MSB Implementation - overrides writeBytes
 
-tnr::MSBBaseBinaryArchiveRead::MSBBaseBinaryArchiveRead() : BaseBinaryArchiveRead()
-{
-}
-
-tnr::MSBBaseBinaryArchiveRead::~MSBBaseBinaryArchiveRead()
-{
-}
-
 /**
  * Converts the value passed in to a series of bytes in MSB order and writes them
  * using the pure virtual method writeOneByte(), which is implemented by derived classes
@@ -391,7 +333,5 @@ int tnr::MSBBaseBinaryArchiveRead::readBytes(U32 & value, U32 noOfBytes)
 
     return result;
 }
-
-
 
 } /* namespace tnr */
