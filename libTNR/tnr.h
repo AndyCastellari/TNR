@@ -104,7 +104,7 @@ public:
 class tnr_read_interface
 {
 protected:
-    tnr_read_interface() = default;;
+    tnr_read_interface() = default;
     virtual ~tnr_read_interface() = default;;
 public:
     virtual int read(U8 &value, tnr_format &format) = 0;
@@ -135,9 +135,7 @@ class tnr_baseData
 {
 public:
     //! Construct from a string
-    explicit tnr_baseData(const std::string &description);
-    //! Construct from a null terminated string (for convenience)
-    explicit tnr_baseData(const char * description);
+    explicit tnr_baseData(std::string description);
     //! Destructor is virtual to force all the derived classes to be virtual
     virtual ~tnr_baseData() = default;
 
@@ -178,11 +176,7 @@ template <class T> class POD : public tnr_baseData
 {
 public:
     //! Create an object to hold a simple POD type with a string description
-    POD(T value, const std::string &description) : tnr_baseData(description), m_value(value)
-    {
-    }
-    //! Create an object to hold a simple POD type with a null terminated string description
-    POD(T value, const char * description) : tnr_baseData(description), m_value(value)
+    POD(T value, const std::string description) : tnr_baseData(description), m_value(value)
     {
     }
     //!  Nothing dynamic so destructor doesn't need to do anything
@@ -206,26 +200,31 @@ public:
     //! This method is used when using the class as a counter of a counted array
     U32 getCount() override { return (U32)m_value; };
 
+    //! Return arithmetic value
     virtual T getValue() { return m_value; };
-//    virtual std::string & getDescription() { return m_description; };
 
-    //! Can't remember why I wrote this one
-    explicit operator T() { return getValue(); };
+    //! Cast to type - allows use of POD in arithmetic expression - compiler generates implicit conversions
+    operator T();
 
 protected:
     T m_value;
 };
 
-    template<class T>
-    int POD<T>::write(tnr_write_interface &write_if) {
-        return write_if.write(m_value, m_description, m_format);
-    }
+template<class T>
+int POD<T>::write(tnr_write_interface &write_if)
+{
+    return write_if.write(m_value, m_description, m_format);
+}
 
-    template<class T>
-    int POD<T>::read(tnr_read_interface &read_if) {
-        int result = read_if.read(m_value, m_format);
-        return result;
-    }
+template<class T>
+int POD<T>::read(tnr_read_interface &read_if)
+{
+    int result = read_if.read(m_value, m_format);
+    return result;
+}
+
+template<class T>
+POD<T>::operator T() { return getValue(); }
 
 // Make a set of predefined types for the basic integer types
 typedef POD<U8> POD_U8;
@@ -266,9 +265,7 @@ typedef std::shared_ptr<POD_S32> POD_S32_ptr;
 class TNRContainer : public tnr_baseData
 {
 public:
-    explicit TNRContainer(const std::string &description);
-    explicit TNRContainer(const char * description);
-
+    explicit TNRContainer(std::string description);
     ~TNRContainer() override;
 
     //! Add a new field to the container
@@ -293,9 +290,7 @@ typedef std::shared_ptr<TNRContainer> TNRContainer_ptr;
 class TNRFixedArray : public tnr_baseData
 {
 public:
-    TNRFixedArray(const std::string &description, U32 count, tnr_baseData_ptr recordType);
-    TNRFixedArray(const char * description, U32 count, tnr_baseData_ptr recordType);
-
+    TNRFixedArray(std::string description, U32 count, tnr_baseData_ptr recordType);
     ~TNRFixedArray() override;
 
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
@@ -322,9 +317,7 @@ typedef std::shared_ptr<TNRFixedArray> TNRFixedArray_ptr;
 class TNRCountedArray : public tnr_baseData
 {
 public:
-    TNRCountedArray(const std::string &description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
-    TNRCountedArray(const char * description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
-
+    TNRCountedArray(std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
     ~TNRCountedArray() override;
 
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
@@ -353,8 +346,7 @@ typedef std::shared_ptr<TNRCountedArray> TNRCountedArray_ptr;
 class TNR_C_String : public tnr_baseData
 {
 public:
-    TNR_C_String(const std::string &value, const std::string &description);
-//    TNR_C_String(const std::string &description, const char * description);
+    TNR_C_String(const std::string &value, std::string description);
     ~TNR_C_String() override;
 
     // Define methods that must be implemented by the child classes
@@ -364,7 +356,7 @@ public:
 
     tnr_baseData_ptr clone() override;
     //! Return number of items in the array
-    U32 getItemCount() override { U32 result = m_Cstring.size(); return result; };
+    U32 getItemCount() override;;
     std::string getValue() { return m_Cstring; };
 protected:
     //! Store the string value

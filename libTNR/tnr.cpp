@@ -263,7 +263,7 @@ tnr_baseData_ptr TNRCountedArray::clone()
     return c;
 }
 
-U32 TNRCountedArray::getItemCount() { U32 result = m_values.size(); return result; }
+U32 TNRCountedArray::getItemCount() { U32 result = (U32)m_values.size(); return result; }
 
 //===============================================================================================
 tnr::TNR_C_String::TNR_C_String(const std::string &value, const std::string description) : tnr_baseData(description),
