@@ -35,16 +35,6 @@
 using namespace std;
 using namespace tnr;
 
-POD_Tester::POD_Tester()
-{
-    // TODO Auto-generated constructor stub
-}
-
-POD_Tester::~POD_Tester()
-{
-    // TODO Auto-generated destructor stub
-}
-
 //! Quick print a string of binary values out
 void printString(const char * title, const std::string &s)
 {
@@ -80,9 +70,6 @@ bool POD_Tester::testSimpleTextWriteIf()
 bool POD_Tester::testTextWriteIf(tnr::tnr_write_interface & wif)
 {
     bool result = true;
-//    std::shared_ptr<std::stringstream> _wstream(new std::stringstream());
-
-//    TextLogWriteIf mswif(_wstream);
 
     TNRContainer_ptr tnrcontainer1(new TNRContainer("Nested Container1"));
     TNRContainer_ptr tnrcontainer2(new TNRContainer("Nested Container2"));
@@ -134,9 +121,6 @@ bool POD_Tester::testTextWriteIf(tnr::tnr_write_interface & wif)
 
     tnrcontainer1->write(wif);
 
-//    printf("%s\n", _wstream->str().c_str());
-//    cout << _wstream->str() << endl;
-//    printString("Nested Structure", _wstream->str().c_str());
     return result;
 }
 
@@ -470,11 +454,11 @@ bool POD_Tester::testPODType()
 
     result = result && (s8.getValue() == -80);
     result = result && (s16.getValue() == -768);
-    S32 ba = (S32)s24a.getValue();
-    S32 bb = (S32)s24b.getValue();
-    S32 bc = (S32)s24c.getValue();
-    S32 bd = (S32)s24d.getValue();
-    S32 be = (S32)s24e.getValue();
+    auto ba = (S32)s24a.getValue();
+    auto bb = (S32)s24b.getValue();
+    auto bc = (S32)s24c.getValue();
+    auto bd = (S32)s24d.getValue();
+    auto be = (S32)s24e.getValue();
     result = result && (ba == -1);
     result = result && (bb == -1024);
     result = result && (bc == 1024);

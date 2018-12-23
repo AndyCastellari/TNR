@@ -29,8 +29,8 @@
 class POD_Tester
 {
 public:
-    POD_Tester();
-    virtual ~POD_Tester();
+    POD_Tester() = default;
+    virtual ~POD_Tester() = default;
 
     bool testPODType();
 
