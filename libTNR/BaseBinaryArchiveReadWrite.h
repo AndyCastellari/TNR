@@ -37,9 +37,8 @@ namespace tnr {
  */
 class BaseBinaryArchiveWrite: public tnr::tnr_write_interface {
 public:
-    BaseBinaryArchiveWrite();
-
-    ~BaseBinaryArchiveWrite() override;
+    BaseBinaryArchiveWrite() = default;
+    ~BaseBinaryArchiveWrite() = default;
 
     int write(U8 value, std::string &description, tnr_format &format ) override;
     int write(S8 value, std::string &description, tnr_format &format ) override;
@@ -70,9 +69,8 @@ protected:
 class LSBBaseBinaryArchiveWrite: public tnr::BaseBinaryArchiveWrite
 {
 public:
-    LSBBaseBinaryArchiveWrite();
-
-    ~LSBBaseBinaryArchiveWrite() override;
+    LSBBaseBinaryArchiveWrite() = default;
+    ~LSBBaseBinaryArchiveWrite() = default;
 protected:
     //! Function to write a value as N bytes LSB - used to wrap up all the various writes
     int writeBytes(U32 value, U32 noOfBytes) override;
@@ -83,8 +81,8 @@ protected:
 class MSBBaseBinaryArchiveWrite: public tnr::BaseBinaryArchiveWrite
 {
 public:
-    MSBBaseBinaryArchiveWrite();
-    ~MSBBaseBinaryArchiveWrite() override;
+    MSBBaseBinaryArchiveWrite() = default;
+    ~MSBBaseBinaryArchiveWrite() = default;
 protected:
     //! Function to write a value as N bytes MSB - used to wrap up all the various writes
     int writeBytes(U32 value, U32 noOfBytes) override;
@@ -99,8 +97,8 @@ protected:
 class BaseBinaryArchiveRead: public tnr::tnr_read_interface
 {
 public:
-    BaseBinaryArchiveRead();
-    ~BaseBinaryArchiveRead() override;
+    BaseBinaryArchiveRead() = default;
+    ~BaseBinaryArchiveRead() = default;
 
     int read(U8 & value, tnr_format &format ) override;
     int read(S8 & value, tnr_format &format ) override;
@@ -131,9 +129,8 @@ protected:
 class LSBBaseBinaryArchiveRead: public tnr::BaseBinaryArchiveRead
 {
 public:
-    LSBBaseBinaryArchiveRead();
-
-    ~LSBBaseBinaryArchiveRead() override;
+    LSBBaseBinaryArchiveRead() = default;
+    ~LSBBaseBinaryArchiveRead() = default;
 protected:
     //! Function to write a value as N bytes LSB - used to wrap up all the various writes
     int readBytes(U32 & value, U32 noOfBytes) override;
@@ -144,8 +141,8 @@ protected:
 class MSBBaseBinaryArchiveRead: public tnr::BaseBinaryArchiveRead
 {
 public:
-    MSBBaseBinaryArchiveRead();
-    ~MSBBaseBinaryArchiveRead() override;
+    MSBBaseBinaryArchiveRead() = default;
+    ~MSBBaseBinaryArchiveRead() = default;
 protected:
     //! Function to write a value as N bytes MSB - used to wrap up all the various writes
     int readBytes(U32 & value, U32 noOfBytes) override;
