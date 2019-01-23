@@ -52,7 +52,7 @@ class tnr_format
 {
     public:
         tnr_format() : m_outputNewline(true), m_outputDescription(true) {};
-        tnr_format(const tnr_format &c);;
+        tnr_format(const tnr_format &c);
         ~tnr_format() = default;
 
         // Setters and getters for format booleans
@@ -180,7 +180,7 @@ public:
     {
     }
     //!  Nothing dynamic so destructor doesn't need to do anything
-    ~POD() override = default;
+    ~POD() = default;
 
     //! Output the POD type to the write interface
     int write(tnr_write_interface &write_if) override;
@@ -191,7 +191,7 @@ public:
     //! Create a deep copy of the variable
     tnr_baseData_ptr clone() override
     {
-        std::shared_ptr< POD<T> > c(new POD<T>(m_value, m_description));
+        auto c = std::make_shared<POD<T>>(m_value, m_description);
         // In case the default format was changed, copy that over as well
         c->m_format = this->m_format;
         return c;
@@ -266,7 +266,7 @@ class TNRContainer : public tnr_baseData
 {
 public:
     explicit TNRContainer(std::string description);
-    ~TNRContainer() override;
+    ~TNRContainer() = default;
 
     //! Add a new field to the container
     void Add(tnr_baseData_ptr value);
@@ -291,7 +291,7 @@ class TNRFixedArray : public tnr_baseData
 {
 public:
     TNRFixedArray(std::string description, U32 count, tnr_baseData_ptr recordType);
-    ~TNRFixedArray() override;
+    ~TNRFixedArray() = default;
 
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
     tnr_baseData_ptr & operator[](U32 index);
@@ -318,7 +318,7 @@ class TNRCountedArray : public tnr_baseData
 {
 public:
     TNRCountedArray(std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
-    ~TNRCountedArray() override;
+    ~TNRCountedArray() = default;
 
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
     tnr_baseData_ptr & operator[](U32 index);
@@ -347,7 +347,7 @@ class TNR_C_String : public tnr_baseData
 {
 public:
     TNR_C_String(const std::string &value, std::string description);
-    ~TNR_C_String() override;
+    ~TNR_C_String() = default;
 
     // Define methods that must be implemented by the child classes
     int write(tnr_write_interface &write_if) override;

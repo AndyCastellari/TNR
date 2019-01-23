@@ -32,7 +32,7 @@ void tnr_format::printFormat(const char * name)
     printf("Object (%s) - Description(%s), NewLine(%s)\n",  name, this->m_outputDescription ? "on" : "off", this->m_outputNewline ? "on" : "off");
 }
 
-    tnr_format::tnr_format(const tnr_format &c) = default;
+tnr_format::tnr_format(const tnr_format &c) = default;
 
     //======================================================
 tnr_baseData::tnr_baseData(const std::string description) : m_description(description)
@@ -43,9 +43,7 @@ tnr::TNRContainer::TNRContainer(const std::string description) : tnr_baseData(de
 {
 }
 
-tnr::TNRContainer::~TNRContainer() = default;
-
-    /**
+/**
  * This method adds new values (which are not necessarily the same type)
  * to the vector to make a collection of types
  */
@@ -121,8 +119,6 @@ tnr::TNRFixedArray::TNRFixedArray(    const std::string description, U32 count, 
     }
 }
 
-tnr::TNRFixedArray::~TNRFixedArray() = default;
-
 tnr_baseData_ptr & tnr::TNRFixedArray::operator [](U32 index)
 {
     return m_values[index];
@@ -197,8 +193,6 @@ tnr::TNRCountedArray::TNRCountedArray(    const std::string description, tnr_bas
     }
 }
 
-tnr::TNRCountedArray::~TNRCountedArray() = default;
-
     tnr_baseData_ptr & tnr::TNRCountedArray::operator [](U32 index)
 {
     return m_values[index];
@@ -270,8 +264,6 @@ tnr::TNR_C_String::TNR_C_String(const std::string &value, const std::string desc
                                                                                             m_Cstring(value)
 {
 }
-
-tnr::TNR_C_String::~TNR_C_String() = default;
 
     // Define methods that must be implemented by the child classes
 int tnr::TNR_C_String::write(tnr_write_interface &write_if)
