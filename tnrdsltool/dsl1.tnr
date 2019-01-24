@@ -22,7 +22,9 @@ define header2 =
     };   /* End Union */
 }   /* end define */
 
-main =
+define centimetres = U32("centimetres");
+
+define main =
 {   /* main */
     U8("Type");
     U16("");
