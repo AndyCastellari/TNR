@@ -26,7 +26,8 @@ variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_
 
 union_parameters : (union_param)* ;
 union_param : expression
-            | 'case' NUMBER ':';
+            | 'case' union_case_number ':';
+union_case_number : NUMBER;
 
 optional_parameters : // nothing
                     | parameter (',' parameter)*
