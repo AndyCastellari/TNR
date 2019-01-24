@@ -4,12 +4,12 @@ cmake_policy(SET CMP0048 NEW)
 project (TnrDslParser VERSION 1.3.1 LANGUAGES CXX)
 
 add_executable(tnrdsltool tnrdsltool.cpp
-        TNRDSLBaseListener.cpp
+#        TNRDSLBaseListener.cpp
         TNRDSLBaseVisitor.cpp
         TNRDSLLexer.cpp
-        TNRDSLListener.cpp
+#        TNRDSLListener.cpp
         TNRDSLParser.cpp
-        )
+        TnrVisitor.cpp TnrVisitor.h)
 
 target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap-1.2.2/include/
         ${CMAKE_CURRENT_LIST_DIR}/../../antlr4-cpp-runtime/run/usr/local/include/antlr4-runtime)

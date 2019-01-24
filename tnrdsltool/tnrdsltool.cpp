@@ -45,6 +45,7 @@
 #include "TNRDSLLexer.h"
 #include "TNRDSLParser.h"
 #include "TNRDSLBaseVisitor.h"
+#include "TnrVisitor.h"
 
 using namespace antlr4;
 
@@ -77,9 +78,12 @@ void ParseDsl(std::string mainObject,
 //        tree::ParseTree *tree = parser.startRuleName();
         auto *tree = parser.startRuleName();
 
-        std::cout << tree->toStringTree(&parser) << std::endl;
+//        std::cout << "After Parsing" << std::endl;
+//        std::cout << tree->toStringTree(&parser) << std::endl;
+//        std::cout << "After toStringTree" << std::endl;
 
-        auto *visitor = new TNRDSLBaseVisitor();
+//        auto *visitor = new TNRDSLBaseVisitor();
+        auto *visitor = new TnrVisitor();
         visitor->visitStartRuleName(tree);
         tnrDslFile.close();
     }
