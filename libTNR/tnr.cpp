@@ -32,7 +32,9 @@ void tnr_format::printFormat(const char * name)
     printf("Object (%s) - Description(%s), NewLine(%s)\n",  name, this->m_outputDescription ? "on" : "off", this->m_outputNewline ? "on" : "off");
 }
 
-tnr_format::tnr_format(const tnr_format &c) = default;
+tnr_format::tnr_format(const tnr_format &)
+{
+}
 
     //======================================================
 tnr_baseData::tnr_baseData(const std::string description) : m_description(description)
@@ -204,10 +206,10 @@ int tnr::TNRCountedArray::write(tnr_write_interface& write_if)
 
     write_if.startSection(m_format);
 
-    result = write_if.write(m_description, m_format);
+    write_if.write(m_description, m_format);
     write_if.nextLevel(m_format);
 
-    result = m_count->write(write_if);
+    m_count->write(write_if);
 
     for (const tnr_baseData_ptr &value: m_values)
     {
@@ -257,7 +259,7 @@ tnr_baseData_ptr TNRCountedArray::clone()
     return c;
 }
 
-U32 TNRCountedArray::getItemCount() { U32 result = (U32)m_values.size(); return result; }
+U32 TNRCountedArray::getItemCount() { auto result = (U32)m_values.size(); return result; }
 
 //===============================================================================================
 tnr::TNR_C_String::TNR_C_String(const std::string &value, const std::string description) : tnr_baseData(description),
