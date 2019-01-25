@@ -1,0 +1,15 @@
+.idea/
+cmake-build-debug/
+tnrdsltool/TNRDSL.interp
+tnrdsltool/TNRDSL.tokens
+tnrdsltool/TNRDSLBaseVisitor.cpp
+tnrdsltool/TNRDSLBaseVisitor.h
+tnrdsltool/TNRDSLLexer.cpp
+tnrdsltool/TNRDSLLexer.h
+tnrdsltool/TNRDSLLexer.interp
+tnrdsltool/TNRDSLLexer.tokens
+tnrdsltool/TNRDSLParser.cpp
+tnrdsltool/TNRDSLParser.h
+tnrdsltool/TNRDSLVisitor.cpp
+tnrdsltool/TNRDSLVisitor.h
+
