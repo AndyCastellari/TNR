@@ -1,38 +1,51 @@
 grammar TNRDSL;
 
-startRuleName  : (definition)* main EOF ;
+//startRuleName  : (definition)* main EOF ;
+startRuleName  : (definition)* EOF ;
 
-definition : 'define' ID '=' expression ;
-main : 'main' '=' expression ;
+definition : 'define' new_type_name '=' expression ;
+new_type_name : ID;
+//main : 'main' '=' expression ;
 
-expression : '{' (expression)+ '}'
+expression : compound_start (expression)+ compound_end
            | variable ';';
+compound_start : '{';
+compound_end : '}';
 
 variable : simple_variable
             | fixed_array
             | counted_array
             | variant ;
 
-simple_variable : ID '(' optional_parameters ')' ;
-fixed_array : 'FixedArray' '(' NUMBER optional_parameters ')' ':' (expression | variable) ;
+simple_variable : existing_type '(' optional_parameters ')' ;
+existing_type : ID;
+fixed_array : 'FixedArray' '(' fixed_array_count optional_parameters ')' ':' (expression | variable) ;
+fixed_array_count : NUMBER;
 counted_array : 'CountedArray' '(' simple_variable optional_parameters ')' ':' (expression | variable) ;
 variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_parameters '}';
 
 union_parameters : (union_param)* ;
 union_param : expression
-            | 'case' NUMBER ':';
+            | 'case' union_case_number ':';
+union_case_number : NUMBER;
 
 optional_parameters : // nothing
                     | parameter (',' parameter)*
                     | ',' parameter (',' parameter)*;
 
-parameter : STRING
-            | 'format' '=' STRING
-            | 'description' '=' (on|off)
-            | 'newline' '=' (on|off)
+parameter : object_name_parameter
+            | 'format' '=' format_parameter
+            | 'description' '=' (description_on|description_off)
+            | 'newline' '=' (newline_on|newline_off)
             | enum_definition  ;
-on : 'on';
-off : 'off';
+object_name_parameter : STRING;
+format_parameter : STRING;
+description_on : 'on';
+description_off : 'off';
+newline_on : 'on';
+newline_off : 'off';
+//on : 'on';
+//off : 'off';
 
 enum_definition : 'enum' '(' enum_param (',' enum_param)* ')' ;
 
