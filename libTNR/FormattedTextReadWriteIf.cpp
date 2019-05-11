@@ -37,10 +37,6 @@ tnr::FormattedTextWriteIf::FormattedTextWriteIf(std::shared_ptr<std::ostream> _s
     m_PreviousFormats.push(true);
 }
 
-tnr::FormattedTextWriteIf::~FormattedTextWriteIf()
-{
-}
-
 std::string tnr::FormattedTextWriteIf::padding()
 {
         return std::string(m_level * 2, ' ');
@@ -76,8 +72,8 @@ int tnr::FormattedTextWriteIf::writeNumber(U32 value, U8 width, std::string &des
         *m_stream << description;
     }
 
-    if (format.getOutputNewline() == false)
-    {
+    if (format.getOutputNewline()) {}
+    else {
         // Just finished a section with NewLine off so output a newline
         *m_stream << NewLineDebug();
     }
@@ -112,7 +108,7 @@ int tnr::FormattedTextWriteIf::write(std::string &value, std::string &descriptio
         *m_stream << description;
     }
 
-    if (format.getOutputNewline() == false)
+    if (!format.getOutputNewline())
     {
         // Just finished a section with NewLine off so output a newline
         *m_stream << NewLineDebug();
@@ -120,9 +116,8 @@ int tnr::FormattedTextWriteIf::write(std::string &value, std::string &descriptio
 
     // TODO escape double quotes in string
     *m_stream << " : " << '"';
-    for (unsigned int i = 0; i < value.length(); i++)
+    for (char c : value)
     {
-        char c = value[i];
         switch (c)
         {
         case '\\':
@@ -201,7 +196,7 @@ void tnr::FormattedTextWriteIf::CheckForPadding(tnr_format &format)
 {
     bool NewLineOn = format.getOutputNewline();
 
-    if (m_PreviousFormats.top() && (NewLineOn == false))
+    if (m_PreviousFormats.top() && !NewLineOn)
     {
         // NewLine was ON but is now OFF so need to output the padding
         *m_stream << padding();
@@ -213,7 +208,7 @@ void tnr::FormattedTextWriteIf::CheckForNewLine(tnr_format &format)
 {
     bool NewLineOn = format.getOutputNewline();
 
-    if ((m_PreviousFormats.top() == true) && (NewLineOn == false))
+    if (m_PreviousFormats.top() && !NewLineOn)
     {
         // Just finished a section with NewLine off so output a newline
         *m_stream << endl;
@@ -266,7 +261,7 @@ int tnr::FormattedTextWriteIf::write(std::string &description, tnr_format &forma
     }
 
     // Debugging to show if object has correct NewLine attribute
-    if (format.getOutputNewline() == false)
+    if (!format.getOutputNewline())
     {
         // Just finished a section with NewLine off so output a newline
         *m_stream << NewLineDebug();
@@ -289,10 +284,6 @@ int tnr::FormattedTextWriteIf::write(std::string &description, tnr_format &forma
  * if there is a colon, it reads a number after the colon
  */
 tnr::FormattedTextReadIf::FormattedTextReadIf(std::shared_ptr<std::istream> _stream): m_level(0), m_stream(_stream)
-{
-}
-
-tnr::FormattedTextReadIf::~FormattedTextReadIf()
 {
 }
 
@@ -418,7 +409,7 @@ int tnr::FormattedTextReadIf::read(std::string &value, tnr_format &)
 
 //    cout << "Read " << '"' << value << '"' << " from m_stream" << std::endl;
 
-    return result;    // TODO
+    return result;
 }
 
 void tnr::FormattedTextReadIf::nextLevel(tnr_format &)

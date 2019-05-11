@@ -34,7 +34,7 @@ class FormattedTextWriteIf: public tnr::tnr_write_interface
 {
 public:
     explicit FormattedTextWriteIf(std::shared_ptr<std::ostream> _stream);
-    ~FormattedTextWriteIf() override;
+    ~FormattedTextWriteIf() override = default;
 
     int write(U8 value, std::string &description, tnr_format &format ) override;
     int write(S8 value, std::string &description, tnr_format &format ) override;
@@ -80,7 +80,7 @@ protected:
 class FormattedTextReadIf: public tnr::tnr_read_interface {
 public:
     explicit FormattedTextReadIf(std::shared_ptr<std::istream> _stream);
-    ~FormattedTextReadIf() override;
+    ~FormattedTextReadIf() override = default;
 
     int read(U8 & value, tnr_format &format ) override;
     int read(S8 & value, tnr_format &format ) override;

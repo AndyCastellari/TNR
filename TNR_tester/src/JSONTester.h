@@ -29,8 +29,8 @@
 class JSONTester
 {
 public:
-    JSONTester();
-    virtual ~JSONTester();
+    JSONTester() = default;
+    virtual ~JSONTester() = default;
 
     //! Simple test that rapidjson is working
     bool testParsing();

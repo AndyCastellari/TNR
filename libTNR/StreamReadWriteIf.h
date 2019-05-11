@@ -37,7 +37,7 @@ class StreamWriteIf: public tnr::LSBBaseBinaryArchiveWrite
 {
 public:
     explicit StreamWriteIf(std::shared_ptr<std::ostream> _stream);
-    ~StreamWriteIf() override;
+    ~StreamWriteIf() override = default;
 
 protected:
     //! Write one byte to the actual storage being used
@@ -52,7 +52,7 @@ class StreamReadIf: public tnr::LSBBaseBinaryArchiveRead
 {
 public:
     explicit StreamReadIf(std::shared_ptr<std::istream> _stream);
-    ~StreamReadIf() override;
+    ~StreamReadIf() override = default;
 
 //    bool operator==(std::string &rhs);
 

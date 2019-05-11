@@ -35,10 +35,6 @@ tnr::SimpleTextWriteIf::SimpleTextWriteIf(std::shared_ptr<std::ostream> _stream)
 {
 }
 
-tnr::SimpleTextWriteIf::~SimpleTextWriteIf()
-{
-}
-
 std::string tnr::SimpleTextWriteIf::padding()
 {
         return std::string(m_level * 2, ' ');
@@ -146,10 +142,6 @@ tnr::SimpleTextReadIf::SimpleTextReadIf(std::shared_ptr<std::istream> _stream): 
 {
 }
 
-tnr::SimpleTextReadIf::~SimpleTextReadIf()
-{
-}
-
 int tnr::SimpleTextReadIf::read(U8& value, tnr_format &format)
 {
     int result = 0;
@@ -236,7 +228,7 @@ int tnr::SimpleTextReadIf::read(std::string &value, tnr_format &)
     {
         *m_stream >> temp;
     } while (temp != ":");
-    char c;
+    char c = '\0';
 
     // Skip 0x then read the hex number following
     *m_stream >> c;    // skip opening double quote
@@ -251,7 +243,7 @@ int tnr::SimpleTextReadIf::read(std::string &value, tnr_format &)
 
     cout << "Read " << '"' << value << '"' << " from m_stream" << std::endl;
 
-    return result;    // TODO
+    return result;
 }
 
 void tnr::SimpleTextReadIf::nextLevel(tnr_format &)

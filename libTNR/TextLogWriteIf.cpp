@@ -31,14 +31,8 @@ namespace tnr {
 
 TextLogWriteIf::TextLogWriteIf(std::shared_ptr<std::ostream> _stream): m_level(0), m_stream(_stream)
 {
-    // TODO Auto-generated constructor stub
-
 }
 
-TextLogWriteIf::~TextLogWriteIf()
-{
-    // TODO Auto-generated destructor stub
-}
 
 int TextLogWriteIf::write(U8 value, std::string &description, tnr_format &)
 {

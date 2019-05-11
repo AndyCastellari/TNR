@@ -34,8 +34,8 @@ namespace tnr {
 class ObjectMap
 {
 public:
-    ObjectMap();
-    virtual ~ObjectMap();
+    ObjectMap() = default;
+    virtual ~ObjectMap() = default;
     //! Adds a clone of the object to the map with the given name
     bool AddObject(tnr_baseData_ptr & object);
     //! Returns a clone of the object with the name

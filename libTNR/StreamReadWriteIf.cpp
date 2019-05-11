@@ -31,10 +31,6 @@ StreamWriteIf::StreamWriteIf(std::shared_ptr<std::ostream> _stream) : LSBBaseBin
 {
 }
 
-StreamWriteIf::~StreamWriteIf()
-{
-    // TODO Auto-generated destructor stub
-}
 
 /**
  * This method implements writing a byte to some storage medium
@@ -50,10 +46,6 @@ StreamReadIf::StreamReadIf(std::shared_ptr<std::istream> _stream) : LSBBaseBinar
 {
 }
 
-StreamReadIf::~StreamReadIf()
-{
-    // TODO Auto-generated destructor stub
-}
 
 /**
  * This method implements reading a byte from some storage medium.

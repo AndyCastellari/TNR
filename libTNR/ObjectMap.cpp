@@ -24,24 +24,13 @@
  */
 
 #include "ObjectMap.h"
-#include <stdio.h>
+#include <cstdio>
 
 namespace tnr {
 
-ObjectMap::ObjectMap() : m_objectDirectory()
-{
-    // TODO Auto-generated constructor stub
-
-}
-
-ObjectMap::~ObjectMap()
-{
-    // TODO Auto-generated destructor stub
-}
-
 bool ObjectMap::AddObject(tnr_baseData_ptr& object)
 {
-    bool result = true;
+    bool result;
 
     std::pair<std::map<std::string, tnr_baseData_ptr>::iterator, bool> check;
 //    printf("ObjectMap::AddObject   <%s>\n", object->getDescription().c_str());

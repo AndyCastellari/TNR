@@ -46,15 +46,15 @@ public:
     bool AddItemToContainer(TNRContainer_ptr &c, const char * name, const char * type,
             tnr_format &output_format);
 
-    bool AddFixedArrayToContainer(const char * containerName, TNRContainer_ptr c, U32 count,
+    bool AddFixedArrayToContainer(const char * containerName, const TNRContainer_ptr& c, U32 count,
             rapidjson::Value &recordType, int depth, bool addToOM, std::string ObjectName,
             tnr_format &output_format);
 
-    bool AddCountedArrayToContainer(const char * containerName, TNRContainer_ptr c, rapidjson::Value &count,
+    bool AddCountedArrayToContainer(const char * containerName, const TNRContainer_ptr& c, rapidjson::Value &count,
             rapidjson::Value &recordType, int depth, bool addToOM, std::string ObjectName,
             tnr_format &output_format);
 
-    bool parseTNRObject(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth,
+    bool parseTNRObject(const char * containerName, const TNRContainer_ptr& c, const char * input_json, int depth,
             tnr_format &output_format);
 
     bool parseJSONToTNR(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth);

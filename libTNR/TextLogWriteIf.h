@@ -33,7 +33,7 @@ namespace tnr {
 class TextLogWriteIf: public tnr::tnr_write_interface {
 public:
     explicit TextLogWriteIf(std::shared_ptr<std::ostream> _stream);
-    ~TextLogWriteIf() override;
+    ~TextLogWriteIf() override = default;
 
     int write(U8 value, std::string &description, tnr_format &format ) override;
     int write(S8 value, std::string &description, tnr_format &format ) override;

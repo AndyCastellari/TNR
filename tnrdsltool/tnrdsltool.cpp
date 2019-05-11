@@ -240,7 +240,7 @@ int main(int argc, char** argv)
         bool readBinary = binaryToTextSwitch.isSet();
 
         // Input and output files
-        std::string inputFile = inputFileObject.getValue();;
+        std::string inputFile = inputFileObject.getValue();
         std::string outputFile = outputFileObject.getValue();
 
         //===============================================================================================
@@ -377,7 +377,6 @@ int main(int argc, char** argv)
                     }
                     else
                     {
-                        // TODO can't open files
                         if (!in_stream->good())
                         {
                             cerr << "Failed to open <" << inputFile << "> as input" << endl;

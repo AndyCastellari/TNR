@@ -49,15 +49,6 @@ using namespace rapidjson;
 using namespace tnr;
 using namespace std;
 
-JSONTester::JSONTester() {
-    // TODO Auto-generated constructor stub
-
-}
-
-JSONTester::~JSONTester() {
-    // TODO Auto-generated destructor stub
-}
-
 /**
  * This test is to check that rapidjson parsing is working
  */

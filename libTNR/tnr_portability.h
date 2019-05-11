@@ -43,7 +43,9 @@ typedef unsigned int U32;
 typedef struct u24
 {
 public:
-    u24(U32 value) { c[0] = value & 0xff; c[1] = (value >> 8) & 0xff; c[2] = (value >> 16) & 0xff; };
+    u24(U32 value) { c[0] = static_cast<U8>(value & 0xff);
+                     c[1] = static_cast<U8>((value >> 8) & 0xff);
+                     c[2] = static_cast<U8>((value >> 16) & 0xff); };
     operator U32() { U32 t = 0; t = (c[2] << 16) + (c[1] << 8) + (c[0] << 0); return t; };
 //    bool operator==(const U32 rhs) { return U32() == rhs; };
 //protected:

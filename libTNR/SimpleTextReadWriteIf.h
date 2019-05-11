@@ -33,7 +33,7 @@ namespace tnr {
 class SimpleTextWriteIf: public tnr::tnr_write_interface {
 public:
     explicit SimpleTextWriteIf(std::shared_ptr<std::ostream> _stream);
-    ~SimpleTextWriteIf() override;
+    ~SimpleTextWriteIf() override = default;
 
     int write(U8 value, std::string &description, tnr_format &format ) override;
     int write(S8 value, std::string &description, tnr_format &format ) override;
@@ -62,7 +62,7 @@ protected:
 class SimpleTextReadIf: public tnr::tnr_read_interface {
 public:
     explicit SimpleTextReadIf(std::shared_ptr<std::istream> _stream);
-    ~SimpleTextReadIf() override;
+    ~SimpleTextReadIf() override = default;
 
     int read(U8 & value, tnr_format &format ) override;
     int read(S8 & value, tnr_format &format ) override;

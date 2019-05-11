@@ -105,10 +105,8 @@ bool BasicJSONParser::FindTypeFromName(const char * name, const char * type, tnr
  */
 bool BasicJSONParser::AddItemToContainer(TNRContainer_ptr &c, const char * name, const char * type, tnr_format &output_format)
 {
-    bool result = true;
-
     tnr_baseData_ptr recordObj;
-    result = FindTypeFromName(name, type, recordObj);
+    auto result = FindTypeFromName(name, type, recordObj);
     if (result)
     {
         recordObj->setFormat(output_format);
@@ -133,7 +131,7 @@ bool BasicJSONParser::AddItemToContainer(TNRContainer_ptr &c, const char * name,
  * In case 2, the value following "record" is recursively parsed
  */
 bool BasicJSONParser::AddFixedArrayToContainer( const char * containerName,
-                                                TNRContainer_ptr c,
+                                                const TNRContainer_ptr& c,
                                                 U32 count,
                                                 Value &recordType,
                                                 int depth,
@@ -141,7 +139,7 @@ bool BasicJSONParser::AddFixedArrayToContainer( const char * containerName,
                                                 std::string ObjectName,
                                                 tnr_format &output_format)
 {
-    bool result = true;
+    bool result;
     tnr_baseData_ptr recordObj;
 
     // Parse count as number and record as either String or Object
@@ -199,7 +197,7 @@ bool BasicJSONParser::AddFixedArrayToContainer( const char * containerName,
  * In case 2, the value following "record" is recursively parsed
  */
 bool BasicJSONParser::AddCountedArrayToContainer(    const char * containerName,
-                                                    TNRContainer_ptr c,
+                                                    const TNRContainer_ptr& c,
                                                     Value &count,
                                                     Value &recordType,
                                                     int depth,
@@ -272,7 +270,7 @@ bool BasicJSONParser::AddCountedArrayToContainer(    const char * containerName,
  *
  * In all cases a new object is created and added to the parent container that is passed in
  */
-bool BasicJSONParser::parseTNRObject(const char * containerName, TNRContainer_ptr c, const char * input_json, int depth, tnr_format &output_format)
+bool BasicJSONParser::parseTNRObject(const char * containerName, const TNRContainer_ptr& c, const char * input_json, int depth, tnr_format &output_format)
 {
     bool result = true;
     // In the grammar of this system, an object that has the attribute ObjectName will be
