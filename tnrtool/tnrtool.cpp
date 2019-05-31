@@ -212,7 +212,7 @@ int main(int argc, char** argv)
         readBinary = binaryToTextSwitch.isSet();
 
         // Input and output files
-        inputFile = inputFileObject.getValue();;
+        inputFile = inputFileObject.getValue();
         outputFile = outputFileObject.getValue();
         diagArgSwitchFlag = diagArgSwitch.isSet();
         dryRunFlag = dryRunSwitch.isSet();
@@ -348,7 +348,6 @@ int main(int argc, char** argv)
                 }
                 else
                 {
-                    // TODO can't open files
                     if (!in_stream->good())
                     {
                         cerr << "Failed to open <" << inputFile << "> as input" << endl;

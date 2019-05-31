@@ -26,26 +26,19 @@ variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_
 
 union_parameters : (union_param)* ;
 union_param : expression
-            | 'case' union_case_number ':';
-union_case_number : NUMBER;
+            | 'case' NUMBER ':';
 
 optional_parameters : // nothing
                     | parameter (',' parameter)*
                     | ',' parameter (',' parameter)*;
 
-parameter : object_name_parameter
-            | 'format' '=' format_parameter
-            | 'description' '=' (description_on|description_off)
-            | 'newline' '=' (newline_on|newline_off)
+parameter : STRING
+            | 'format' '=' STRING
+            | 'description' '=' (on|off)
+            | 'newline' '=' (on|off)
             | enum_definition  ;
-object_name_parameter : STRING;
-format_parameter : STRING;
-description_on : 'on';
-description_off : 'off';
-newline_on : 'on';
-newline_off : 'off';
-//on : 'on';
-//off : 'off';
+on : 'on';
+off : 'off';
 
 enum_definition : 'enum' '(' enum_param (',' enum_param)* ')' ;
 

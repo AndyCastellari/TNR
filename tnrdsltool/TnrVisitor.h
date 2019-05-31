@@ -65,35 +65,35 @@ public:
         std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
         return visitChildren(ctx);
     }
-    virtual antlrcpp::Any visitObject_name_parameter(TNRDSLParser::Object_name_parameterContext *ctx) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
-        return visitChildren(ctx);
-    }
+//    virtual antlrcpp::Any visitObject_name_parameter(TNRDSLParser::Object_name_parameterContext *ctx) override {
+//        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+//        return visitChildren(ctx);
+//    }
+//
+//    virtual antlrcpp::Any visitFormat_parameter(TNRDSLParser::Format_parameterContext *ctx) override {
+//        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+//        return visitChildren(ctx);
+//    }
 
-    virtual antlrcpp::Any visitFormat_parameter(TNRDSLParser::Format_parameterContext *ctx) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
-        return visitChildren(ctx);
-    }
+//    virtual antlrcpp::Any visitDescription_on(TNRDSLParser::Description_onContext *ctx) override {
+//        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+//        return visitChildren(ctx);
+//    }
+//
+//    virtual antlrcpp::Any visitDescription_off(TNRDSLParser::Description_offContext *ctx) override {
+//        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+//        return visitChildren(ctx);
+//    }
 
-    virtual antlrcpp::Any visitDescription_on(TNRDSLParser::Description_onContext *ctx) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
-        return visitChildren(ctx);
-    }
-
-    virtual antlrcpp::Any visitDescription_off(TNRDSLParser::Description_offContext *ctx) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
-        return visitChildren(ctx);
-    }
-
-    virtual antlrcpp::Any visitNewline_on(TNRDSLParser::Newline_onContext *ctx) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
-        return visitChildren(ctx);
-    }
-
-    virtual antlrcpp::Any visitNewline_off(TNRDSLParser::Newline_offContext *ctx) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
-        return visitChildren(ctx);
-    }
+//    virtual antlrcpp::Any visitNewline_on(TNRDSLParser::Newline_onContext *ctx) override {
+//        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+//        return visitChildren(ctx);
+//    }
+//
+//    virtual antlrcpp::Any visitNewline_off(TNRDSLParser::Newline_offContext *ctx) override {
+//        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+//        return visitChildren(ctx);
+//    }
 
 private:
     uint32_t m_indent;
