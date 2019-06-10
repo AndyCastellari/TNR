@@ -32,13 +32,17 @@ optional_parameters : // nothing
                     | parameter (',' parameter)*
                     | ',' parameter (',' parameter)*;
 
-parameter : STRING
-            | 'format' '=' STRING
-            | 'description' '=' (on|off)
-            | 'newline' '=' (on|off)
+parameter : object_description
+            | 'format' '=' format_string
+            | 'description' '=' (descriptionon|descriptionoff)
+            | 'newline' '=' (newlineon|newlineoff)
             | enum_definition  ;
-on : 'on';
-off : 'off';
+object_description : STRING;
+format_string : STRING;
+newlineon : 'on';
+newlineoff : 'off';
+descriptionon : 'on';
+descriptionoff : 'off';
 
 enum_definition : 'enum' '(' enum_param (',' enum_param)* ')' ;
 
