@@ -3,18 +3,20 @@ grammar TNRDSL;
 //startRuleName  : (definition)* main EOF ;
 startRuleName  : (definition)* EOF ;
 
-definition : 'define' new_type_name '=' expression ;
+definition : 'define' new_type_name '=' expression define_end;
 new_type_name : ID;
+define_end : ';';
 //main : 'main' '=' expression ;
 
-expression : compound_start (expression)+ compound_end
-           | variable ;
 //expression : compound_start (expression)+ compound_end
-//           | variable ';';
+//           | variable ;
+expression : compound_start (expression)+ compound_end
+           | variable;
 compound_start : '{';
 compound_end : '}';
 
-variable : simple_variable ';'
+//variable : simple_variable ';'
+variable : simple_variable
             | fixed_array
             | counted_array
             | variant ;
@@ -26,7 +28,7 @@ existing_type : ID;
 fixed_array : 'FixedArray' '(' fixed_array_count optional_parameters ')' ':' array_element ;
 fixed_array_count : NUMBER;
 counted_array : 'CountedArray' '(' simple_variable optional_parameters ')' ':' array_element ;
-array_element : (expression | variable) ;
+array_element : expression ;
 variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_parameters '}';
 
 union_parameters : (union_param)* ;
