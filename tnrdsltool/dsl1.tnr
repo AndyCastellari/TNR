@@ -6,7 +6,7 @@ define header =
     U24();
     FixedArray(5, "FixedArray", newline=off) : U8();
     FixedArray(7) : U8();
-    CountedArray(U16("Number", format="%02d"), "Variable Array") : { U32("P1"); String("Driver");  };
+    CountedArray(U16("Number", format="%02d"), "Variable Array") : { U32("P1"); String("Driver");  }
 }
 
 //define header2 =
@@ -22,7 +22,7 @@ define header =
 //    };   /* End Union */
 //}   /* end define */
 
-//define centimetres = U32("centimetres");
+define centimetres = U32("centimetres");
 //
 //define main =
 //{   /* main */

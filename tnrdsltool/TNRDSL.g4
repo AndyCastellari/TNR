@@ -8,20 +8,25 @@ new_type_name : ID;
 //main : 'main' '=' expression ;
 
 expression : compound_start (expression)+ compound_end
-           | variable ';';
+           | variable ;
+//expression : compound_start (expression)+ compound_end
+//           | variable ';';
 compound_start : '{';
 compound_end : '}';
 
-variable : simple_variable
+variable : simple_variable ';'
             | fixed_array
             | counted_array
             | variant ;
 
-simple_variable : existing_type '(' optional_parameters ')' ;
+simple_variable : existing_type simple_start optional_parameters simple_end ;
+simple_start : '(' ;
+simple_end : ')' ;
 existing_type : ID;
-fixed_array : 'FixedArray' '(' fixed_array_count optional_parameters ')' ':' (expression | variable) ;
+fixed_array : 'FixedArray' '(' fixed_array_count optional_parameters ')' ':' array_element ;
 fixed_array_count : NUMBER;
-counted_array : 'CountedArray' '(' simple_variable optional_parameters ')' ':' (expression | variable) ;
+counted_array : 'CountedArray' '(' simple_variable optional_parameters ')' ':' array_element ;
+array_element : (expression | variable) ;
 variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_parameters '}';
 
 union_parameters : (union_param)* ;
