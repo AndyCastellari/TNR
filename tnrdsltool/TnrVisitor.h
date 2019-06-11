@@ -10,7 +10,7 @@
 class TnrVisitor : public TNRDSLBaseVisitor
 {
 public:
-    TnrVisitor() : m_indent(0);
+    TnrVisitor() : TNRDSLBaseVisitor(), m_indent(0) { };
 public:
     //! Return a string that indents by number of spaces times 4
     std::string printIndent() { return std::string(m_indent * 4, ' '); };
