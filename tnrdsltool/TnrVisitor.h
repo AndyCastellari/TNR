@@ -25,7 +25,7 @@ public:
     }
 
     antlrcpp::Any visitDefine_end(TNRDSLParser::Define_endContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
+        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl << std::endl;
         return visitChildren(context);
     }
 
@@ -36,8 +36,8 @@ public:
     }
 
     antlrcpp::Any visitCompound_end(TNRDSLParser::Compound_endContext *context) override {
-        unindent();
         std::cout << printIndent() << __FUNCTION__ << std::endl;
+        unindent();
         return visitChildren(context);
     }
 
