@@ -24,3 +24,13 @@
  */
 
 #include "ObjectBuilder.h"
+
+void ObjectBuilder::StartNewType(const std::string& typeName)
+{
+
+}
+
+void ObjectBuilder::AddNewType()
+{
+
+}

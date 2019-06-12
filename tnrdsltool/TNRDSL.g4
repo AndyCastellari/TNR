@@ -27,8 +27,13 @@ simple_end : ')' ;
 existing_type : ID;
 fixed_array : 'FixedArray' '(' fixed_array_count optional_parameters ')' ':' array_element ;
 fixed_array_count : NUMBER;
-counted_array : 'CountedArray' '(' simple_variable optional_parameters ')' ':' array_element ;
-array_element : expression ;
+counted_array : 'CountedArray' '(' counted_array_count optional_parameters ')' ':' array_element ;
+counted_array_count : simple_variable;
+array_element : array_element_start (expression)+ array_element_end
+                           | variable;
+array_element_start : '{';
+array_element_end : '}';
+
 variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_parameters '}';
 
 union_parameters : (union_param)* ;

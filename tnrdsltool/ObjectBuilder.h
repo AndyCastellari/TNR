@@ -33,8 +33,8 @@
 class ObjectBuilder
 {
 public:
-    ObjectBuilder = default;
-    ~ObjectBuilder = default;
+    ObjectBuilder() = default;
+    ~ObjectBuilder() = default;
 
 public:
     //! Start a new type with an empty object
