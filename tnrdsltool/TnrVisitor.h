@@ -6,11 +6,13 @@
 
 
 #include "TNRDSLBaseVisitor.h"
+#include "ObjectBuilder.h"
 
 class TnrVisitor : public TNRDSLBaseVisitor
 {
 public:
-    TnrVisitor() : TNRDSLBaseVisitor(), m_indent(0) { };
+    explicit TnrVisitor(ObjectBuilder & objectBuilder) : TNRDSLBaseVisitor(), m_indent(0), m_objectBuilder(objectBuilder) { };
+
 public:
     //! Return a string that indents by number of spaces times 4
     std::string printIndent() { return std::string(m_indent * 4, ' '); };
@@ -114,6 +116,7 @@ public:
 
 private:
     uint32_t m_indent;
+    ObjectBuilder & m_objectBuilder;
 };
 
 

@@ -53,7 +53,7 @@ using namespace rapidjson;
 using namespace tnr;
 using namespace std;
 
-void ParseDsl(std::string mainObject,
+void ParseDsl(const std::string mainObject,
               vector<string> library,
               vector<string> libraryPaths,
               std::string inputFile,
@@ -83,7 +83,8 @@ void ParseDsl(std::string mainObject,
 //        std::cout << "After toStringTree" << std::endl;
 
 //        auto *visitor = new TNRDSLBaseVisitor();
-        auto *visitor = new TnrVisitor();
+        ObjectBuilder ob;
+        auto *visitor = new TnrVisitor(ob);
         visitor->visitStartRuleName(tree);
         tnrDslFile.close();
     }
