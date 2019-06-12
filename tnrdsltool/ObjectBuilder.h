@@ -28,9 +28,19 @@
 #define TNR_OBJECTBUILER_H
 
 
+#include <string>
+
 class ObjectBuilder
 {
+public:
+    ObjectBuilder = default;
+    ~ObjectBuilder = default;
 
+public:
+    //! Start a new type with an empty object
+    void StartNewType(const std::string &typeName);
+    //! New type is now complete and can be added to the ObjectMap
+    void AddNewType();
 };
 
 

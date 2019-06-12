@@ -23,11 +23,13 @@ public:
 
     antlrcpp::Any visitNew_type_name(TNRDSLParser::New_type_nameContext *context) override {
         std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
+        m_objectBuilder.StartNewType(context->getText());
         return visitChildren(context);
     }
 
     antlrcpp::Any visitDefine_end(TNRDSLParser::Define_endContext *context) override {
         std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl << std::endl;
+        m_objectBuilder.AddNewType();
         return visitChildren(context);
     }
 
