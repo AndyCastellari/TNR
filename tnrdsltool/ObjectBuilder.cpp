@@ -51,6 +51,12 @@ void ObjectBuilder::SetFormatOnTopOfStack(const std::string &description)
     std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
 }
 
+void ObjectBuilder::SetNewlineOnTopOfStack(bool newLine)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << (newLine ? "On" : "Off") << std::endl;
+}
+
+
 void ObjectBuilder::PushEmptyCompoundObject()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;

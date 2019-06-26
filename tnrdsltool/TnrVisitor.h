@@ -42,9 +42,29 @@ public:
     }
 
     antlrcpp::Any visitFormat_string(TNRDSLParser::Format_stringContext *ctx) override {
+        m_objectBuilder.SetFormatOnTopOfStack(ctx->getText());
         return visitChildren(ctx);
     }
 
+    antlrcpp::Any visitNewlineon(TNRDSLParser::NewlineonContext *ctx) override {
+        m_objectBuilder.SetNewlineOnTopOfStack(true);
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitNewlineoff(TNRDSLParser::NewlineoffContext *ctx) override {
+        m_objectBuilder.SetNewlineOnTopOfStack(false);
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitDescriptionon(TNRDSLParser::DescriptiononContext *ctx) override {
+        m_objectBuilder.SetPrintDescriptionOnTopOfStack(true);
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitDescriptionoff(TNRDSLParser::DescriptionoffContext *ctx) override {
+        m_objectBuilder.SetPrintDescriptionOnTopOfStack(false);
+        return visitChildren(ctx);
+    }
 
 
     antlrcpp::Any visitCompound_start(TNRDSLParser::Compound_startContext *ctx) override {
