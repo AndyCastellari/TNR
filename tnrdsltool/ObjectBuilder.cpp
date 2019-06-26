@@ -41,6 +41,16 @@ void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
     std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
 }
 
+void ObjectBuilder::SetPrintDescriptionOnTopOfStack(bool showDescription)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << (showDescription ? "On" : "Off") << std::endl;
+}
+
+void ObjectBuilder::SetFormatOnTopOfStack(const std::string &description)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
+}
+
 void ObjectBuilder::PushEmptyCompoundObject()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
@@ -81,3 +91,4 @@ void ObjectBuilder::PopCounterAndElementToCountedArray()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
 }
+

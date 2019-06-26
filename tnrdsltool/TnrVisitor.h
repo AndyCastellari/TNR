@@ -41,6 +41,11 @@ public:
         return visitChildren(ctx);
     }
 
+    antlrcpp::Any visitFormat_string(TNRDSLParser::Format_stringContext *ctx) override {
+        return visitChildren(ctx);
+    }
+
+
 
     antlrcpp::Any visitCompound_start(TNRDSLParser::Compound_startContext *ctx) override {
         indent();
@@ -76,8 +81,15 @@ public:
 
     virtual antlrcpp::Any visitFixed_array_count(TNRDSLParser::Fixed_array_countContext *ctx) override {
         if (dbg) std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        try
+        {
+            m_objectBuilder.SetFixedArrayLength(std::stoi(ctx->getText()));
+        }
+        catch (const std::invalid_argument& ia)
+        {
+            std::cerr << "Invalid argument: " << ia.what() << '\n';
+        }
 
-        m_objectBuilder.SetFixedArrayLength(0); // TODO
         return visitChildren(ctx);
     }
 

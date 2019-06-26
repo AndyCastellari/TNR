@@ -50,6 +50,8 @@ public:
     virtual void AddNewType();
 
     virtual void SetDescriptionOnTopOfStack(const std::string &description);
+    virtual void SetPrintDescriptionOnTopOfStack(bool);
+    virtual void SetFormatOnTopOfStack(const std::string &description);
 
     virtual void PushEmptyCompoundObject();
     virtual void PushEmptyExistingType(const std::string &typeName);
