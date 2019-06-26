@@ -4,10 +4,8 @@ cmake_policy(SET CMP0048 NEW)
 project (TnrDslParser VERSION 1.3.1 LANGUAGES CXX)
 
 add_executable(tnrdsltool tnrdsltool.cpp
-#        TNRDSLBaseListener.cpp
         TNRDSLBaseVisitor.cpp
         TNRDSLLexer.cpp
-#        TNRDSLListener.cpp
         TNRDSLParser.cpp
         TnrVisitor.cpp TnrVisitor.h ObjectBuilder.cpp ObjectBuilder.h)
 
