@@ -21,119 +21,64 @@ public:
     //! Decrease indentation
     void unindent() { if (m_indent > 0) { m_indent--; } }
 
-    antlrcpp::Any visitNew_type_name(TNRDSLParser::New_type_nameContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        m_objectBuilder.StartNewType(context->getText());   // Reset and save the type name
-        return visitChildren(context);
+    antlrcpp::Any visitNew_type_name(TNRDSLParser::New_type_nameContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        m_objectBuilder.StartNewType(ctx->getText());   // Reset and save the type name
+        return visitChildren(ctx);
     }
 
-    antlrcpp::Any visitDefine_end(TNRDSLParser::Define_endContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl << std::endl;
+    antlrcpp::Any visitDefine_end(TNRDSLParser::Define_endContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl << std::endl;
         m_objectBuilder.AddNewType();   // Defining the type is complete
-        return visitChildren(context);
+        return visitChildren(ctx);
     }
 
-    antlrcpp::Any visitCompound_start(TNRDSLParser::Compound_startContext *context) override {
+    antlrcpp::Any visitCompound_start(TNRDSLParser::Compound_startContext *ctx) override {
         indent();
         std::cout << printIndent() << __FUNCTION__ << std::endl;
-        return visitChildren(context);
+        return visitChildren(ctx);
     }
 
-    antlrcpp::Any visitCompound_end(TNRDSLParser::Compound_endContext *context) override {
+    antlrcpp::Any visitCompound_end(TNRDSLParser::Compound_endContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << std::endl;
         unindent();
-        return visitChildren(context);
+        return visitChildren(ctx);
     }
 
-    antlrcpp::Any visitExisting_type(TNRDSLParser::Existing_typeContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitArray_element(TNRDSLParser::Array_elementContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-    virtual antlrcpp::Any visitArray_element_start(TNRDSLParser::Array_element_startContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    virtual antlrcpp::Any visitArray_element_end(TNRDSLParser::Array_element_endContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-
-    antlrcpp::Any visitFixed_array(TNRDSLParser::Fixed_arrayContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitFixed_array_count(TNRDSLParser::Fixed_array_countContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitCounted_array(TNRDSLParser::Counted_arrayContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitCounted_array_count(TNRDSLParser::Counted_array_countContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitVariant(TNRDSLParser::VariantContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitObject_description(TNRDSLParser::Object_descriptionContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-    antlrcpp::Any visitFormat_string(TNRDSLParser::Format_stringContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-//    virtual antlrcpp::Any visitOptional_parameters(TNRDSLParser::Optional_parametersContext *context) override {
-//        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-//        return visitChildren(context);
-//    }
-
-    antlrcpp::Any visitNewlineon(TNRDSLParser::NewlineonContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitNewlineoff(TNRDSLParser::NewlineoffContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitDescriptionon(TNRDSLParser::DescriptiononContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitDescriptionoff(TNRDSLParser::DescriptionoffContext *context) override {
-        std::cout << printIndent() << __FUNCTION__ << " " << context->getText() << std::endl;
-        return visitChildren(context);
-    }
-
-    antlrcpp::Any visitSimple_start(TNRDSLParser::Simple_startContext *ctx) override {
+    antlrcpp::Any visitExisting_type(TNRDSLParser::Existing_typeContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
         return visitChildren(ctx);
     }
 
-    antlrcpp::Any visitSimple_end(TNRDSLParser::Simple_endContext *ctx) override {
+    antlrcpp::Any visitCompound_member_end(TNRDSLParser::Compound_member_endContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << " Add to parent" << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitFixed_array_type(TNRDSLParser::Fixed_array_typeContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    virtual antlrcpp::Any visitFixed_array_count(TNRDSLParser::Fixed_array_countContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
         return visitChildren(ctx);
     }
 
+    antlrcpp::Any visitFixed_array_element_end(TNRDSLParser::Fixed_array_element_endContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitCounted_array_type(TNRDSLParser::Counted_array_typeContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitCounted_array_element_end(TNRDSLParser::Counted_array_element_endContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
 
 
 private:

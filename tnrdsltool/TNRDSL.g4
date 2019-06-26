@@ -3,41 +3,45 @@ grammar TNRDSL;
 //startRuleName  : (definition)* main EOF ;
 startRuleName  : (definition)* EOF ;
 
-definition : 'define' new_type_name '=' expression define_end;
+definition : 'define' new_type_name '=' variable define_end;
 new_type_name : ID;
 define_end : ';';
-//main : 'main' '=' expression ;
 
-//expression : compound_start (expression)+ compound_end
-//           | variable ;
-expression : compound_start (expression)+ compound_end
-           | variable;
-compound_start : '{';
-compound_end : '}';
-
-//variable : simple_variable ';'
-variable : simple_variable
+variable :    compound_variable
+            | simple_variable
             | fixed_array
             | counted_array
-            | variant ;
+            | variant ;             // Leaves object on stack
+
+compound_variable : compound_start (variable compound_member_end)+ compound_end;
+compound_start : '{';
+compound_end : '}';
+compound_member_end : ';';      // Add variable on stack to parent compound object
 
 simple_variable : existing_type simple_start optional_parameters simple_end ;
+existing_type : ID;             // Create variable on stack
 simple_start : '(' ;
 simple_end : ')' ;
-existing_type : ID;
-fixed_array : 'FixedArray' '(' fixed_array_count optional_parameters ')' ':' array_element ;
-fixed_array_count : NUMBER;
-counted_array : 'CountedArray' '(' counted_array_count optional_parameters ')' ':' array_element ;
-counted_array_count : simple_variable;
-array_element : array_element_start (expression)+ array_element_end
-                           | variable;
-array_element_start : '{';
-array_element_end : '}';
+
+fixed_array : fixed_array_type '(' fixed_array_count optional_parameters ')' fixed_array_element ;
+fixed_array_type: 'FixedArray';     // Create fixed array object on stack
+fixed_array_count : NUMBER;         // Set size of fixed_array on stack
+
+fixed_array_element : fixed_array_element_start variable fixed_array_element_end;
+fixed_array_element_start : '<';
+fixed_array_element_end : '>';      // Set top of stack object as element of fixed_array under it on stack
+
+counted_array : counted_array_type '(' simple_variable optional_parameters ')' counted_array_element ;
+counted_array_type: 'CountedArray';     // Create counted array on stack
+
+counted_array_element : counted_array_element_start variable counted_array_element_end;
+counted_array_element_start : '<';
+counted_array_element_end : '>';        // Set counted array count and element from top of stack
 
 variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_parameters '}';
 
 union_parameters : (union_param)* ;
-union_param : expression
+union_param : variable
             | 'case' NUMBER ':';
 
 optional_parameters : // nothing
