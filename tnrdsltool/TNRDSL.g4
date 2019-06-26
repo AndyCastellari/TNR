@@ -31,7 +31,7 @@ fixed_array_element : fixed_array_element_start variable fixed_array_element_end
 fixed_array_element_start : '<';
 fixed_array_element_end : '>';      // Set top of stack object as element of fixed_array under it on stack
 
-counted_array : counted_array_type '(' simple_variable optional_parameters ')' counted_array_element ;
+counted_array : counted_array_type '(' optional_parameters ',' simple_variable ')' counted_array_element ;
 counted_array_type: 'CountedArray';     // Create counted array on stack
 
 counted_array_element : counted_array_element_start variable counted_array_element_end;

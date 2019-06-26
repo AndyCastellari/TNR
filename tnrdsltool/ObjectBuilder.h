@@ -38,9 +38,23 @@ public:
 
 public:
     //! Start a new type with an empty object
-    void StartNewType(const std::string &typeName);
+    virtual void StartNewType(const std::string &typeName);
     //! New type is now complete and can be added to the ObjectMap
-    void AddNewType();
+    virtual void AddNewType();
+
+    virtual void SetDescriptionOnTopOfStack(const std::string &description);
+
+    virtual void PushEmptyCompoundObject();
+    virtual void PushEmptyExistingType(const std::string &typeName);
+    virtual void PushEmptyFixedArray();
+    virtual void PushEmptyCountedArray();
+
+    virtual void PopObjectToParentObject();
+
+    virtual void SetFixedArrayLength(uint32_t size);
+    virtual void PopElementToFixedArray();
+
+    virtual void PopCounterAndElementToCountedArray();
 };
 
 

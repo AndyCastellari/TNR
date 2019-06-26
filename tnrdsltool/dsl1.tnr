@@ -6,7 +6,7 @@ define header =
     U24();
     FixedArray(5, "FixedArray", newline=off) < U8() >;
     FixedArray(7) < { U8("count"); } >;
-    CountedArray(U16("Number", format="%02d"), "Variable Array") < { U32("P1"); String("Driver");  } >;
+    CountedArray("Variable Array", U16("Number", format="%02d")) < { U32("P1"); String("Driver");  } >;
 };
 
 //define header2 =

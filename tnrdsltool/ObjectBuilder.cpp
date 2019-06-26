@@ -23,14 +23,62 @@
  *
  */
 
+#include <iostream>
 #include "ObjectBuilder.h"
+
+std::string printIndent() { return std::string(10 * 4, ' '); };
 
 void ObjectBuilder::StartNewType(const std::string& typeName)
 {
-
+    std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
 }
 
 void ObjectBuilder::AddNewType()
 {
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+}
 
+void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
+}
+
+void ObjectBuilder::PushEmptyCompoundObject()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+}
+
+void ObjectBuilder::PushEmptyExistingType(const std::string& typeName)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
+}
+
+void ObjectBuilder::PushEmptyFixedArray()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+}
+
+void ObjectBuilder::PushEmptyCountedArray()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+}
+
+void ObjectBuilder::PopObjectToParentObject()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+}
+
+void ObjectBuilder::SetFixedArrayLength(uint32_t size)
+{
+    std::cout << printIndent() << __FUNCTION__ << " size=" << size << std::endl;
+}
+
+void ObjectBuilder::PopElementToFixedArray()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+}
+
+void ObjectBuilder::PopCounterAndElementToCountedArray()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
 }

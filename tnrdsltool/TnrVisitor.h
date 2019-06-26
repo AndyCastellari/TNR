@@ -33,9 +33,17 @@ public:
         return visitChildren(ctx);
     }
 
+    antlrcpp::Any visitObject_description(TNRDSLParser::Object_descriptionContext *ctx) override {
+        std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        m_objectBuilder.SetDescriptionOnTopOfStack(ctx->getText());
+        return visitChildren(ctx);
+    }
+
+
     antlrcpp::Any visitCompound_start(TNRDSLParser::Compound_startContext *ctx) override {
         indent();
         std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.PushEmptyCompoundObject();
         return visitChildren(ctx);
     }
 
@@ -47,36 +55,43 @@ public:
 
     antlrcpp::Any visitExisting_type(TNRDSLParser::Existing_typeContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        m_objectBuilder.PushEmptyExistingType(ctx->getText());
         return visitChildren(ctx);
     }
 
     antlrcpp::Any visitCompound_member_end(TNRDSLParser::Compound_member_endContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << " Add to parent" << std::endl;
+        m_objectBuilder.PopObjectToParentObject();
         return visitChildren(ctx);
     }
 
     antlrcpp::Any visitFixed_array_type(TNRDSLParser::Fixed_array_typeContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.PushEmptyFixedArray();
         return visitChildren(ctx);
     }
 
     virtual antlrcpp::Any visitFixed_array_count(TNRDSLParser::Fixed_array_countContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        m_objectBuilder.SetFixedArrayLength(0); // TODO
         return visitChildren(ctx);
     }
 
     antlrcpp::Any visitFixed_array_element_end(TNRDSLParser::Fixed_array_element_endContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.PopElementToFixedArray();
         return visitChildren(ctx);
     }
 
     antlrcpp::Any visitCounted_array_type(TNRDSLParser::Counted_array_typeContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.PushEmptyCountedArray();
         return visitChildren(ctx);
     }
 
     antlrcpp::Any visitCounted_array_element_end(TNRDSLParser::Counted_array_element_endContext *ctx) override {
         std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.PopCounterAndElementToCountedArray();
         return visitChildren(ctx);
     }
 
