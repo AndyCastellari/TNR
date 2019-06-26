@@ -33,8 +33,15 @@
 class ObjectBuilder
 {
 public:
-    ObjectBuilder() = default;
+    ObjectBuilder() : m_indent(0) {};
     ~ObjectBuilder() = default;
+
+    //! Return a string that indents by number of spaces times 4
+    std::string printIndent() { return std::string((m_indent * 4) + 4, ' '); };
+    //! Increase indentation
+    void indent() { m_indent++; };
+    //! Decrease indentation
+    void unindent() { if (m_indent > 0) { m_indent--; } }
 
 public:
     //! Start a new type with an empty object
@@ -55,6 +62,9 @@ public:
     virtual void PopElementToFixedArray();
 
     virtual void PopCounterAndElementToCountedArray();
+
+protected:
+    uint32_t m_indent;
 };
 
 

@@ -26,8 +26,6 @@
 #include <iostream>
 #include "ObjectBuilder.h"
 
-std::string printIndent() { return std::string(10 * 4, ' '); };
-
 void ObjectBuilder::StartNewType(const std::string& typeName)
 {
     std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
@@ -46,6 +44,7 @@ void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
 void ObjectBuilder::PushEmptyCompoundObject()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    indent();
 }
 
 void ObjectBuilder::PushEmptyExistingType(const std::string& typeName)
