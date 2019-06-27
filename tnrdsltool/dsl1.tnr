@@ -6,7 +6,7 @@ define header =
     U24();
     FixedArray(5, "FixedArray", newline=off) < U8() >;
     FixedArray(7) < { U8("count"); } >;
-    CountedArray("Variable Array", U16("Number", format="%02d")) < { U32("P1"); String("Driver");  } >;
+    CountedArray("Variable Array", U16("Number", format="%02d")) < { U32("P1"); STRING("Driver");  } >;
 };
 
 //define header2 =
@@ -23,6 +23,12 @@ define header =
 //}   /* end define */
 
 define centimetres = U32("centimetres");
+
+define square =
+{
+    centimetres("Length");
+    centimetres("Width");
+}
 //
 //define main =
 //{   /* main */

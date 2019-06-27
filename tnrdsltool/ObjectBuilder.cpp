@@ -29,11 +29,19 @@
 void ObjectBuilder::StartNewType(const std::string& typeName)
 {
     std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
+    m_newTypeName = typeName;
 }
 
 void ObjectBuilder::AddNewType()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl << std::endl;
+    std::cout << printIndent() << __FUNCTION__ << " " << m_newTypeName << std::endl << std::endl;
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr object = m_objectStack.top();
+        m_objectStack.pop();
+        object->setDescription(m_newTypeName);
+        m_objectMap.AddObject(object);
+    }
 }
 
 void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
