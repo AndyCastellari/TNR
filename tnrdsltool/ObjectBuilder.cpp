@@ -33,7 +33,7 @@ void ObjectBuilder::StartNewType(const std::string& typeName)
 
 void ObjectBuilder::AddNewType()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl << std::endl;
 }
 
 void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
@@ -61,26 +61,46 @@ void ObjectBuilder::PushEmptyCompoundObject()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     indent();
+    tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRContainer>("");
+    m_objectStack.push(o);
 }
 
 void ObjectBuilder::PushEmptyExistingType(const std::string& typeName)
 {
     std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
+    tnr::tnr_baseData_ptr retObj;
+    if (m_objectMap.FindObject(typeName, retObj))
+    {
+        m_objectStack.push(retObj);
+    }
+    else
+    {
+        std::cout << "type " << typeName << " not found in object map" << std::endl;
+    }
 }
 
 void ObjectBuilder::PushEmptyFixedArray()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRFixedArray>();
+    m_objectStack.push(o);
 }
 
 void ObjectBuilder::PushEmptyCountedArray()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRCountedArray>();
+    m_objectStack.push(o);
 }
 
 void ObjectBuilder::PopObjectToParentObject()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr object = m_objectStack.top();
+        m_objectStack.pop();
+    }
 }
 
 void ObjectBuilder::SetFixedArrayLength(uint32_t size)
@@ -91,10 +111,25 @@ void ObjectBuilder::SetFixedArrayLength(uint32_t size)
 void ObjectBuilder::PopElementToFixedArray()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr element = m_objectStack.top();
+        m_objectStack.pop();
+    }
 }
 
 void ObjectBuilder::PopCounterAndElementToCountedArray()
 {
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr element = m_objectStack.top();
+        m_objectStack.pop();
+    }
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr counter = m_objectStack.top();
+        m_objectStack.pop();
+    }
 }
 

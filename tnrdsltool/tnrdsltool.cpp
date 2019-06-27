@@ -60,7 +60,8 @@ void ParseDsl(const std::string mainObject,
               std::string outputFile,
               bool  binaryToText,
               bool  dryRun,
-              bool  printObjectMap)
+              bool  printObjectMap,
+              ObjectMap & objectMap)
 {
     string line;
     ifstream tnrDslFile (mainObject);
@@ -83,7 +84,7 @@ void ParseDsl(const std::string mainObject,
 //        std::cout << "After toStringTree" << std::endl;
 
 //        auto *visitor = new TNRDSLBaseVisitor();
-        ObjectBuilder ob;
+        ObjectBuilder ob(objectMap);
         auto *visitor = new TnrVisitor(ob);
         visitor->visitStartRuleName(tree);
         tnrDslFile.close();
@@ -288,7 +289,8 @@ int main(int argc, char** argv)
                  outputFile,
                  binaryToTextSwitch.isSet(),
                  dryRunSwitch.isSet(),
-                 diagObjectMapSwitch.isSet());
+                 diagObjectMapSwitch.isSet(),
+                 om);
 #else
         // For now we are ignoring the library paths - that will be used when opening the files
         cout << endl << "Parsing library files" << endl;
