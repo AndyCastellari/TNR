@@ -24,7 +24,7 @@ define header =
 
 define centimetres = U32("centimetres");
 
-define square =
+define main =
 {
     centimetres("Length");
     centimetres("Width");

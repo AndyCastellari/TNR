@@ -302,7 +302,7 @@ int main(int argc, char** argv)
 
         if (ok)
         {
-            ParseDslFileToObjectMap(mainObjectFile, om);
+            ok = ParseDslFileToObjectMap(mainObjectFile, om);
         }
 
         if (diagObjectMapSwitch.isSet())
@@ -312,7 +312,11 @@ int main(int argc, char** argv)
 
         // If this is NOT a dry run, process input to output
         tnr::tnr_baseData_ptr c;
-        om.FindObject("main", c);
+        if (!om.FindObject("main", c))
+        {
+            ok = false;
+            std::cout << "Didn't find main in object map" << std::endl;
+        }
 
         if (ok && !dryRunSwitch.isSet())
         {
