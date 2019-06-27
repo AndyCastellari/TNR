@@ -40,7 +40,7 @@ bool ObjectMap::AddObject(tnr_baseData_ptr& object)
     return result;
 }
 
-bool ObjectMap::FindObject(std::string& objectName, tnr_baseData_ptr& object)
+bool ObjectMap::FindObject(const std::string& objectName, tnr_baseData_ptr& object)
 {
     bool result = true;
     std::map<std::string, tnr_baseData_ptr>::iterator it;

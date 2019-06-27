@@ -39,7 +39,7 @@ public:
     //! Adds a clone of the object to the map with the given name
     bool AddObject(tnr_baseData_ptr & object);
     //! Returns a clone of the object with the name
-    bool FindObject(std::string &objectName, tnr_baseData_ptr & object);
+    bool FindObject(const std::string& objectName, tnr_baseData_ptr& object);
     //! Print the contents of the map
     void PrintMap();
 protected:
