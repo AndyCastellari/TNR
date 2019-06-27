@@ -290,6 +290,7 @@ typedef std::shared_ptr<TNRContainer> TNRContainer_ptr;
 class TNRFixedArray : public tnr_baseData
 {
 public:
+    TNRFixedArray();
     TNRFixedArray(std::string description, U32 count, tnr_baseData_ptr recordType);
     ~TNRFixedArray() = default;
 
@@ -317,6 +318,7 @@ typedef std::shared_ptr<TNRFixedArray> TNRFixedArray_ptr;
 class TNRCountedArray : public tnr_baseData
 {
 public:
+    TNRCountedArray();
     TNRCountedArray(std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
     ~TNRCountedArray() = default;
 

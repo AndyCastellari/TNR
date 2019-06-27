@@ -109,7 +109,14 @@ U32 TNRContainer::getItemCount() { return m_values.size(); }
 
 //===============================================================================================
 
-tnr::TNRFixedArray::TNRFixedArray(    const std::string description, U32 count, tnr_baseData_ptr recordType) :
+TNRFixedArray::TNRFixedArray():
+        tnr_baseData(""), m_count(0), m_recordType(), m_values()
+{
+
+}
+
+
+    tnr::TNRFixedArray::TNRFixedArray(    const std::string description, U32 count, tnr_baseData_ptr recordType) :
                                                         tnr_baseData(description), m_count(count), m_values()
 {
     m_recordType = recordType->clone();
@@ -181,7 +188,12 @@ U32 TNRFixedArray::getItemCount() { U32 result = m_values.size(); return result;
 
 //===============================================================================================
 
-tnr::TNRCountedArray::TNRCountedArray(    const std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
+TNRCountedArray::TNRCountedArray() : tnr_baseData(""), m_count(), m_recordType(), m_values()
+{
+
+}
+
+    tnr::TNRCountedArray::TNRCountedArray(    const std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
                                                                                         tnr_baseData(description), m_values()
 {
     m_count = countType->clone();
