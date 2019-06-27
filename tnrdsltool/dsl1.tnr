@@ -28,7 +28,7 @@ define square =
 {
     centimetres("Length");
     centimetres("Width");
-}
+};
 //
 //define main =
 //{   /* main */
