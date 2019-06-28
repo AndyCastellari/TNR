@@ -115,10 +115,9 @@ TNRFixedArray::TNRFixedArray():
 
 }
 
-
-    tnr::TNRFixedArray::TNRFixedArray(    const std::string description, U32 count, tnr_baseData_ptr recordType) :
-                                                        tnr_baseData(description), m_count(count), m_values()
+void TNRFixedArray::createArray(U32 count, tnr_baseData_ptr recordType)
 {
+    m_count = count;
     m_recordType = recordType->clone();
     // Fill array with correct number of items (we don't know what type these items are)
     for (unsigned int i = 0; i < m_count; i++)
@@ -126,6 +125,20 @@ TNRFixedArray::TNRFixedArray():
         tnr_baseData_ptr newRecord = m_recordType->clone();
         m_values.push_back(newRecord);
     }
+}
+
+
+tnr::TNRFixedArray::TNRFixedArray(    const std::string description, U32 count, tnr_baseData_ptr recordType) :
+                                                    tnr_baseData(description), m_count(count), m_values()
+{
+    createArray(count, recordType);
+//    m_recordType = recordType->clone();
+//    // Fill array with correct number of items (we don't know what type these items are)
+//    for (unsigned int i = 0; i < m_count; i++)
+//    {
+//        tnr_baseData_ptr newRecord = m_recordType->clone();
+//        m_values.push_back(newRecord);
+//    }
 }
 
 tnr_baseData_ptr & tnr::TNRFixedArray::operator [](U32 index)

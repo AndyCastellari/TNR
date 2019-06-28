@@ -306,6 +306,9 @@ public:
     U32 getItemCount() override;
 
 protected:
+    void createArray(U32 count, tnr_baseData_ptr recordType);
+
+protected:
     //! Number of items in the fixed array - not serialised (needed?)
     U32 m_count;
     //! Item that will be put into the array - its actual type is not known
