@@ -47,11 +47,21 @@ void ObjectBuilder::AddNewType()
 void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
 {
     std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr object = m_objectStack.top();
+        object->setDescription(description);
+    }
 }
 
 void ObjectBuilder::SetPrintDescriptionOnTopOfStack(bool showDescription)
 {
     std::cout << printIndent() << __FUNCTION__ << " " << (showDescription ? "On" : "Off") << std::endl;
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr object = m_objectStack.top();
+        object->setOutputDescription(showDescription);
+    }
 }
 
 void ObjectBuilder::SetFormatOnTopOfStack(const std::string &description)
@@ -62,6 +72,11 @@ void ObjectBuilder::SetFormatOnTopOfStack(const std::string &description)
 void ObjectBuilder::SetNewlineOnTopOfStack(bool newLine)
 {
     std::cout << printIndent() << __FUNCTION__ << " " << (newLine ? "On" : "Off") << std::endl;
+    if (!m_objectStack.empty())
+    {
+        tnr::tnr_baseData_ptr object = m_objectStack.top();
+        object->setOutputNewline(newLine);
+    }
 }
 
 
@@ -71,6 +86,7 @@ void ObjectBuilder::PushEmptyCompoundObject()
     indent();
     tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRContainer>("");
     m_objectStack.push(o);
+    PrintStackSize();
 }
 
 void ObjectBuilder::PushEmptyExistingType(const std::string& typeName)
@@ -80,6 +96,7 @@ void ObjectBuilder::PushEmptyExistingType(const std::string& typeName)
     if (m_objectMap.FindObject(typeName, retObj))
     {
         m_objectStack.push(retObj);
+        PrintStackSize();
     }
     else
     {
@@ -92,6 +109,7 @@ void ObjectBuilder::PushEmptyFixedArray()
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRFixedArray>();
     m_objectStack.push(o);
+    PrintStackSize();
 }
 
 void ObjectBuilder::PushEmptyCountedArray()
@@ -99,6 +117,7 @@ void ObjectBuilder::PushEmptyCountedArray()
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRCountedArray>();
     m_objectStack.push(o);
+    PrintStackSize();
 }
 
 void ObjectBuilder::PopObjectToParentObject()
@@ -106,8 +125,19 @@ void ObjectBuilder::PopObjectToParentObject()
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     if (!m_objectStack.empty())
     {
-        tnr::tnr_baseData_ptr object = m_objectStack.top();
+        std::shared_ptr<tnr::TNRContainer> parent;
+        std::shared_ptr<tnr::tnr_baseData> object;
+
+        object = m_objectStack.top();
         m_objectStack.pop();
+        PrintStackSize();
+
+//        parent = std::dynamic_pointer_cast<tnr::TNRContainer>(m_objectStack.top());
+//        parent->Add(object);
+    }
+    else
+    {
+        std::cout << "m_objectStack is empty" << std::endl;
     }
 }
 
@@ -139,5 +169,10 @@ void ObjectBuilder::PopCounterAndElementToCountedArray()
         tnr::tnr_baseData_ptr counter = m_objectStack.top();
         m_objectStack.pop();
     }
+}
+
+void ObjectBuilder::PrintStackSize()
+{
+//    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
 }
 

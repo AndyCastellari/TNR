@@ -147,7 +147,7 @@ public:
     //! This method is used when using the class as a counter of a counted array
     virtual U32 getCount() { return 0; };        // TBC - this could be pure virtual
     //! Return name of object
-    virtual void setDescription(std::string &s) { m_description = s; };
+    virtual void setDescription(const std::string &s) { m_description = s; };
     //! Return name of object
     virtual std::string & getDescription() { return m_description; };
     //! This method is used for containers/arrays to find out how many items are in them - POD returns 1
@@ -303,7 +303,8 @@ public:
 
     tnr_baseData_ptr clone() override;
     //! Return number of items in the array
-    U32 getItemCount() override;;
+    U32 getItemCount() override;
+
 protected:
     //! Number of items in the fixed array - not serialised (needed?)
     U32 m_count;
