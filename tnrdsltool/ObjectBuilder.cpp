@@ -28,13 +28,15 @@
 
 void ObjectBuilder::StartNewType(const std::string& typeName)
 {
+    std::cout << std::endl;
     std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
     m_newTypeName = typeName;
+    PrintStackSize();
 }
 
 void ObjectBuilder::AddNewType()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << m_newTypeName << std::endl << std::endl;
+    std::cout << printIndent() << __FUNCTION__ << " " << m_newTypeName << std::endl;
     if (!m_objectStack.empty())
     {
         tnr::tnr_baseData_ptr object = m_objectStack.top();
@@ -42,6 +44,8 @@ void ObjectBuilder::AddNewType()
         object->setDescription(m_newTypeName);
         m_objectMap.AddObject(object);
     }
+
+    PrintStackSize();
 }
 
 void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
@@ -132,18 +136,28 @@ void ObjectBuilder::PopObjectToParentObject()
         m_objectStack.pop();
         PrintStackSize();
 
-//        parent = std::dynamic_pointer_cast<tnr::TNRContainer>(m_objectStack.top());
-//        parent->Add(object);
+        parent = std::dynamic_pointer_cast<tnr::TNRContainer>(m_objectStack.top());
+        parent->Add(object);
     }
     else
     {
-        std::cout << "m_objectStack is empty" << std::endl;
+        std::cout << __FUNCTION__ << " m_objectStack is empty" << std::endl;
     }
 }
 
 void ObjectBuilder::SetFixedArrayLength(uint32_t size)
 {
     std::cout << printIndent() << __FUNCTION__ << " size=" << size << std::endl;
+    if (!m_objectStack.empty())
+    {
+        std::shared_ptr<tnr::TNRFixedArray> fixedArray;
+        fixedArray = std::dynamic_pointer_cast<tnr::TNRFixedArray>(m_objectStack.top());
+        fixedArray->SetNumberOfElements(size);
+    }
+    else
+    {
+        std::cout << __FUNCTION__ << " m_objectStack is empty" << std::endl;
+    }
 }
 
 void ObjectBuilder::PopElementToFixedArray()
@@ -153,26 +167,43 @@ void ObjectBuilder::PopElementToFixedArray()
     {
         tnr::tnr_baseData_ptr element = m_objectStack.top();
         m_objectStack.pop();
+
+        if (!m_objectStack.empty())
+        {
+            std::shared_ptr<tnr::TNRFixedArray> fixedArray;
+            fixedArray = std::dynamic_pointer_cast<tnr::TNRFixedArray>(m_objectStack.top());
+            fixedArray->SetRecordType(element);
+        }
     }
 }
 
 void ObjectBuilder::PopCounterAndElementToCountedArray()
 {
+    tnr::tnr_baseData_ptr element;
+    tnr::tnr_baseData_ptr counter;
+
     std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     if (!m_objectStack.empty())
     {
-        tnr::tnr_baseData_ptr element = m_objectStack.top();
+        element = m_objectStack.top();
         m_objectStack.pop();
     }
     if (!m_objectStack.empty())
     {
-        tnr::tnr_baseData_ptr counter = m_objectStack.top();
+        counter = m_objectStack.top();
         m_objectStack.pop();
+    }
+    if (!m_objectStack.empty())
+    {
+        std::shared_ptr<tnr::TNRCountedArray> countedArray;
+        countedArray = std::dynamic_pointer_cast<tnr::TNRCountedArray>(m_objectStack.top());
+        countedArray->SetNumberOfElements(counter);
+        countedArray->SetRecordType(element);
     }
 }
 
 void ObjectBuilder::PrintStackSize()
 {
-//    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
+    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
 }
 

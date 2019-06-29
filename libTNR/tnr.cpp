@@ -112,13 +112,14 @@ U32 TNRContainer::getItemCount() { return m_values.size(); }
 TNRFixedArray::TNRFixedArray():
         tnr_baseData(""), m_count(0), m_recordType(), m_values()
 {
-
+    m_recordType = std::make_shared<POD_U8>(0, "");
+    createArray();
 }
 
-void TNRFixedArray::createArray(U32 count, tnr_baseData_ptr recordType)
+void TNRFixedArray::createArray()
 {
-    m_count = count;
-    m_recordType = recordType->clone();
+    m_values.clear();
+
     // Fill array with correct number of items (we don't know what type these items are)
     for (unsigned int i = 0; i < m_count; i++)
     {
@@ -127,18 +128,13 @@ void TNRFixedArray::createArray(U32 count, tnr_baseData_ptr recordType)
     }
 }
 
-
 tnr::TNRFixedArray::TNRFixedArray(    const std::string description, U32 count, tnr_baseData_ptr recordType) :
-                                                    tnr_baseData(description), m_count(count), m_values()
+                                                    tnr_baseData(description),
+                                                    m_count(count),
+                                                    m_recordType(recordType),
+                                                    m_values()
 {
-    createArray(count, recordType);
-//    m_recordType = recordType->clone();
-//    // Fill array with correct number of items (we don't know what type these items are)
-//    for (unsigned int i = 0; i < m_count; i++)
-//    {
-//        tnr_baseData_ptr newRecord = m_recordType->clone();
-//        m_values.push_back(newRecord);
-//    }
+    createArray();
 }
 
 tnr_baseData_ptr & tnr::TNRFixedArray::operator [](U32 index)
@@ -199,18 +195,30 @@ tnr_baseData_ptr TNRFixedArray::clone()
 
 U32 TNRFixedArray::getItemCount() { U32 result = m_values.size(); return result; }
 
+void TNRFixedArray::SetNumberOfElements(uint32_t count)
+{
+    m_count = count;
+    createArray();
+}
+
+void TNRFixedArray::SetRecordType(tnr_baseData_ptr recordType)
+{
+    m_recordType = recordType->clone();
+    createArray();
+}
+
 //===============================================================================================
 
 TNRCountedArray::TNRCountedArray() : tnr_baseData(""), m_count(), m_recordType(), m_values()
 {
-
+    m_count = std::make_shared<POD_U8>(0, "");
+    m_recordType = std::make_shared<POD_U8>(0, "");
+    createArray();
 }
 
-    tnr::TNRCountedArray::TNRCountedArray(    const std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
-                                                                                        tnr_baseData(description), m_values()
+void TNRCountedArray::createArray()
 {
-    m_count = countType->clone();
-    m_recordType = recordType->clone();
+    m_values.clear();
 
     // Fill array with correct number of items (we don't know what type these items are)
     for (unsigned int i = 0; i < m_count->getCount(); i++)
@@ -218,6 +226,22 @@ TNRCountedArray::TNRCountedArray() : tnr_baseData(""), m_count(), m_recordType()
         tnr_baseData_ptr newRecord = m_recordType->clone();
         m_values.push_back(newRecord);
     }
+}
+
+
+tnr::TNRCountedArray::TNRCountedArray(    const std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType) :
+                                                                                    tnr_baseData(description), m_values()
+{
+    m_count = countType->clone();
+    m_recordType = recordType->clone();
+
+    createArray();
+//     Fill array with correct number of items (we don't know what type these items are)
+//    for (unsigned int i = 0; i < m_count->getCount(); i++)
+//    {
+//        tnr_baseData_ptr newRecord = m_recordType->clone();
+//        m_values.push_back(newRecord);
+//    }
 }
 
     tnr_baseData_ptr & tnr::TNRCountedArray::operator [](U32 index)
@@ -285,6 +309,18 @@ tnr_baseData_ptr TNRCountedArray::clone()
 }
 
 U32 TNRCountedArray::getItemCount() { auto result = (U32)m_values.size(); return result; }
+
+void TNRCountedArray::SetNumberOfElements(tnr_baseData_ptr countType)
+{
+    m_count = countType->clone();
+    createArray();
+}
+
+void TNRCountedArray::SetRecordType(tnr_baseData_ptr recordType)
+{
+    m_recordType = recordType->clone();
+    createArray();
+}
 
 //===============================================================================================
 tnr::TNR_C_String::TNR_C_String(const std::string &value, const std::string description) : tnr_baseData(description),

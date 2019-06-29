@@ -294,6 +294,9 @@ public:
     TNRFixedArray(std::string description, U32 count, tnr_baseData_ptr recordType);
     ~TNRFixedArray() = default;
 
+    void SetNumberOfElements(uint32_t count);
+    void SetRecordType(tnr_baseData_ptr recordType);
+
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
     tnr_baseData_ptr & operator[](U32 index);
 
@@ -306,7 +309,7 @@ public:
     U32 getItemCount() override;
 
 protected:
-    void createArray(U32 count, tnr_baseData_ptr recordType);
+    void createArray();
 
 protected:
     //! Number of items in the fixed array - not serialised (needed?)
@@ -326,6 +329,9 @@ public:
     TNRCountedArray(std::string description, tnr_baseData_ptr countType, tnr_baseData_ptr recordType);
     ~TNRCountedArray() = default;
 
+    void SetNumberOfElements(tnr_baseData_ptr countType);
+    void SetRecordType(tnr_baseData_ptr recordType);
+
     //! Return a reference to the pointer inside the object so we can read or write it or modify the object it points to
     tnr_baseData_ptr & operator[](U32 index);
 
@@ -336,7 +342,11 @@ public:
 
     tnr_baseData_ptr clone() override;
     //! Return number of items in the array
-    U32 getItemCount() override;;
+    U32 getItemCount() override;
+
+protected:
+    void createArray();
+
 protected:
     //! Number of items in the fixed array - not serialised
     tnr_baseData_ptr m_count;
