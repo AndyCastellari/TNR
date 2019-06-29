@@ -337,7 +337,10 @@ int main(int argc, char** argv)
 
             // try to open the input and output file
             in_stream->open(inputFile.c_str(), mode_in);
-            out_stream->open(outputFile.c_str(), mode_out);
+            if (in_stream->good())
+            {
+                out_stream->open(outputFile.c_str(), mode_out);
+            }
 
             if (in_stream->good() && out_stream->good())
             {
