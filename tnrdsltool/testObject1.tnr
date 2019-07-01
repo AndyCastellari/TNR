@@ -1,0 +1,10 @@
+define main =
+{
+    U8("U8");
+    U16("U16");
+    FixedArray(8, "FixedArray") < U8("U8 element") >;
+    U8("Another U8");
+    CountedArray("Variable Array 24 bit count and 32 bit values", U24("U24 count", format="%02d")) < { U32("U32 element"); } >;
+    CountedArray("Variable array 32 bit count and values are struct of two 16 bit values", U32("U32 count")) < { U16("U16 start element"); U16("U16 end element"); } >;
+    U8("Final U8");
+};
