@@ -44,7 +44,7 @@ std::string tnr::FormattedTextWriteIf::padding()
 
 std::string tnr::FormattedTextWriteIf::NewLineDebug()
 {
-#if 1
+#if 0
     return std::string("<NoCr>");
 #else
     return std::string("");
