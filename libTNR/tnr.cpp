@@ -60,7 +60,11 @@ int tnr::TNRContainer::write(tnr_write_interface& write_if)
 
     write_if.startSection(m_format);
 
-    write_if.write(m_description, m_format);
+    if (!m_description.empty())
+    {
+        write_if.write(m_description, m_format);
+    }
+
     write_if.nextLevel(m_format);
 
     for (const auto &value: m_values)

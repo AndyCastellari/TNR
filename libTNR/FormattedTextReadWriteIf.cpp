@@ -44,7 +44,7 @@ std::string tnr::FormattedTextWriteIf::padding()
 
 std::string tnr::FormattedTextWriteIf::NewLineDebug()
 {
-#if 0
+#if 1
     return std::string("<NoCr>");
 #else
     return std::string("");
@@ -62,7 +62,7 @@ int tnr::FormattedTextWriteIf::writeNumber(U32 value, U8 width, std::string &des
 {
     int result = 0;
 
-    if (format.getOutputNewline())
+//    if (format.getOutputNewline())
     {
         *m_stream << padding();
     }
@@ -72,11 +72,11 @@ int tnr::FormattedTextWriteIf::writeNumber(U32 value, U8 width, std::string &des
         *m_stream << description;
     }
 
-    if (format.getOutputNewline()) {}
-    else {
-        // Just finished a section with NewLine off so output a newline
-        *m_stream << NewLineDebug();
-    }
+//    if (format.getOutputNewline()) {}
+//    else {
+//         Just finished a section with NewLine off so output a newline
+//        *m_stream << NewLineDebug();
+//    }
 
 
     // TBC add controlling the formatting of the number
@@ -85,6 +85,11 @@ int tnr::FormattedTextWriteIf::writeNumber(U32 value, U8 width, std::string &des
     if (format.getOutputNewline())
     {
         *m_stream << endl;
+    }
+    else
+    {
+        // Just finished a section with NewLine off so output a newline
+        *m_stream << NewLineDebug();
     }
 
     return result;
@@ -249,13 +254,13 @@ int tnr::FormattedTextWriteIf::write(std::string &description, tnr_format &forma
 {
     int result = 0;
     // If NewLine is off, padding is provided elsewhere
-    if (format.getOutputNewline())
+//    if (format.getOutputNewline())
     {
         *m_stream << padding();
     }
 
     // Write description if it is turned on
-//    if (format.getOutputDescription())
+    if (format.getOutputDescription())
     {
         *m_stream << description << ' ';
     }
