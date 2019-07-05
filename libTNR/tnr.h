@@ -35,6 +35,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <memory>
+#include <map>
 
 
 namespace tnr
@@ -380,6 +381,35 @@ protected:
 };
 
 typedef std::shared_ptr<TNR_C_String> TNR_C_String_ptr;
+
+class TNR_Variant : public tnr_baseData
+{
+public:
+    TNR_Variant();
+    TNR_Variant(const std::string description, tnr_baseData_ptr selectorType);
+    ~TNR_Variant() = default;
+
+public:
+    // Interfaces required by base class
+    int write(tnr_write_interface &write_if) override;
+    int read(tnr_read_interface &read_if) override;
+    //! The object provides a copy of itself: the same class and contents
+    tnr_baseData_ptr clone() override;
+
+public:
+    void addObject(uint32_t selectValue, tnr_baseData_ptr recordType);
+
+protected:
+    //! Returns the record type selected by the selector from the map
+    tnr_baseData_ptr getVariant(uint32_t selector);
+
+protected:
+    //! Type that reads the value in the stream that selects the follow-on type from the map
+    tnr_baseData_ptr m_selector;
+    //! map of values and which type of record is selected by that value
+    std::map<uint32_t, tnr_baseData_ptr> m_variants;
+};
+    typedef std::shared_ptr<TNR_Variant> TNR_Variant_ptr;
 
 }    // end of namespace
 

@@ -240,12 +240,6 @@ tnr::TNRCountedArray::TNRCountedArray(    const std::string description, tnr_bas
     m_recordType = recordType->clone();
 
     createArray();
-//     Fill array with correct number of items (we don't know what type these items are)
-//    for (unsigned int i = 0; i < m_count->getCount(); i++)
-//    {
-//        tnr_baseData_ptr newRecord = m_recordType->clone();
-//        m_values.push_back(newRecord);
-//    }
 }
 
     tnr_baseData_ptr & tnr::TNRCountedArray::operator [](U32 index)
@@ -374,4 +368,84 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
 
 //===============================================================================================
 
+    TNR_Variant::TNR_Variant() : TNR_Variant("", std::make_shared<POD_U8>(0, ""))
+    {
+
+    }
+
+    TNR_Variant::TNR_Variant(const std::string description, tnr_baseData_ptr selectorType) :
+                            tnr_baseData(description),
+                            m_selector(selectorType),
+                            m_variants()
+    {
+    }
+
+    int TNR_Variant::write(tnr_write_interface& write_if)
+    {
+        tnr_baseData_ptr record;
+        m_selector->write(write_if);
+        record = getVariant(m_selector->getCount());
+        if (record)
+        {
+            record->write(write_if);
+        }
+        else
+        {
+            // TODO error because record was not found
+        }
+
+        return 0;
+    }
+
+    int TNR_Variant::read(tnr_read_interface& read_if)
+    {
+        tnr_baseData_ptr record;
+        m_selector->read(read_if);
+        record = getVariant(m_selector->getCount());
+        if (record)
+        {
+            record->read(read_if);
+        }
+        else
+        {
+            // TODO error because record was not found
+        }
+
+        return 0;
+    }
+
+    tnr_baseData_ptr TNR_Variant::clone()
+    {
+        TNR_Variant_ptr c = std::make_shared<TNR_Variant>(m_description, m_selector);
+        c->m_format = m_format;
+
+        for (auto record: m_variants)
+        {
+            c->addObject(record.first, record.second);
+        }
+        return c;
+    }
+
+    void TNR_Variant::addObject(uint32_t selectValue, tnr_baseData_ptr recordType)
+    {
+        if (getVariant(m_selector->getCount()))
+        {
+            // TODO Error because selectValue is already in the map
+        }
+        else
+        {
+            m_variants.insert(std::pair<uint32_t, tnr_baseData_ptr>(selectValue, recordType));
+        }
+    }
+
+    tnr_baseData_ptr TNR_Variant::getVariant(uint32_t selector)
+    {
+        tnr_baseData_ptr record;
+        auto t = m_variants.find(selector);
+        if (t != m_variants.end())
+        {
+            record = t->second;
+        }
+        return record;
+    }
 }// End of namespace tnr
