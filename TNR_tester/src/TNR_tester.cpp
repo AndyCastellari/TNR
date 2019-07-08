@@ -104,6 +104,12 @@ TEST(TNRTestCase, testJSON_to_Container)
     ASSERT_TRUE(jt.testJSON_to_Container());
 }
 
+TEST(TNRTestCase, testTNR_Variant)
+{
+    POD_Tester pt;
+    ASSERT_TRUE(pt.testVariant());
+}
+
 #if 0
 int main() {
     cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!

@@ -421,7 +421,7 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
 
         for (auto record: m_variants)
         {
-            c->addObject(record.first, record.second);
+            c->addObject(record.first, record.second->clone());
         }
         return c;
     }
@@ -447,5 +447,15 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
             record = t->second;
         }
         return record;
+    }
+
+    void TNR_Variant::setSelector(tnr_baseData_ptr selectorType)
+    {
+        m_selector = selectorType;
+    }
+
+    uint32_t TNR_Variant::getSelectorValue()
+    {
+        return m_selector->getCount();
     }
 }// End of namespace tnr

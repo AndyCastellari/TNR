@@ -793,7 +793,7 @@ bool POD_Tester::testTNR_C_String()
     result = result && (string2->write(mswif) == 0);
     result = result && (string3->write(mswif) == 0);
 
-    // Checkl that the streams match
+    // Check that the streams match
     printString("wstream ", _wstream->str());
     printString("rstream ", _rstream->str());
     result = result && (_wstream->str() == rhs);
@@ -858,4 +858,56 @@ bool POD_Tester::testObjectMap()
     }
 
     return result;
+}
+
+bool POD_Tester::testVariant()
+{
+    bool result = true;
+
+    // Make a variant with U8 selector
+    TNR_Variant_ptr v = make_shared<TNR_Variant>();
+    v->setSelector(make_shared<POD_U8>(0, "Selector"));
+
+    v->addObject(1, make_shared<POD_U8>(0, "Variant 1"));
+    v->addObject(2, make_shared<POD_U16>(0, "Variant 2"));
+    v->addObject(3, make_shared<POD_U24>(0, "Variant 3"));
+    v->addObject(4, make_shared<POD_U32>(0, "Variant 4"));
+
+
+    // Make the expected binary output stream
+    std::string rhs;
+    std::string lhs;
+    std::vector<unsigned char> input = {
+            0x01, 0xaa,
+            0x02, 0xaa, 0xbb,
+            0x03, 0xaa, 0xbb, 0xcc,
+            0x04, 0xaa, 0xbb, 0xcc, 0xdd };
+
+    for (char c: input)
+    {
+        rhs += c;
+    }
+
+    std::shared_ptr<std::stringstream> _wstream(new std::stringstream());
+    std::shared_ptr<std::stringstream> _rstream(new std::stringstream(rhs));
+
+    StreamWriteIf mswif(_wstream);
+    StreamReadIf msrif(_rstream);
+
+    // Read a variant, then write it - at the end the output should match the input
+    v->read(msrif);
+    v->write(mswif);
+    v->read(msrif);
+    v->write(mswif);
+    v->read(msrif);
+    v->write(mswif);
+    v->read(msrif);
+    v->write(mswif);
+
+    lhs = _wstream->str();
+
+    printString("rhs", rhs);
+    printString("lhs", lhs);
+
+    return (lhs == rhs);
 }

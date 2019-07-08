@@ -211,6 +211,7 @@ protected:
     T m_value;
 };
 
+
 template<class T>
 int POD<T>::write(tnr_write_interface &write_if)
 {
@@ -397,7 +398,10 @@ public:
     tnr_baseData_ptr clone() override;
 
 public:
+    void setSelector(tnr_baseData_ptr selectorType);
     void addObject(uint32_t selectValue, tnr_baseData_ptr recordType);
+
+    uint32_t getSelectorValue();
 
 protected:
     //! Returns the record type selected by the selector from the map

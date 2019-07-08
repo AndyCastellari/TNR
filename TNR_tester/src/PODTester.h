@@ -51,6 +51,8 @@ public:
     bool testTextWriteIf(tnr::tnr_write_interface & wif);
 
     bool testObjectMap();
+
+    bool testVariant();
 };
 
 #endif /* PODTESTER_H_ */
