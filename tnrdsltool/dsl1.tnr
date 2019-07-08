@@ -9,18 +9,18 @@ define header =
     CountedArray("Variable Array", U16("Number", format="%02d")) < { U32("P1"); STRING("Driver");  } >;
 };
 
-//define header2 =
-//{   /* define */
-//    Union(U8("Selector"), "My first Union") :
-//    {   /* Union */
-//        U8("First variant");
-//        {   /* Second variant */
-//            String("Second Variant");
-//            U16("16-bit");
-//        }  /* end of second variant */
-//        String("Third Variant");
-//    };   /* End Union */
-//}   /* end define */
+define header2 =
+{   /* define */
+    Union("My first Union", U8("Selector"))
+    <   /* Union */
+        U8("First variant");
+        {   /* Second variant */
+            String("Second Variant");
+            U16("16-bit");
+        }  /* end of second variant */
+        String("Third Variant");
+    >;   /* End Union */
+}   /* end define */
 
 define centimetres = U32("centimetres");
 

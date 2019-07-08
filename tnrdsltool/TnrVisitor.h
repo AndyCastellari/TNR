@@ -12,7 +12,7 @@ class TnrVisitor : public TNRDSLBaseVisitor
 {
 public:
     explicit TnrVisitor(ObjectBuilder & objectBuilder) : TNRDSLBaseVisitor(),
-                                                            dbg(false), m_indent(0),
+                                                            dbg(true), m_indent(0),
                                                             m_objectBuilder(objectBuilder) { };
 
 public:
@@ -131,6 +131,45 @@ public:
         return visitChildren(ctx);
     }
 
+    antlrcpp::Any visitVariant(TNRDSLParser::VariantContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_type(TNRDSLParser::Variant_typeContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_elements_start(TNRDSLParser::Variant_elements_startContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_elements_end(TNRDSLParser::Variant_elements_endContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_elements(TNRDSLParser::Variant_elementsContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_param(TNRDSLParser::Variant_paramContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_selector_value(TNRDSLParser::Variant_selector_valueContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_param_end(TNRDSLParser::Variant_param_endContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
 
 private:
     bool dbg;

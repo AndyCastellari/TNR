@@ -38,11 +38,16 @@ counted_array_element : counted_array_element_start variable counted_array_eleme
 counted_array_element_start : '<';
 counted_array_element_end : '>';        // Set counted array count and element from top of stack
 
-variant : 'Union' '(' simple_variable ',' optional_parameters ')' ':' '{' union_parameters '}';
+variant : variant_type '(' optional_parameters ',' simple_variable ')' ':' '<' variant_elements '>';
 
-union_parameters : (union_param)* ;
-union_param : variable
-            | 'case' NUMBER ':';
+variant_type : 'Variant';
+variant_elements_start : '<';
+variant_elements_end : '>';
+variant_elements : (variant_param)* ;
+variant_param : variable variant_param_end
+            | 'case' variant_selector_value ':';
+variant_selector_value : NUMBER;
+variant_param_end : ';';
 
 optional_parameters : // nothing
                     | parameter (',' parameter)*
