@@ -147,6 +147,8 @@ public:
     virtual tnr_baseData_ptr clone() = 0;
     //! This method is used when using the class as a counter of a counted array
     virtual U32 getCount() { return 0; };        // TBC - this could be pure virtual
+    //! Null method that can be used in derived classes
+    virtual void setValue(uint32_t) {};
     //! Return name of object
     virtual void setDescription(const std::string &s) { m_description = s; };
     //! Return name of object
@@ -201,6 +203,9 @@ public:
     //! This method is used when using the class as a counter of a counted array
     U32 getCount() override { return (U32)m_value; };
 
+
+    //! Set value of POD - assumes unsigned
+    virtual void setValue(uint32_t value) { m_value = (T)value; };
     //! Return arithmetic value
     virtual T getValue() { return m_value; };
 

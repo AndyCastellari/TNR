@@ -41,7 +41,7 @@ public:
     ~ObjectBuilder() = default;
 
     //! Return a string that indents by number of spaces times 4
-    std::string printIndent() { return std::string((m_indent * 4) + 4, ' '); };
+    std::string printIndent() { return std::string((m_indent * 4) + 40, ' '); };
     //! Increase indentation
     void indent() { m_indent++; };
     //! Decrease indentation
@@ -70,6 +70,16 @@ public:
 
     virtual void PopCounterAndElementToCountedArray();
 
+    //! Put empty variant on stack
+    virtual void PushEmptyVariant();
+    //! Set value in the selector
+    virtual void SetVariantSelectorValue(uint32_t value);
+    //! Add the stack[tos] to variant stack[tos-2] with value in selector stack [tos-1]
+    virtual void PopElementToVariantWithSelectorValue();
+    //! Set selector object in variant
+    virtual void SetSelectorTypeInVariant();
+
+    //! Debug routine to watch stack size
     virtual void PrintStackSize();
 protected:
     uint32_t m_indent;

@@ -15,6 +15,7 @@ define header2 =
     Variant("My first variant", U8("Selector")) :
     <   /* Union */
         U8("First variant");
+        case 12:
         {   /* Second variant */
             STRING("Second Variant");
             U16("16-bit");

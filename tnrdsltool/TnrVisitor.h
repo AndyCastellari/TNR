@@ -132,12 +132,19 @@ public:
     }
 
     antlrcpp::Any visitVariant(TNRDSLParser::VariantContext *ctx) override {
-        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+//        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
         return visitChildren(ctx);
     }
 
     antlrcpp::Any visitVariant_type(TNRDSLParser::Variant_typeContext *ctx) override {
         if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.PushEmptyVariant();
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitVariant_selector_value(TNRDSLParser::Variant_selector_valueContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.SetVariantSelectorValue(std::stoi(ctx->getText()));
         return visitChildren(ctx);
     }
 
@@ -148,6 +155,7 @@ public:
 
     antlrcpp::Any visitVariant_elements_end(TNRDSLParser::Variant_elements_endContext *ctx) override {
         if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.SetSelectorTypeInVariant();
         return visitChildren(ctx);
     }
 
@@ -161,13 +169,9 @@ public:
         return visitChildren(ctx);
     }
 
-    antlrcpp::Any visitVariant_selector_value(TNRDSLParser::Variant_selector_valueContext *ctx) override {
-        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
-        return visitChildren(ctx);
-    }
-
     antlrcpp::Any visitVariant_param_end(TNRDSLParser::Variant_param_endContext *ctx) override {
         if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        m_objectBuilder.PopElementToVariantWithSelectorValue();
         return visitChildren(ctx);
     }
 

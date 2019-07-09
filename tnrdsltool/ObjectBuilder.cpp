@@ -204,6 +204,69 @@ void ObjectBuilder::PopCounterAndElementToCountedArray()
 
 void ObjectBuilder::PrintStackSize()
 {
-//    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
+    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
+}
+
+void ObjectBuilder::PushEmptyVariant()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNR_Variant>();
+    m_objectStack.push(o);
+    PrintStackSize();
+
+}
+
+void ObjectBuilder::SetVariantSelectorValue(uint32_t value)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
+    tnr::tnr_baseData_ptr selector;
+    selector = m_objectStack.top();
+    selector->setValue(value);
+
+    PrintStackSize();
+}
+
+void ObjectBuilder::PopElementToVariantWithSelectorValue()
+{
+    tnr::tnr_baseData_ptr element;
+    tnr::tnr_baseData_ptr selector;
+
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (!m_objectStack.empty())
+    {
+        element = m_objectStack.top();
+        m_objectStack.pop();
+    }
+    if (!m_objectStack.empty())
+    {
+        selector = m_objectStack.top();
+        m_objectStack.pop();
+    }
+    if (!m_objectStack.empty())
+    {
+        std::shared_ptr<tnr::TNR_Variant> variant;
+        variant = std::dynamic_pointer_cast<tnr::TNR_Variant>(m_objectStack.top());
+        variant->addObject(selector->getCount(), element);
+        selector->setValue(selector->getCount() + 1);
+        m_objectStack.push(selector);
+    }
+    PrintStackSize();
+}
+
+void ObjectBuilder::SetSelectorTypeInVariant()
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    tnr::tnr_baseData_ptr selector;
+    if (!m_objectStack.empty())
+    {
+        selector = m_objectStack.top();
+        m_objectStack.pop();
+    }
+    if (!m_objectStack.empty())
+    {
+        std::shared_ptr<tnr::TNR_Variant> variant;
+        variant = std::dynamic_pointer_cast<tnr::TNR_Variant>(m_objectStack.top());
+        variant->setSelector(selector);
+    }
 }
 
