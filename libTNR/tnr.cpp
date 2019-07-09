@@ -418,7 +418,7 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
 
     tnr_baseData_ptr TNR_Variant::clone()
     {
-        TNR_Variant_ptr c = std::make_shared<TNR_Variant>(m_description, m_selector);
+        TNR_Variant_ptr c = std::make_shared<TNR_Variant>(m_description, m_selector->clone());
         c->m_format = m_format;
 
         for (auto record: m_variants)
@@ -433,6 +433,7 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
         if (getVariant(selectValue))
         {
             // TODO Error because selectValue is already in the map
+            std::cout << __FUNCTION__ << " Found existing selector " << selectValue << std::endl;
         }
         else
         {
@@ -450,7 +451,6 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
         }
         else
         {
-            std::cout << __FUNCTION__ << " didn't find variant for selector " << selector << std::endl;
         }
         return record;
     }
