@@ -38,7 +38,10 @@ counted_array_element : counted_array_element_start variable counted_array_eleme
 counted_array_element_start : '<';
 counted_array_element_end : '>';        // Set counted array count and element from top of stack
 
-variant : variant_type '(' optional_parameters ',' simple_variable ')' ':' '<' variant_elements '>';
+variant : variant_type '(' optional_parameters ',' simple_variable ')' ':'
+                                                                    variant_elements_start
+                                                                        variant_elements
+                                                                    variant_elements_end;
 
 variant_type : 'Variant';
 variant_elements_start : '<';

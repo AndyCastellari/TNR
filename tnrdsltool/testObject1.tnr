@@ -11,7 +11,8 @@
 //};
 
 define header2 =
-{   /* define */
+{
+   /* define */
     Variant("My first variant", U8("Selector")) :
     <   /* Union */
         U8("First variant");
@@ -22,8 +23,8 @@ define header2 =
         };  /* end of second variant */
         STRING("Third Variant");
     >;   /* End Union */
-};   /* end define */
-
+   /* end define */
+};
 
 //define main =
 //{
