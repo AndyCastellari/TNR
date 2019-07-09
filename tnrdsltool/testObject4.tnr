@@ -38,5 +38,7 @@ define main =
         U16("U16 start element", description=on, newline=off);
         U16("U16 end element", description=on);
     } >;
+    U8("U8 before variant");
+    header2("Variant");
     U8("Final U8");
 };

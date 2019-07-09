@@ -392,6 +392,7 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
         else
         {
             // TODO error because record was not found
+            std::cerr << __FUNCTION__ << "No record found for selector " << m_selector->getCount() << std::endl;
         }
 
         return 0;
@@ -409,6 +410,7 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
         else
         {
             // TODO error because record was not found
+            std::cerr << __FUNCTION__ << "No record found for selector " << m_selector->getCount() << std::endl;
         }
 
         return 0;
@@ -428,7 +430,7 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
 
     void TNR_Variant::addObject(uint32_t selectValue, tnr_baseData_ptr recordType)
     {
-        if (getVariant(m_selector->getCount()))
+        if (getVariant(selectValue))
         {
             // TODO Error because selectValue is already in the map
         }
@@ -445,6 +447,10 @@ U32 TNR_C_String::getItemCount() { U32 result = m_Cstring.size(); return result;
         if (t != m_variants.end())
         {
             record = t->second;
+        }
+        else
+        {
+            std::cout << __FUNCTION__ << " didn't find variant for selector " << selector << std::endl;
         }
         return record;
     }
