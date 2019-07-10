@@ -40,8 +40,5 @@ define main =
     } >;
     U8("U8 before variant");
     FixedArray(3, "Array of Variants") < header2("Variant element"); >;
-//    header2("Variant 1");
-//    header2("Variant 2");
-//    header2("Variant 3");
     U8("Final U8");
 };

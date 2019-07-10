@@ -860,13 +860,14 @@ bool POD_Tester::testObjectMap()
     return result;
 }
 
-bool POD_Tester::testVariant()
+bool testVariantWithSelector(tnr_baseData_ptr selector, std::vector<unsigned char> &input)
 {
     bool result = true;
 
     // Make a variant with U8 selector
     TNR_Variant_ptr v = make_shared<TNR_Variant>();
-    v->setSelector(make_shared<POD_U8>(0, "Selector"));
+//    v->setSelector(make_shared<POD_U8>(0, "Selector"));
+    v->setSelector(selector);
 
     v->addObject(1, make_shared<POD_U8>(0, "Variant 1"));
     v->addObject(2, make_shared<POD_U16>(0, "Variant 2"));
@@ -877,11 +878,11 @@ bool POD_Tester::testVariant()
     // Make the expected binary output stream
     std::string rhs;
     std::string lhs;
-    std::vector<unsigned char> input = {
-            0x01, 0xaa,
-            0x02, 0xaa, 0xbb,
-            0x03, 0xaa, 0xbb, 0xcc,
-            0x04, 0xaa, 0xbb, 0xcc, 0xdd };
+//    std::vector<unsigned char> input = {
+//            0x01, 0xaa,
+//            0x02, 0xaa, 0xbb,
+//            0x03, 0xaa, 0xbb, 0xcc,
+//            0x04, 0xaa, 0xbb, 0xcc, 0xdd };
 
     for (char c: input)
     {
@@ -906,8 +907,45 @@ bool POD_Tester::testVariant()
 
     lhs = _wstream->str();
 
-    printString("rhs", rhs);
-    printString("lhs", lhs);
-
     return (lhs == rhs);
 }
+
+bool POD_Tester::testVariant()
+{
+    bool result = true;
+
+    std::vector<unsigned char> inputU8Selector = {
+            0x01, 0xaa,
+            0x02, 0xaa, 0xbb,
+            0x03, 0xaa, 0xbb, 0xcc,
+            0x04, 0xaa, 0xbb, 0xcc, 0xdd };
+
+    result = testVariantWithSelector(make_shared<POD_U8>(0, "Selector"), inputU8Selector);
+
+    std::vector<unsigned char> inputU16Selector = {
+            0x01, 0x00, 0xaa,
+            0x02, 0x00, 0xaa, 0xbb,
+            0x03, 0x00, 0xaa, 0xbb, 0xcc,
+            0x04, 0x00, 0xaa, 0xbb, 0xcc, 0xdd };
+
+    result = testVariantWithSelector(make_shared<POD_U16>(0, "Selector"), inputU16Selector);
+
+    std::vector<unsigned char> inputU24Selector = {
+            0x01, 0x00, 0x00, 0xaa,
+            0x02, 0x00, 0x00, 0xaa, 0xbb,
+            0x03, 0x00, 0x00, 0xaa, 0xbb, 0xcc,
+            0x04, 0x00, 0x00, 0xaa, 0xbb, 0xcc, 0xdd };
+
+    result = testVariantWithSelector(make_shared<POD_U24>(0, "Selector"), inputU24Selector);
+
+    std::vector<unsigned char> inputU32Selector = {
+            0x01, 0x00, 0x00, 0x00, 0xaa,
+            0x02, 0x00, 0x00, 0x00, 0xaa, 0xbb,
+            0x03, 0x00, 0x00, 0x00, 0xaa, 0xbb, 0xcc,
+            0x04, 0x00, 0x00, 0x00, 0xaa, 0xbb, 0xcc, 0xdd };
+
+    result = testVariantWithSelector(make_shared<POD_U32>(0, "Selector"), inputU32Selector);
+
+    return result;
+}
+
