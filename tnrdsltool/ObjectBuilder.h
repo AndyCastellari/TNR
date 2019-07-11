@@ -41,7 +41,7 @@ public:
     ~ObjectBuilder() = default;
 
     //! Return a string that indents by number of spaces times 4
-    std::string printIndent() { return std::string((m_indent * 4) + 40, ' '); };
+    std::string printIndent() { return std::string((m_indent * 4) + 4, ' '); };
     //! Increase indentation
     void indent() { m_indent++; };
     //! Decrease indentation

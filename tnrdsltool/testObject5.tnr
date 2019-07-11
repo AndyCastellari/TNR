@@ -39,6 +39,6 @@ define main =
         U16("U16 end element", description=on);
     } >;
     U8("U8 before variant");
-    FixedArray(3, "Array of Variants") < header2("Variant element"); >;
+    FixedArray(3, "Array of Variants") < header2("Variant element") >;
     U8("Final U8");
 };

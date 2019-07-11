@@ -204,7 +204,7 @@ void ObjectBuilder::PopCounterAndElementToCountedArray()
 
 void ObjectBuilder::PrintStackSize()
 {
-    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
+//    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
 }
 
 void ObjectBuilder::PushEmptyVariant()
