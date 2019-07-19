@@ -187,6 +187,7 @@ public:
 
     antlrcpp::Any visitEnum_identifier(TNRDSLParser::Enum_identifierContext *ctx) override {
         if (dbg) std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        m_objectBuilder.AddEnumNameToTopOfStack(ctx->getText());
         return visitChildren(ctx);
     }
 
@@ -194,7 +195,7 @@ public:
         if (dbg) std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
         try
         {
-//            m_objectBuilder.SetFixedArrayLength(std::stoi(ctx->getText()));
+            m_objectBuilder.SetEnumValueToTopOfStack(std::stoi(ctx->getText()));
         }
         catch (const std::invalid_argument& ia)
         {

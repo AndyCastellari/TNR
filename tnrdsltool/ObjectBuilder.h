@@ -79,6 +79,9 @@ public:
     //! Set selector object in variant
     virtual void SetSelectorTypeInVariant();
 
+    virtual void AddEnumNameToTopOfStack(const std::string &typeName);
+    virtual void SetEnumValueToTopOfStack(uint32_t value);
+
     //! Debug routine to watch stack size
     virtual void PrintStackSize();
 protected:

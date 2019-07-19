@@ -270,3 +270,13 @@ void ObjectBuilder::SetSelectorTypeInVariant()
     }
 }
 
+void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& typeName)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
+}
+
+void ObjectBuilder::SetEnumValueToTopOfStack(uint32_t value)
+{
+    std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
+}
+
