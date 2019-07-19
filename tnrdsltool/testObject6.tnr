@@ -1,4 +1,6 @@
 
+define colour = U8("colour", enum (red, green, blue=4));
+
 define centimetres = U16("cm");
 
 define struct1 =

@@ -12,7 +12,7 @@ class TnrVisitor : public TNRDSLBaseVisitor
 {
 public:
     explicit TnrVisitor(ObjectBuilder & objectBuilder) : TNRDSLBaseVisitor(),
-                                                            dbg(false), m_indent(0),
+                                                            dbg(true), m_indent(0),
                                                             m_objectBuilder(objectBuilder) { };
 
 public:
@@ -174,6 +174,35 @@ public:
         m_objectBuilder.PopElementToVariantWithSelectorValue();
         return visitChildren(ctx);
     }
+
+    antlrcpp::Any visitStart_enum(TNRDSLParser::Start_enumContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitEnd_enum(TNRDSLParser::End_enumContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitEnum_identifier(TNRDSLParser::Enum_identifierContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        return visitChildren(ctx);
+    }
+
+    antlrcpp::Any visitEnum_value(TNRDSLParser::Enum_valueContext *ctx) override {
+        if (dbg) std::cout << printIndent() << __FUNCTION__ << " " << ctx->getText() << std::endl;
+        try
+        {
+//            m_objectBuilder.SetFixedArrayLength(std::stoi(ctx->getText()));
+        }
+        catch (const std::invalid_argument& ia)
+        {
+            std::cerr << "Invalid argument: " << ia.what() << '\n';
+        }
+        return visitChildren(ctx);
+    }
+
 
 private:
     bool dbg;

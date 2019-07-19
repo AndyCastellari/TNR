@@ -68,10 +68,13 @@ newlineoff : 'off';
 descriptionon : 'on';
 descriptionoff : 'off';
 
-enum_definition : 'enum' '(' enum_param (',' enum_param)* ')' ;
-
-enum_param : STRING
-            | STRING '=' NUMBER ;
+enum_definition : 'enum' start_enum enum_param (',' enum_param)* end_enum;
+start_enum : '(';
+end_enum : ')';
+enum_param : enum_identifier
+            | enum_identifier '=' enum_value ;
+enum_identifier : ID;
+enum_value : NUMBER;
 
 ID : [A-Za-z][A-Za-z0-9_-]* ;     // identifiers start with alpha and then alpha or number or dash or underline
 STRING : '"' (.)*? '"' ;
