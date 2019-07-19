@@ -270,13 +270,23 @@ void ObjectBuilder::SetSelectorTypeInVariant()
     }
 }
 
-void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& typeName)
+void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& enumName)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
+    std::cout << printIndent() << __FUNCTION__ << " " << enumName << std::endl;
+    tnr::tnr_baseData_ptr object;
+    if (!m_objectStack.empty())
+    {
+        m_objectStack.top()->addEnumName(enumName);
+    }
 }
 
 void ObjectBuilder::SetEnumValueToTopOfStack(uint32_t value)
 {
     std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
+    tnr::tnr_baseData_ptr object;
+    if (!m_objectStack.empty())
+    {
+        m_objectStack.top()->setEnumValue(value);
+    }
 }
 

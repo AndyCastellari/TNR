@@ -165,6 +165,11 @@ public:
     //! Apply an existing format to the object
     void setFormat(const tnr_format &output_format) { m_format = output_format; };
 
+    //! Add an enumerated name for an integer value
+    virtual void addEnumName(const std::string &) {};
+    //! Set the value for this and future enumerated names
+    virtual void setEnumValue(uint32_t) {};
+
 protected:
     std::string m_description;
     tnr_format m_format;
