@@ -1,0 +1,26 @@
+
+define centimetres = U16("cm");
+
+define struct1 =
+{
+    CountedArray("Var array U8 of centimetres", U8()) < centimetres() >;
+};
+
+define struct2 =
+{
+    CountedArray("Var Array U16 of struct1", U16()) < struct1() >;
+};
+
+define main =
+{
+    U8("U8 Start Sentinel");
+    CountedArray("Variable array U32 count / struct of two U16", U32("U32 count")) <
+    {
+        centimetres("U16 start element", description=on, newline=off);
+        centimetres("U16 end element", description=on);
+    } >;
+    CountedArray("Var Array U24 count / struct1 values", U24("U24 count")) < struct1() >;
+    CountedArray("Var Array U24 count / struct2 values", U24("U24 count")) < struct2() >;
+    FixedArray(3, "Fixed Array of 3 struct1") < struct1() >;
+    U8("U8 End Sentinel");
+};
