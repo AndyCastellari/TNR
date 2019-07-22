@@ -5,7 +5,7 @@ project (tnrtool VERSION 1.3.1 LANGUAGES CXX)
 
 add_executable(tnrtool tnrtool.cpp)
 
-target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap-1.2.2/include/)
+target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap/include/)
 
 target_link_libraries(tnrtool TNRlib)
 

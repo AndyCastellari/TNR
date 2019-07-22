@@ -53,21 +53,38 @@ namespace tnr
 class tnr_format
 {
     public:
-        tnr_format() : m_outputNewline(true), m_outputDescription(true) {};
+        tnr_format() : m_outputNewline(true), m_outputDescription(true), m_enumStore() {};
         tnr_format(const tnr_format &c);
         ~tnr_format() = default;
 
-        // Setters and getters for format booleans
+        tnr_format& operator =(const tnr_format& rhs) = default;
+//        {
+//            this->m_outputNewline = rhs.m_outputNewline;
+//            this->m_outputDescription = rhs.m_outputDescription;
+//            this->m_enumStore = rhs.m_enumStore;
+//            return *this;
+//        }
+
+    // Setters and getters for format booleans
         // There could more later on and not necessarily booleans, for example, make the " : " able to specified
         void setOutputNewline(bool onOff) { m_outputNewline = onOff; };
         bool getOutputNewline() { return m_outputNewline; };
         void setOutputDescription( bool onOff) { m_outputDescription = onOff; };
         bool getOutputDescription() { return m_outputDescription; };
-        // For debugging, write the contents of the format
+
+        //! Add an enumerated name for an integer value
+        void addEnumName(const std::string &name) { m_enumStore.AddEnumValue(name); };
+        //! Set the value for this and future enumerated names
+        void setEnumValue(uint32_t value) { m_enumStore.SetEnumValue(value); };
+        //! Set the value for this and future enumerated names
+        std::string getEnumValue(uint32_t value) { return m_enumStore.GetEnumName(value); };
+
+    // For debugging, write the contents of the format
         void printFormat(const char * name);
     protected:
         bool m_outputNewline;
         bool m_outputDescription;
+        EnumerationStore m_enumStore;
 };
 
 /**
@@ -167,11 +184,11 @@ public:
     void setFormat(const tnr_format &output_format) { m_format = output_format; };
 
     //! Add an enumerated name for an integer value
-    virtual void addEnumName(const std::string &) {};
+    virtual void addEnumName(const std::string &name) { m_format.addEnumName(name); };
     //! Set the value for this and future enumerated names
-    virtual void setEnumValue(uint32_t) {};
+    virtual void setEnumValue(uint32_t value) { m_format.setEnumValue(value); };
     //! Set the value for this and future enumerated names
-    virtual std::string getEnumValue(uint32_t) { return std::string(); };
+    virtual std::string getEnumValue(uint32_t value) { return m_format.getEnumValue(value); };
 
 protected:
     std::string m_description;
@@ -187,7 +204,7 @@ template <class T> class POD : public tnr_baseData
 {
 public:
     //! Create an object to hold a simple POD type with a string description
-    POD(T value, const std::string description) : tnr_baseData(description), m_value(value), m_enumStore()
+    POD(T value, const std::string description) : tnr_baseData(description), m_value(value)//, m_enumStore()
     {
     }
     //!  Nothing dynamic so destructor doesn't need to do anything
@@ -205,7 +222,6 @@ public:
         auto c = std::make_shared<POD<T>>(m_value, m_description);
         // In case the default format was changed, copy that over as well
         c->m_format = this->m_format;
-        c->m_enumStore = this->m_enumStore;
         return c;
     }
 
@@ -218,19 +234,11 @@ public:
     //! Return arithmetic value
     virtual T getValue() { return m_value; };
 
-    //! Add an enumerated name for an integer value
-    void addEnumName(const std::string &name) override { m_enumStore.AddEnumValue(name); };
-    //! Set the value for this and future enumerated names
-    void setEnumValue(uint32_t value) override { m_enumStore.SetEnumValue(value); };
-    //! Set the value for this and future enumerated names
-    std::string getEnumValue(uint32_t value) override { return m_enumStore.GetEnumName(value); };
-
     //! Cast to type - allows use of POD in arithmetic expression - compiler generates implicit conversions
     operator T();
 
 protected:
     T m_value;
-    EnumerationStore m_enumStore;
 };
 
 
