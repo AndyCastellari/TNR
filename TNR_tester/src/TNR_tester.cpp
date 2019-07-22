@@ -217,6 +217,54 @@ TEST(TNRTestCase, testChangingFirstValueThenIncrementingThenChangingAgainEnumera
     ProcessEnumTestVector(testVector);
 }
 
+const uint32_t MAX_ENUM_TEST_COUNT = 5000;
+
+TEST(TNRTestCase, testEnumStringsAreAllEmptyWithNoEnumsDefined)
+{
+    EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
+    std::string enumName;
+
+    // Check that nothing is returned while the store is empty
+    for (uint32_t counter = 0; counter < MAX_ENUM_TEST_COUNT; counter++)
+    {
+        enumName = enumStore->GetEnumName(counter);
+        ASSERT_TRUE(enumName.empty());
+    }
+}
+
+TEST(TNRTestCase, testNonEnumValuesAreEmptyWithSomeEnumsDefined)
+{
+    // Define enums for values 4 to 8
+    std::vector<std::pair<std::string, uint32_t>> testVector =
+            {
+                    {"Red", 5},
+                    {"Green", 7},
+                    {"Blue", 4},
+                    {"Yellow", 6},
+                    {"Purple", 8},
+            };
+
+    EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
+    std::string enumName;
+
+    LoadEnumerationStore(testVector, enumStore);
+//    enumStore->PrintEnumStore();
+
+    // Check that nothing is returned apart from 4-8 which have enum values
+    for (uint32_t counter = 0; counter < MAX_ENUM_TEST_COUNT; counter++)
+    {
+        enumName = enumStore->GetEnumName(counter);
+        if ((counter >= 4) && (counter <= 8))
+        {
+            ASSERT_FALSE(enumName.empty());
+        }
+        else
+        {
+            ASSERT_TRUE(enumName.empty());
+        }
+    }
+}
+
 
 #if 0
 int main() {
