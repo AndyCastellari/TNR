@@ -27,6 +27,7 @@
 #define TNR_H_
 
 #include "tnr_portability.h"
+#include "EnumerationStore.h"
 #include <string>
 #include <vector>
 #include <stack>
@@ -169,6 +170,8 @@ public:
     virtual void addEnumName(const std::string &) {};
     //! Set the value for this and future enumerated names
     virtual void setEnumValue(uint32_t) {};
+    //! Set the value for this and future enumerated names
+    virtual std::string getEnumValue(uint32_t) { return std::string(); };
 
 protected:
     std::string m_description;
@@ -184,7 +187,7 @@ template <class T> class POD : public tnr_baseData
 {
 public:
     //! Create an object to hold a simple POD type with a string description
-    POD(T value, const std::string description) : tnr_baseData(description), m_value(value)
+    POD(T value, const std::string description) : tnr_baseData(description), m_value(value), m_enumStore()
     {
     }
     //!  Nothing dynamic so destructor doesn't need to do anything
@@ -202,6 +205,7 @@ public:
         auto c = std::make_shared<POD<T>>(m_value, m_description);
         // In case the default format was changed, copy that over as well
         c->m_format = this->m_format;
+        c->m_enumStore = this->m_enumStore;
         return c;
     }
 
@@ -214,11 +218,19 @@ public:
     //! Return arithmetic value
     virtual T getValue() { return m_value; };
 
+    //! Add an enumerated name for an integer value
+    void addEnumName(const std::string &name) override { m_enumStore.AddEnumValue(name); };
+    //! Set the value for this and future enumerated names
+    void setEnumValue(uint32_t value) override { m_enumStore.SetEnumValue(value); };
+    //! Set the value for this and future enumerated names
+    std::string getEnumValue(uint32_t value) override { return m_enumStore.GetEnumName(value); };
+
     //! Cast to type - allows use of POD in arithmetic expression - compiler generates implicit conversions
     operator T();
 
 protected:
     T m_value;
+    EnumerationStore m_enumStore;
 };
 
 
