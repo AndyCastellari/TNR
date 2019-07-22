@@ -153,24 +153,70 @@ void CheckEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &
     }
 }
 
-
-TEST(TNRTestCase, testEnumeration)
+void ProcessEnumTestVector(const std::vector<std::pair<std::string, uint32_t>> &testVector)
 {
-    std::vector<std::pair<std::string, uint32_t>> testVector1 =
-    {
-            {"Red", DontChangeEnumValue},
-            {"Green", DontChangeEnumValue},
-            {"Blue", DontChangeEnumValue},
-            {"Yellow", 10},
-            {"Purple", DontChangeEnumValue},
-    };
-
     EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
 
-    LoadEnumerationStore(testVector1, enumStore);
-    enumStore->PrintEnumStore();
-    CheckEnumerationStore(testVector1, enumStore);
+    LoadEnumerationStore(testVector, enumStore);
+//    enumStore->PrintEnumStore();
+    CheckEnumerationStore(testVector, enumStore);
 }
+
+TEST(TNRTestCase, testBasicIncrementingFromZeroEnumeration)
+{
+    std::vector<std::pair<std::string, uint32_t>> testVector =
+            {
+                    {"Red", DontChangeEnumValue},
+                    {"Green", DontChangeEnumValue},
+                    {"Blue", DontChangeEnumValue},
+                    {"Yellow", DontChangeEnumValue},
+                    {"Purple", DontChangeEnumValue},
+            };
+
+    ProcessEnumTestVector(testVector);
+}
+
+TEST(TNRTestCase, testIncrementingFromThenChangingEnumeration)
+{
+    std::vector<std::pair<std::string, uint32_t>> testVector =
+            {
+                    {"Red", DontChangeEnumValue},
+                    {"Green", DontChangeEnumValue},
+                    {"Blue", DontChangeEnumValue},
+                    {"Yellow", 10},
+                    {"Purple", DontChangeEnumValue},
+            };
+
+    ProcessEnumTestVector(testVector);
+}
+
+TEST(TNRTestCase, testChangingFirstValueThenIncrementingEnumeration)
+{
+    std::vector<std::pair<std::string, uint32_t>> testVector =
+            {
+                    {"Red", 12},
+                    {"Green", DontChangeEnumValue},
+                    {"Blue", DontChangeEnumValue},
+                    {"Yellow", DontChangeEnumValue},
+                    {"Purple", DontChangeEnumValue},
+            };
+    ProcessEnumTestVector(testVector);
+}
+
+
+TEST(TNRTestCase, testChangingFirstValueThenIncrementingThenChangingAgainEnumeration)
+{
+    std::vector<std::pair<std::string, uint32_t>> testVector =
+            {
+                    {"Red", 12},
+                    {"Green", DontChangeEnumValue},
+                    {"Blue", DontChangeEnumValue},
+                    {"Yellow", 7},
+                    {"Purple", DontChangeEnumValue},
+            };
+    ProcessEnumTestVector(testVector);
+}
+
 
 #if 0
 int main() {
