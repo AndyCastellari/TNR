@@ -37,6 +37,8 @@ using namespace std;
 #include "TextLogWriteIf.h"
 #include "SimpleTextReadWriteIf.h"
 
+#include "EnumerationStore.h"
+
 TEST(TNRTestCase, testPODType)
 {
     POD_Tester pt;
@@ -108,6 +110,64 @@ TEST(TNRTestCase, testTNR_Variant)
 {
     POD_Tester pt;
     ASSERT_TRUE(pt.testVariant());
+}
+
+// Special value for test to prevent updating the enum value
+const uint32_t DontChangeEnumValue = 0xffff;
+
+// Load enumStore with value from test vector, names and optionally values
+void LoadEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &testVector, EnumerationStore_ptr &enumStore)
+{
+    for (auto element: testVector)
+    {
+        enumStore->AddEnumValue(element.first);
+        if (element.second != DontChangeEnumValue)
+        {
+            enumStore->SetEnumValue(element.second);
+        }
+    }
+}
+
+// Check enumStore with value from test vector, names and optionally values
+void CheckEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &testVector, EnumerationStore_ptr &enumStore)
+{
+    uint32_t expectedValue = 0;
+    std::string actual;
+
+    for (auto element: testVector)
+    {
+        // Calculate what the next actual should be
+        // either the enum actual was set or it just increments
+        if (element.second != DontChangeEnumValue)
+        {
+            expectedValue = element.second;
+        }
+        else
+        {
+            expectedValue++;
+        }
+
+        actual = enumStore->GetEnumName(expectedValue);
+        EXPECT_EQ(element.first, actual);
+    }
+}
+
+
+TEST(TNRTestCase, testEnumeration)
+{
+    std::vector<std::pair<std::string, uint32_t>> testVector1 =
+    {
+            {"Red", DontChangeEnumValue},
+            {"Green", DontChangeEnumValue},
+            {"Blue", DontChangeEnumValue},
+            {"Yellow", 10},
+            {"Purple", DontChangeEnumValue},
+    };
+
+    EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
+
+    LoadEnumerationStore(testVector1, enumStore);
+    CheckEnumerationStore(testVector1, enumStore);
 }
 
 #if 0

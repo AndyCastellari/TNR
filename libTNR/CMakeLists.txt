@@ -16,7 +16,7 @@ if(NOT TARGET TNRlib)
         StreamReadWriteIf.cpp
         TextLogWriteIf.cpp
         tnr.cpp
-    )
+            EnumerationStore.cpp EnumerationStore.h)
 
     add_library(TNRlib STATIC ${TNRlib_SRC})
 
