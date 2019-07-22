@@ -141,13 +141,14 @@ void CheckEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &
         if (element.second != DontChangeEnumValue)
         {
             expectedValue = element.second;
+            actual = enumStore->GetEnumName(expectedValue);
         }
         else
         {
-            expectedValue++;
+            actual = enumStore->GetEnumName(expectedValue);
         }
+        expectedValue++;
 
-        actual = enumStore->GetEnumName(expectedValue);
         EXPECT_EQ(element.first, actual);
     }
 }
@@ -167,6 +168,7 @@ TEST(TNRTestCase, testEnumeration)
     EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
 
     LoadEnumerationStore(testVector1, enumStore);
+    enumStore->PrintEnumStore();
     CheckEnumerationStore(testVector1, enumStore);
 }
 
