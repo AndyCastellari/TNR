@@ -175,7 +175,6 @@ void ProcessTestVectorOnAllTypes(const std::vector<std::pair<std::string, uint32
     ProcessEnumTestVector<tnr::POD_S16>(testVector);
     ProcessEnumTestVector<tnr::POD_S24>(testVector);
     ProcessEnumTestVector<tnr::POD_S32>(testVector);
-
 }
 
 TEST(TNRTestCase, testBasicIncrementingFromZeroEnumeration)
@@ -233,11 +232,12 @@ TEST(TNRTestCase, testChangingFirstValueThenIncrementingThenChangingAgainEnumera
     ProcessTestVectorOnAllTypes(testVector);
 }
 
-const uint32_t MAX_ENUM_TEST_COUNT = 5000;
+const uint32_t MAX_ENUM_TEST_COUNT = 50000;
 
-TEST(TNRTestCase, testEnumStringsAreAllEmptyWithNoEnumsDefined)
+template<class T>
+void testEnumStringsAreAllEmptyWithNoEnumsDefined()
 {
-    EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
+    std::shared_ptr<T> enumStore = std::make_shared<T>();
     std::string enumName;
 
     // Check that nothing is returned while the store is empty
@@ -248,7 +248,21 @@ TEST(TNRTestCase, testEnumStringsAreAllEmptyWithNoEnumsDefined)
     }
 }
 
-TEST(TNRTestCase, testNonEnumValuesAreEmptyWithSomeEnumsDefined)
+TEST(TNRTestCase, testEnumStringsAreAllEmptyWithNoEnumsDefined)
+{
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<EnumerationStore>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_U8>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_U16>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_U24>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_U32>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_S8>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_S16>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_S24>();
+    testEnumStringsAreAllEmptyWithNoEnumsDefined<tnr::POD_S32>();
+}
+
+template <class T>
+void CheckEnumerationValuesAreAllEmptyApartFromThoseDefined()
 {
     // Define enums for values 4 to 8
     std::vector<std::pair<std::string, uint32_t>> testVector =
@@ -260,11 +274,10 @@ TEST(TNRTestCase, testNonEnumValuesAreEmptyWithSomeEnumsDefined)
                     {"Purple", 8},
             };
 
-    EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
+    std::shared_ptr<T> enumStore = std::make_shared<T>();
     std::string enumName;
 
     LoadEnumerationStore(testVector, enumStore);
-//    enumStore->PrintEnumStore();
 
     // Check that nothing is returned apart from 4-8 which have enum values
     for (uint32_t counter = 0; counter < MAX_ENUM_TEST_COUNT; counter++)
@@ -279,5 +292,18 @@ TEST(TNRTestCase, testNonEnumValuesAreEmptyWithSomeEnumsDefined)
             ASSERT_TRUE(enumName.empty());
         }
     }
+}
+
+TEST(TNRTestCase, testNonEnumValuesAreEmptyWithSomeEnumsDefined)
+{
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<EnumerationStore>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_U8>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_U16>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_U24>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_U32>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_S8>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_S16>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_S24>();
+    CheckEnumerationValuesAreAllEmptyApartFromThoseDefined<tnr::POD_S32>();
 }
 
