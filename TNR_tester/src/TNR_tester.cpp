@@ -161,21 +161,12 @@ void ProcessEnumTestVector(const std::vector<std::pair<std::string, uint32_t>> &
     std:shared_ptr<T> enumClass = std::make_shared<T>();
 
     LoadEnumerationStore(testVector, enumClass);
-//    enumStore->PrintEnumStore();
     CheckEnumerationStore(testVector, enumClass);
 }
 
-TEST(TNRTestCase, testBasicIncrementingFromZeroEnumerationWithPodTypes)
+void ProcessTestVectorOnAllTypes(const std::vector<std::pair<std::string, uint32_t>> &testVector)
 {
-    std::vector<std::pair<std::string, uint32_t>> testVector =
-            {
-                    {"Red", DontChangeEnumValue},
-                    {"Green", DontChangeEnumValue},
-                    {"Blue", DontChangeEnumValue},
-                    {"Yellow", DontChangeEnumValue},
-                    {"Purple", DontChangeEnumValue},
-            };
-
+    ProcessEnumTestVector<EnumerationStore>(testVector);
     ProcessEnumTestVector<tnr::POD_U8>(testVector);
     ProcessEnumTestVector<tnr::POD_U16>(testVector);
     ProcessEnumTestVector<tnr::POD_U24>(testVector);
@@ -184,6 +175,7 @@ TEST(TNRTestCase, testBasicIncrementingFromZeroEnumerationWithPodTypes)
     ProcessEnumTestVector<tnr::POD_S16>(testVector);
     ProcessEnumTestVector<tnr::POD_S24>(testVector);
     ProcessEnumTestVector<tnr::POD_S32>(testVector);
+
 }
 
 TEST(TNRTestCase, testBasicIncrementingFromZeroEnumeration)
@@ -197,7 +189,7 @@ TEST(TNRTestCase, testBasicIncrementingFromZeroEnumeration)
                     {"Purple", DontChangeEnumValue},
             };
 
-    ProcessEnumTestVector<EnumerationStore>(testVector);
+    ProcessTestVectorOnAllTypes(testVector);
 }
 
 TEST(TNRTestCase, testIncrementingFromThenChangingEnumeration)
@@ -211,7 +203,7 @@ TEST(TNRTestCase, testIncrementingFromThenChangingEnumeration)
                     {"Purple", DontChangeEnumValue},
             };
 
-    ProcessEnumTestVector<EnumerationStore>(testVector);
+    ProcessTestVectorOnAllTypes(testVector);
 }
 
 TEST(TNRTestCase, testChangingFirstValueThenIncrementingEnumeration)
@@ -224,7 +216,7 @@ TEST(TNRTestCase, testChangingFirstValueThenIncrementingEnumeration)
                     {"Yellow", DontChangeEnumValue},
                     {"Purple", DontChangeEnumValue},
             };
-    ProcessEnumTestVector<EnumerationStore>(testVector);
+    ProcessTestVectorOnAllTypes(testVector);
 }
 
 
@@ -238,7 +230,7 @@ TEST(TNRTestCase, testChangingFirstValueThenIncrementingThenChangingAgainEnumera
                     {"Yellow", 7},
                     {"Purple", DontChangeEnumValue},
             };
-    ProcessEnumTestVector<EnumerationStore>(testVector);
+    ProcessTestVectorOnAllTypes(testVector);
 }
 
 const uint32_t MAX_ENUM_TEST_COUNT = 5000;
@@ -289,36 +281,3 @@ TEST(TNRTestCase, testNonEnumValuesAreEmptyWithSomeEnumsDefined)
     }
 }
 
-
-#if 0
-int main() {
-    cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
-    POD_Tester pt;
-    JSONTester jt;
-    bool b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12;
-    bool allTests;
-
-    printf("Test testPODType %s\n", (b1 = pt.testPODType()) ? "PASSED" : "FAILED");
-    printf("Test testFixedArray %s\n", (b2 = pt.testFixedArray()) ? "PASSED" : "FAILED");
-    printf("Test testCountedArray %s\n", (b3 = pt.testCountedArray()) ? "PASSED" : "FAILED");
-    printf("Test testMemoryStreamIf %s\n", (b4 = pt.testMemoryStreamIf()) ? "PASSED" : "FAILED");
-    printf("Test testTNRContainer %s\n", (b5 = pt.testTNRContainer()) ? "PASSED" : "FAILED");
-    printf("Test testTNRNestedContainer %s\n", (b6 = pt.testTNRNestedContainer()) ? "PASSED" : "FAILED");
-    printf("Test testTextLogWriteIf %s\n", (b7 = pt.testTextLogWriteIf()) ? "PASSED" : "FAILED");
-    printf("Test testSimpleTextWriteIf %s\n", (b8 = pt.testSimpleTextWriteIf()) ? "PASSED" : "FAILED");
-
-    printf("Test testTNR_C_String %s\n", (b9 = pt.testTNR_C_String()) ? "PASSED" : "FAILED");
-
-    printf("Test testObjectMap %s\n", (b10 = pt.testObjectMap()) ? "PASSED" : "FAILED");
-
-    printf("Test JSONTester::testParsing %s\n", (b11 = jt.testParsing()) ? "PASSED" : "FAILED");
-    printf("Test JSONTester::testJSON_to_Container %s\n", (b12 = jt.testJSON_to_Container()) ? "PASSED" : "FAILED");
-
-    allTests = (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && b10 && b11 && b12);
-
-    printf("\nOverall Test %s\n\n", allTests ? "PASSED" : "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FAILED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-
-    return 0;
-}
-#endif
