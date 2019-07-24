@@ -80,7 +80,8 @@ int tnr::FormattedTextWriteIf::writeNumber(U32 value, U8 width, std::string &des
 
 
     // TBC add controlling the formatting of the number
-    *m_stream << " : " << "0x" << std::hex << std::setw(width) << std::setfill('0') << value << ' ' << format.getEnumValue(value);
+    *m_stream << " : " << "0x" << std::hex << std::setw(width) << std::setfill('0') << value << ' ' << format.GetEnumName(
+            value);
 
     if (format.getOutputNewline())
     {

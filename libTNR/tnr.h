@@ -73,11 +73,11 @@ class tnr_format
         bool getOutputDescription() { return m_outputDescription; };
 
         //! Add an enumerated name for an integer value
-        void addEnumName(const std::string &name) { m_enumStore.AddEnumValue(name); };
+        void AddEnumValue(const std::string& name) { m_enumStore.AddEnumValue(name); };
         //! Set the value for this and future enumerated names
-        void setEnumValue(uint32_t value) { m_enumStore.SetEnumValue(value); };
+        void SetEnumValue(uint32_t value) { m_enumStore.SetEnumValue(value); };
         //! Set the value for this and future enumerated names
-        std::string getEnumValue(uint32_t value) { return m_enumStore.GetEnumName(value); };
+        std::string GetEnumName(uint32_t value) { return m_enumStore.GetEnumName(value); };
 
     // For debugging, write the contents of the format
         void printFormat(const char * name);
@@ -184,11 +184,11 @@ public:
     void setFormat(const tnr_format &output_format) { m_format = output_format; };
 
     //! Add an enumerated name for an integer value
-    virtual void addEnumName(const std::string &name) { m_format.addEnumName(name); };
+    virtual void AddEnumValue(const std::string& name) { m_format.AddEnumValue(name); };
     //! Set the value for this and future enumerated names
-    virtual void setEnumValue(uint32_t value) { m_format.setEnumValue(value); };
+    virtual void SetEnumValue(uint32_t value) { m_format.SetEnumValue(value); };
     //! Set the value for this and future enumerated names
-    virtual std::string getEnumValue(uint32_t value) { return m_format.getEnumValue(value); };
+    virtual std::string GetEnumName(uint32_t value) { return m_format.GetEnumName(value); };
 
 protected:
     std::string m_description;
@@ -207,6 +207,7 @@ public:
     POD(T value, const std::string description) : tnr_baseData(description), m_value(value)//, m_enumStore()
     {
     }
+    POD() : POD(0, "") {};
     //!  Nothing dynamic so destructor doesn't need to do anything
     ~POD() = default;
 

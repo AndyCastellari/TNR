@@ -276,7 +276,7 @@ void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& enumName)
     tnr::tnr_baseData_ptr object;
     if (!m_objectStack.empty())
     {
-        m_objectStack.top()->addEnumName(enumName);
+        m_objectStack.top()->AddEnumValue(enumName);
     }
 }
 

@@ -1,11 +1,11 @@
 
-define colour = U8("colour", enum (red, green, blue=4));
+define colour = U16("colour", enum (red, green, blue=4));
 
 define centimetres = U16("cm");
 
 define struct1 =
 {
-    CountedArray("Var array U8 of centimetres", U8()) < centimetres() >;
+    CountedArray("Var array U8 of centimetres", U8()) < colour() >;
 };
 
 define struct2 =

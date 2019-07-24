@@ -116,7 +116,8 @@ TEST(TNRTestCase, testTNR_Variant)
 const uint32_t DontChangeEnumValue = 0xffff;
 
 // Load enumStore with value from test vector, names and optionally values
-void LoadEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &testVector, EnumerationStore_ptr &enumStore)
+template<class T>
+void LoadEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &testVector, std::shared_ptr<T> &enumStore)
 {
     for (auto element: testVector)
     {
@@ -129,7 +130,8 @@ void LoadEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &t
 }
 
 // Check enumStore with value from test vector, names and optionally values
-void CheckEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &testVector, EnumerationStore_ptr &enumStore)
+template<class T>
+void CheckEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &testVector, std::shared_ptr<T> &enumStore)
 {
     uint32_t expectedValue = 0;
     std::string actual;
@@ -153,13 +155,35 @@ void CheckEnumerationStore(const std::vector<std::pair<std::string, uint32_t>> &
     }
 }
 
+template <class T>
 void ProcessEnumTestVector(const std::vector<std::pair<std::string, uint32_t>> &testVector)
 {
-    EnumerationStore_ptr enumStore = std::make_shared<EnumerationStore>();
+    std:shared_ptr<T> enumClass = std::make_shared<T>();
 
-    LoadEnumerationStore(testVector, enumStore);
+    LoadEnumerationStore(testVector, enumClass);
 //    enumStore->PrintEnumStore();
-    CheckEnumerationStore(testVector, enumStore);
+    CheckEnumerationStore(testVector, enumClass);
+}
+
+TEST(TNRTestCase, testBasicIncrementingFromZeroEnumerationWithPodTypes)
+{
+    std::vector<std::pair<std::string, uint32_t>> testVector =
+            {
+                    {"Red", DontChangeEnumValue},
+                    {"Green", DontChangeEnumValue},
+                    {"Blue", DontChangeEnumValue},
+                    {"Yellow", DontChangeEnumValue},
+                    {"Purple", DontChangeEnumValue},
+            };
+
+    ProcessEnumTestVector<tnr::POD_U8>(testVector);
+    ProcessEnumTestVector<tnr::POD_U16>(testVector);
+    ProcessEnumTestVector<tnr::POD_U24>(testVector);
+    ProcessEnumTestVector<tnr::POD_U32>(testVector);
+    ProcessEnumTestVector<tnr::POD_S8>(testVector);
+    ProcessEnumTestVector<tnr::POD_S16>(testVector);
+    ProcessEnumTestVector<tnr::POD_S24>(testVector);
+    ProcessEnumTestVector<tnr::POD_S32>(testVector);
 }
 
 TEST(TNRTestCase, testBasicIncrementingFromZeroEnumeration)
@@ -173,7 +197,7 @@ TEST(TNRTestCase, testBasicIncrementingFromZeroEnumeration)
                     {"Purple", DontChangeEnumValue},
             };
 
-    ProcessEnumTestVector(testVector);
+    ProcessEnumTestVector<EnumerationStore>(testVector);
 }
 
 TEST(TNRTestCase, testIncrementingFromThenChangingEnumeration)
@@ -187,7 +211,7 @@ TEST(TNRTestCase, testIncrementingFromThenChangingEnumeration)
                     {"Purple", DontChangeEnumValue},
             };
 
-    ProcessEnumTestVector(testVector);
+    ProcessEnumTestVector<EnumerationStore>(testVector);
 }
 
 TEST(TNRTestCase, testChangingFirstValueThenIncrementingEnumeration)
@@ -200,7 +224,7 @@ TEST(TNRTestCase, testChangingFirstValueThenIncrementingEnumeration)
                     {"Yellow", DontChangeEnumValue},
                     {"Purple", DontChangeEnumValue},
             };
-    ProcessEnumTestVector(testVector);
+    ProcessEnumTestVector<EnumerationStore>(testVector);
 }
 
 
@@ -214,7 +238,7 @@ TEST(TNRTestCase, testChangingFirstValueThenIncrementingThenChangingAgainEnumera
                     {"Yellow", 7},
                     {"Purple", DontChangeEnumValue},
             };
-    ProcessEnumTestVector(testVector);
+    ProcessEnumTestVector<EnumerationStore>(testVector);
 }
 
 const uint32_t MAX_ENUM_TEST_COUNT = 5000;
