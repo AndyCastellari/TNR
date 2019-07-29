@@ -10,7 +10,7 @@ add_executable(tnrdsltool tnrdsltool.cpp
         TnrVisitor.cpp TnrVisitor.h ObjectBuilder.cpp ObjectBuilder.h)
 
 target_include_directories(TNRlib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../../tclap-1.2.2/include/
-        ${CMAKE_CURRENT_LIST_DIR}/../../antlr4-cpp-runtime/run/usr/local/include/antlr4-runtime)
+        ${CMAKE_CURRENT_LIST_DIR}/../../antlr4-cpp-runtime/usr/local/include/antlr4-runtime)
 
 target_link_libraries(tnrdsltool TNRlib
         ${CMAKE_CURRENT_LIST_DIR}/../../antlr4-cpp-runtime/dist/libantlr4-runtime.a

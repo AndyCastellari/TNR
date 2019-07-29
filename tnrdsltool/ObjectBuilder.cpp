@@ -286,7 +286,7 @@ void ObjectBuilder::SetEnumValueToTopOfStack(uint32_t value)
     tnr::tnr_baseData_ptr object;
     if (!m_objectStack.empty())
     {
-        m_objectStack.top()->setEnumValue(value);
+        m_objectStack.top()->SetEnumValue(value);
     }
 }
 
