@@ -279,7 +279,7 @@ int tnr::FormattedTextWriteIf::write(std::string &description, tnr_format &forma
         *m_stream << endl;
     }
 
-    format.printFormat(description.c_str());
+//    format.printFormat(description.c_str());
     return result;
 }
 
