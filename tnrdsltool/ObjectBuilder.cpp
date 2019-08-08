@@ -28,15 +28,15 @@
 
 void ObjectBuilder::StartNewType(const std::string& typeName)
 {
-    std::cout << std::endl;
-    std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
+    if (m_dbg) std::cout << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
     m_newTypeName = typeName;
     PrintStackSize();
 }
 
 void ObjectBuilder::AddNewType()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << m_newTypeName << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << m_newTypeName << std::endl;
     if (!m_objectStack.empty())
     {
         tnr::tnr_baseData_ptr object = m_objectStack.top();
@@ -50,7 +50,7 @@ void ObjectBuilder::AddNewType()
 
 void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
     if (!m_objectStack.empty())
     {
         tnr::tnr_baseData_ptr object = m_objectStack.top();
@@ -60,7 +60,7 @@ void ObjectBuilder::SetDescriptionOnTopOfStack(const std::string& description)
 
 void ObjectBuilder::SetPrintDescriptionOnTopOfStack(bool showDescription)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << (showDescription ? "On" : "Off") << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << (showDescription ? "On" : "Off") << std::endl;
     if (!m_objectStack.empty())
     {
         tnr::tnr_baseData_ptr object = m_objectStack.top();
@@ -70,12 +70,12 @@ void ObjectBuilder::SetPrintDescriptionOnTopOfStack(bool showDescription)
 
 void ObjectBuilder::SetFormatOnTopOfStack(const std::string &description)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << description << std::endl;
 }
 
 void ObjectBuilder::SetNewlineOnTopOfStack(bool newLine)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << (newLine ? "On" : "Off") << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << (newLine ? "On" : "Off") << std::endl;
     if (!m_objectStack.empty())
     {
         tnr::tnr_baseData_ptr object = m_objectStack.top();
@@ -86,7 +86,7 @@ void ObjectBuilder::SetNewlineOnTopOfStack(bool newLine)
 
 void ObjectBuilder::PushEmptyCompoundObject()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     indent();
     tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRContainer>("");
     m_objectStack.push(o);
@@ -95,7 +95,7 @@ void ObjectBuilder::PushEmptyCompoundObject()
 
 void ObjectBuilder::PushEmptyExistingType(const std::string& typeName)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << typeName << std::endl;
     tnr::tnr_baseData_ptr retObj;
     if (m_objectMap.FindObject(typeName, retObj))
     {
@@ -110,7 +110,7 @@ void ObjectBuilder::PushEmptyExistingType(const std::string& typeName)
 
 void ObjectBuilder::PushEmptyFixedArray()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRFixedArray>();
     m_objectStack.push(o);
     PrintStackSize();
@@ -118,7 +118,7 @@ void ObjectBuilder::PushEmptyFixedArray()
 
 void ObjectBuilder::PushEmptyCountedArray()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNRCountedArray>();
     m_objectStack.push(o);
     PrintStackSize();
@@ -126,7 +126,7 @@ void ObjectBuilder::PushEmptyCountedArray()
 
 void ObjectBuilder::PopObjectToParentObject()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     if (!m_objectStack.empty())
     {
         std::shared_ptr<tnr::TNRContainer> parent;
@@ -147,7 +147,7 @@ void ObjectBuilder::PopObjectToParentObject()
 
 void ObjectBuilder::SetFixedArrayLength(uint32_t size)
 {
-    std::cout << printIndent() << __FUNCTION__ << " size=" << size << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " size=" << size << std::endl;
     if (!m_objectStack.empty())
     {
         std::shared_ptr<tnr::TNRFixedArray> fixedArray;
@@ -162,7 +162,7 @@ void ObjectBuilder::SetFixedArrayLength(uint32_t size)
 
 void ObjectBuilder::PopElementToFixedArray()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     if (!m_objectStack.empty())
     {
         tnr::tnr_baseData_ptr element = m_objectStack.top();
@@ -182,7 +182,7 @@ void ObjectBuilder::PopCounterAndElementToCountedArray()
     tnr::tnr_baseData_ptr element;
     tnr::tnr_baseData_ptr counter;
 
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     if (!m_objectStack.empty())
     {
         element = m_objectStack.top();
@@ -204,12 +204,12 @@ void ObjectBuilder::PopCounterAndElementToCountedArray()
 
 void ObjectBuilder::PrintStackSize()
 {
-//    std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
+//    if (m_dbg) std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
 }
 
 void ObjectBuilder::PushEmptyVariant()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNR_Variant>();
     m_objectStack.push(o);
     PrintStackSize();
@@ -218,7 +218,7 @@ void ObjectBuilder::PushEmptyVariant()
 
 void ObjectBuilder::SetVariantSelectorValue(uint32_t value)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
     tnr::tnr_baseData_ptr selector;
     selector = m_objectStack.top();
     selector->setValue(value);
@@ -231,7 +231,7 @@ void ObjectBuilder::PopElementToVariantWithSelectorValue()
     tnr::tnr_baseData_ptr element;
     tnr::tnr_baseData_ptr selector;
 
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     if (!m_objectStack.empty())
     {
         element = m_objectStack.top();
@@ -255,7 +255,7 @@ void ObjectBuilder::PopElementToVariantWithSelectorValue()
 
 void ObjectBuilder::SetSelectorTypeInVariant()
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
     tnr::tnr_baseData_ptr selector;
     if (!m_objectStack.empty())
     {
@@ -272,7 +272,7 @@ void ObjectBuilder::SetSelectorTypeInVariant()
 
 void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& enumName)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << enumName << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << enumName << std::endl;
     tnr::tnr_baseData_ptr object;
     if (!m_objectStack.empty())
     {
@@ -282,7 +282,7 @@ void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& enumName)
 
 void ObjectBuilder::SetEnumValueToTopOfStack(uint32_t value)
 {
-    std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
+    if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
     tnr::tnr_baseData_ptr object;
     if (!m_objectStack.empty())
     {

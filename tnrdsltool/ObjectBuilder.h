@@ -37,7 +37,7 @@ class ObjectBuilder
 public:
     ObjectBuilder(tnr::ObjectMap &objectMap) : m_indent(0), m_objectStack(),
                                                 m_objectMap(objectMap),
-                                                m_newTypeName() {};
+                                                m_newTypeName(), m_dbg(false) {};
     ~ObjectBuilder() = default;
 
     //! Return a string that indents by number of spaces times 4
@@ -89,6 +89,7 @@ protected:
     std::stack<tnr::tnr_baseData_ptr> m_objectStack;
     tnr::ObjectMap &m_objectMap;
     std::string m_newTypeName;
+    bool m_dbg;
 };
 
 
