@@ -1,7 +1,7 @@
 
 define colour = U16("colour", enum (red, green, blue=4));
 
-define centimetres = U16("cm", enum(two=2, three=3,four=4);
+define centimetres = U16("cm", enum(two=2, three=3,four=4));
 
 define struct1 =
 {
