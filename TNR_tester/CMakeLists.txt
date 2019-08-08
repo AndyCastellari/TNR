@@ -12,7 +12,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_executable(TNRtester src/TNR_tester.cpp src/PODTester.cpp src/JSONTester.cpp)
 
-add_dependencies(TNRtester gtest gtestmain)
+add_dependencies(TNRtester gtest)
 
 target_link_libraries(TNRtester TNRlib gtest gtest_main)
 
