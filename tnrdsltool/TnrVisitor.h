@@ -12,7 +12,7 @@ class TnrVisitor : public TNRDSLBaseVisitor
 {
 public:
     explicit TnrVisitor(ObjectBuilder & objectBuilder) : TNRDSLBaseVisitor(),
-                                                            dbg(true), m_indent(0),
+                                                            dbg(false), m_indent(0),
                                                             m_objectBuilder(objectBuilder) { };
 
 public:
