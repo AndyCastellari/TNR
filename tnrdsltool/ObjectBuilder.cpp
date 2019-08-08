@@ -204,14 +204,13 @@ void ObjectBuilder::PopCounterAndElementToCountedArray()
 
 void ObjectBuilder::PrintStackSize()
 {
-//    if (m_dbg) std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
+    if (m_dbg) std::cout << "Stack is " << m_objectStack.size() << " deep" << std::endl;
 }
 
 void ObjectBuilder::PushEmptyVariant()
 {
     if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;
-    tnr::tnr_baseData_ptr o = std::make_shared<tnr::TNR_Variant>();
-    m_objectStack.push(o);
+    m_objectStack.push(std::make_shared<tnr::TNR_Variant>());
     PrintStackSize();
 
 }
@@ -273,7 +272,6 @@ void ObjectBuilder::SetSelectorTypeInVariant()
 void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& enumName)
 {
     if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << enumName << std::endl;
-    tnr::tnr_baseData_ptr object;
     if (!m_objectStack.empty())
     {
         m_objectStack.top()->AddEnumValue(enumName);
@@ -283,7 +281,6 @@ void ObjectBuilder::AddEnumNameToTopOfStack(const std::string& enumName)
 void ObjectBuilder::SetEnumValueToTopOfStack(uint32_t value)
 {
     if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << "value:" << value << std::endl;
-    tnr::tnr_baseData_ptr object;
     if (!m_objectStack.empty())
     {
         m_objectStack.top()->SetEnumValue(value);
