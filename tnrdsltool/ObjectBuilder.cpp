@@ -83,7 +83,6 @@ void ObjectBuilder::SetNewlineOnTopOfStack(bool newLine)
     }
 }
 
-
 void ObjectBuilder::PushEmptyCompoundObject()
 {
     if (m_dbg) std::cout << printIndent() << __FUNCTION__ << " " << std::endl;

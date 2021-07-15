@@ -1,10 +1,27 @@
-// (C) 2019 Transport for London
-// All rights reserved.  This information is confidential.  You may not
-// reproduce, adapt or disclose this information or any part of the
-// information, for any purpose without TfL’s written permission.  TfL
-// makes no warranties or representations, and expressly disclaims all
-// liability concerning this information
-
+/*
+ * tnrtool.cpp
+ *
+ *      Author: Andy Castellari
+ *
+ *      COPYRIGHT AND PERMISSION NOTICE
+ *
+ * Copyright (c) 2015 - 2016, Andy Castellari.
+ *
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted,
+ * provided that the above copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale,
+ * use or other dealings in this Software without prior written authorization of the copyright holder.
+ *
+ */
 #include <iostream>
 #include "EnumerationStore.h"
 

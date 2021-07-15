@@ -103,6 +103,5 @@ Types can have attributes for display, for example,
 
 `U16("Length", description=on, newline=off)`
 - Shows the description "Length" but prevents a newline after it when generating a text file
-`U8("Type of colour", enum (red, green, blue, magenta=10, cyan, yellow))`
-- Adds a descriptive text to the value of a variable
+- `U8("Type of colour", enum (red, green, blue, magenta=10, cyan, yellow))` adds a descriptive text to the value of a variable
 - Adds red if variable is 0, green for 1, blue for 2, magenta for 10, cyan for 11 and yellow for 12
